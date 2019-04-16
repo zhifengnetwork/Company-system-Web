@@ -181,3 +181,36 @@
 	height: auto;
 }
 
+
+
+.tab{
+	width: 100%;
+	position: relative;
+}
+.tabs a{
+	text-decoration:none;
+	color:#000;
+	width:100px; height:40px; 
+	line-height:40px; text-align:center;
+	display:inline-block;
+}
+
+.tabs {
+ z-index: 100;
+}
+
+.tabs>li{
+  float:left;
+  width: 25%;
+	border-bottom:1px solid #000;
+	text-align: center;
+}
+
+.tabs .active>a{
+	color: #fff;
+}
+.tabs .active{
+    letter-spacing: 1px;
+    background-color: #418bca;
+}
+

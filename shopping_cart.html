@@ -16,7 +16,7 @@
                         <p class="lb_headWrap_return" >
                             <img class="lb_headWrap_return_img" src="img/back@2x.png" />
                         </p>
-                        <span>购物车</span>
+                        <span class="font">购物车</span>
                         <p class="lb_headWrap_text">
                                编辑
                         </p>
@@ -513,16 +513,11 @@
         //删除 商品
         function dell(){
             $('.dialog-wrapper').fadeOut(500)
-            del.forEach(element => {
-                if($(element).hasClass('check')){ //是选中就删除
-                   $(element).parent().parent().parent().parent().remove();
-                }
-            });
-            // ((i,elem)=>{
-            //     if($(elem).hasClass('check')){ //是选中就删除
-            //        $(elem).parent().parent().parent().parent().remove();
-            //     }
-            // })
+            for (var i=0;i<del.length;i++){
+                if(del[i].hasClass('check')){ //是选中就删除
+                    del[i].parent().parent().parent().parent().remove();
+                 }
+            }
         }
 
         //删除 商品
@@ -531,6 +526,7 @@
                 $('#dialog-wrapper').fadeOut(500)
             }else if($(this).html()=='确定'){
                  dell();
+                 
              if($(".good-pools-data").length==0){ //商品列表的长度 取消全选
                     $('.check-all .edit').removeClass('check')
             } 
