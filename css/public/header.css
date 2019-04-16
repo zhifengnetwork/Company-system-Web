@@ -16,7 +16,7 @@
 	text-align: center;
 	color: #fefefe;
 	letter-spacing: .02rem;
-	background-color: #000;
+	background-image:  linear-gradient(#323232,#414141);
 } 
 /*头部 底部线*/
 .lb_headWrap_line {
