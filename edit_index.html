@@ -5,13 +5,31 @@
 		<title>客户_手动创建页面_给固定模板</title>
 		<link rel="stylesheet" href="css/public/public.css" />
 		<link rel="stylesheet" href="css/edit_index.css" />
+		<!-- 公用头部 -->
+		<link rel="stylesheet" href="css/public/header.css">
+		<!-- 购物车样式 -->
+		<link rel="stylesheet" href="css/shopping_cart.css">
 	</head>
 	<body>
 		<div class="wrapper">
-			<!--head-->
-			<p class="head_box">页面编辑</p>
-			<!--内容-->
-			<div class="content clearfloat">
+			<div class="tab ">
+				<ul class="tabs clearfloat">
+					<li class="active">
+						<a href="" data-toggle="0">首页编辑</a>
+					</li>
+					<li >
+						<a href="" data-toggle="1">分类</a>
+					</li>
+					<li >
+						<a href="" data-toggle="2">购物车</a>
+					</li>
+					<li >
+						<a href="" data-toggle="3">个人中心</a>
+					</li>
+				</ul>
+			</div>
+			<!--首页编辑-->
+			<div class="content clearfloat" >
 				<!--left box-->
 				<div class="left_box">
 					<!--功能插件-->
@@ -39,27 +57,93 @@
 						<!--水平居中-->
 						<div class="html_box">
 							<!--隐藏滚动条-->
-							<div class="html_box_new">
-								<include src="new_index.html"></include>
+							<div class="html_box_new" id="view">
+								<include src="new_index.html" ></include>
 							</div>
-							<!--<iframe id="lead_page" src="new_index.html" width="100%" height="100%" frameborder='0'></iframe>-->
 						</div>
 					</div>
 					<p class="phone_bottom"></p>
 				</div>
 				<div class="right_box"></div>
 			</div>
+			<!-- 分类 -->
+			<div class="content clearfloat" style="display:none">
+					<!--中间 box-->
+					<div class="middle_box">
+						<!--绝对定位=>设置图片，模拟手机-->
+						<p class="phone_top"></p>
+						<p class="phone_left"></p>
+						<p class="phone_right"></p>
+						<!--模拟手机的 wrap，背景图两边（img）-->
+						<div class="html_wrpa">
+							<!--水平居中-->
+							<div class="html_box">
+								<!--隐藏滚动条-->
+								<div class="html_box_new" id="view">
+									<include src="new_index.html" ></include>
+								</div>
+							</div>
+						</div>
+						<p class="phone_bottom"></p>
+					</div>
+					<div class="right_box"></div>
+				</div>
+			<!-- 购物车 -->
+			<div class="content clearfloat" style="display:none" >
+					<!--中间 box-->
+					<div class="middle_box">
+						<!--绝对定位=>设置图片，模拟手机-->
+						<p class="phone_top"></p>
+						<p class="phone_left"></p>
+						<p class="phone_right"></p>
+						<!--模拟手机的 wrap，背景图两边（img）-->
+						<div class="html_wrpa">
+							<!--水平居中-->
+							<div class="html_box">
+								<!--隐藏滚动条-->
+								<div class="html_box_new" id="view">
+										<iframe class="html_box_new" src="shopping_cart.html"></iframe>
+								</div>
+							</div>
+						</div>
+						<p class="phone_bottom"></p>
+					</div>
+					<div class="right_box"></div>
+				</div>
+			<!-- 个人中心 -->
+			<div class="content clearfloat" style="display:none">
+					<!--中间 box-->
+					<div class="middle_box">
+						<!--绝对定位=>设置图片，模拟手机-->
+						<p class="phone_top"></p>
+						<p class="phone_left"></p>
+						<p class="phone_right"></p>
+						<!--模拟手机的 wrap，背景图两边（img）-->
+						<div class="html_wrpa">
+							<!--水平居中-->
+							<div class="html_box">
+								<!--隐藏滚动条-->
+								<div class="html_box_new" id="view">
+									<include src="new_index.html" ></include>
+								</div>
+							</div>
+						</div>
+						<p class="phone_bottom"></p>
+					</div>
+					<div class="right_box"></div>
+				</div>
 		</div>
 		
 		<!--引入另外一个页面的js-->
 		<script src="js/include.js"></script>
 		<script src="js/public/jquery-1.8.3.js"></script>
 		<script src="js/public/swiper.min.js"></script>
-		<!--操作-页面编辑-->
-		<script src="js/public/edit_index.js"></script>
-		
+		<!--public的js-->
+		<script src="js/public/public.js"></script>
+		<!-- <script src="js/public/rem.js"></script> -->
 		<script>
 			$(document).ready(function(){
+				
 				/*轮播图*/
 				$('.rotationChart').on('click',function(){
 					console.log('轮播图！');
@@ -138,7 +222,17 @@
 				})
 				
 				/*666*/
-				
+			
+               // tba切换
+				$(".tabs>li>a").click(function(e){
+				e.preventDefault();
+				var $tar=$(e.target);
+				var index = $tar.attr('data-toggle')
+				if($tar.is("[data-toggle]")){
+				    $tar.parent().addClass('active').siblings().removeClass('active')
+                    $('.wrapper').children('.content').eq(index).show().siblings('.content').hide()
+				}	
+			})
 				
 			})
 			
