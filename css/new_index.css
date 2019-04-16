@@ -1,0 +1,72 @@
+/*最大边框*/
+.wrap_new {
+	width: 100%;
+	height: 100%;
+}
+/*包=>轮播图 wrap*/
+.sowingMapWrap {
+	padding-top: .32rem;
+	box-sizing: border-box;
+	moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: auto;
+}
+/*swiper 外框*/
+.swiper-container {
+	width: 100%;
+	height: auto;
+}
+/*swiper 轮播的外框*/
+.swiper-wrapper {
+	width: 100%;
+	height: auto;
+}
+
+/*swiper 项*/
+.swiper-slide {
+	padding-bottom: .03rem;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	/*margin: 0 auto;*/
+	/*权重*/
+	width: 100% !important;
+	height: auto;
+	
+}
+
+/*轮播-img*/
+.sowingMapImgNQ {
+	display: block;
+	margin: 0 auto;
+	/*width: 6.9rem;*/
+	width: 92%;
+	height: auto;
+	/*height: 2rem;*/
+	border-radius: .06rem;
+	/*box-shadow: 0 .13rem .06rem #ededed;*/
+	
+}
+/*指示器的-整体位置,绝对定位*/
+.swiper-pagination-bullets {
+	bottom: 0 !important;
+}
+/*指示器的-Tab切换背景色,*/
+.swiper-pagination-bullet {
+	width: 6px !important;
+	height: 6px !important;
+	background-color: #fff !important;
+	filter: alpha(opacity=.3);
+	-moz-opacity: .3;
+	-khtml-opacity: .3;
+	opacity: .3;
+}
+/*指示器的-Tab切换背景色, active*/
+.swiper-pagination-bullet-active {
+    background-color: #fff !important;
+    filter: alpha(opacity=.9);
+	-moz-opacity: .9;
+	-khtml-opacity: .9;
+	opacity: .9;
+}

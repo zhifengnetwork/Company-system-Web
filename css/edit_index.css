@@ -1,0 +1,183 @@
+/*最外边框*/
+.wrapper {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	margin: 0 auto;
+	/*width: 100%;*/
+	width: 1200px;
+	height: 100vh;
+	border: 1px solid #d6d6d8;
+	/*overflow-y: scroll;*/
+}
+/*head*/
+.head_box {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: 39px;
+	line-height: 39px;
+	font-size: 14px;
+	letter-spacing: 1px;
+	text-indent: 10px;
+	color: #333;
+	border-bottom: 1px solid #d6d6d8;
+	
+}
+/*内容*/
+.content {
+	padding-left: 10px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: auto;
+}
+/*左 box*/
+.left_box {
+	float: left;
+	padding-top: 60px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 300px;
+	height: auto;
+}
+.left_box_fun_box {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	/*width: 288px;*/
+	width: 96%;
+	/*height: 455px;*/
+	height: auto;
+	border: 1px solid #d6d6d8;
+}
+.fun_box_top {
+	padding-left: 10px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: 55px;
+	line-height: 55px;
+	
+	background: -moz-linear-gradient(top, #fff 0%, #dddce1 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #dddce1));
+	background: -webkit-linear-gradient(top, #fff 0%, #dddce1 100%);
+	background: -o-linear-gradient(top, #fff 0%, #dddce1 100%);
+	background: -ms-linear-gradient(top, #fff 0%, #dddce1 100%);
+}
+.fun_box_content {
+	/*display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-around;
+	justify-content: space-around;
+	-moz-box-pack: space-around;
+	-webkit-box-pack: space-around;
+	box-pack: space-around;*/
+	padding-left: 7px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: auto;
+}
+.fun_box_content_term {
+	float: left;
+	margin: 6px 0 6px 13px;
+	width: 82px;
+	height: 82px;
+	font-size: 14px;
+	line-height: 82px;
+	border-radius: 6px;
+	text-align: center;
+	color: #fff;
+	letter-spacing: 1px;
+	background-color: #418bca;
+}
+.fun_box_content_term:nth-child(3n+1) {
+	margin-left: 0;
+}
+/*鼠标悬浮*/
+.fun_box_content_term:hover {
+	cursor: pointer;
+	background-color: #3378b3;
+}
+/*中间 box*/
+.middle_box {
+	position: relative;
+	float: left;
+	margin-left: 15px;
+	padding-top: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 372px;
+	/*min-height: 600px;*/
+	height: auto;
+	
+}
+/*另外一个页面显示 wrap*/
+.html_wrpa {
+	width: 100%;
+	height: auto;
+    background: url(../img/phone/phone_center.png) 0 0 repeat-y;
+}
+/*另外一个页面显示 box*/
+.html_box {
+	margin: 0 auto;
+	/*加多17px的滚动条*/
+	width: 342px;
+	height: 600px;
+	overflow-x: hidden;
+	background-color: #fff; 
+}
+/*隐藏滚动条*/
+.html_box_new {
+	/*加多17px的滚动条*/
+	width: 359px;
+	height: 100%;
+	overflow-y: scroll;
+}
+/*模拟手机*/
+.phone_top {
+	width: 100%;
+	height: 83px;
+    background: url(../img/phone/phone_top.png) 0 0 no-repeat;
+}
+.phone_left {
+	position: absolute;
+	top: 16px;
+	left: -5px;
+	z-index: 1;
+	height: 293px;
+    width: 5px;
+    background: url(../img/phone/phone_left.png) 0px 88px no-repeat;
+}
+.phone_right {
+	position: absolute;
+	top: 16px;
+	right: -6px;
+	z-index: 1;
+	height: 220px;
+    width: 6px;
+    background: url(../img/phone/phone_right.png) 0px 158px no-repeat;
+    float: left;
+}
+.phone_bottom {
+	height: 92px;
+    width: 372px;
+    background: url(../img/phone/phone_bottom.png) 0 0 no-repeat;
+}
+/*右 box*/
+.right_box {
+	float: left;
+	width: 500px;
+	height: auto;
+}
+
