@@ -13,6 +13,7 @@ li{
 }
 a{
 	text-decoration: none;
+	color: black;
 }
 /*去除input默认样式*/
 input[type=button], input[type=submit], input[type=file], button { 
@@ -21,6 +22,15 @@ input[type=button], input[type=submit], input[type=file], button {
 	background: none;
 	border: none;
 	outline: none;
+}
+/**用公共头部时_需要改class包裹，公共头部height:.88rem;*/
+.max_wrap_head {
+	padding-top: .88rem;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: auto;
 }
 /*清除浮动代码 '父元素'*/
 .clearfloat:after{
@@ -56,4 +66,18 @@ input[type=button], input[type=submit], input[type=file], button {
 	-moz-box-flex: 1; 
 	-ms-flex: 1; 
 	flex: 1; 
+}
+
+/* 左箭头 */
+.right-arrow {
+    border-bottom: 2px solid #cccccc;
+    border-right: 2px solid #cccccc;
+    width: 8px;
+    height: 8px;
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 14px;
 }

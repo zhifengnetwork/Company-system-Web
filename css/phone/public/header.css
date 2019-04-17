@@ -1,10 +1,9 @@
 /*public head*/
 .lb_headWrap {
-	position: relative;
-	/*position: fixed;
+	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 20;*/
+	z-index: 100;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -15,7 +14,7 @@
 	text-align: center;
 	color: #fefefe;
 	letter-spacing: .02rem;
-	background-color: #000;
+	background-image: linear-gradient(#323232,#414141);
 } 
 /*头部 底部线*/
 .lb_headWrap_line {
@@ -69,8 +68,4 @@
 .lb_headWrap_share_icon {
 	width: .28rem;
 	height: .3rem;
-}
-
-.lb_headWrap .font{
-   font-size: .4rem;
 }

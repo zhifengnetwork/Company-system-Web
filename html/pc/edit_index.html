@@ -4,13 +4,13 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>客户_手动创建页面_给固定模板</title>
-		<link rel="stylesheet" href="css/public/public.css" />
+		<link rel="stylesheet" href="../../css/pc/public/public.css" />
 		<!-- 公用头部 -->
-		<link rel="stylesheet" href="css/public/header.css">
-		<link rel="stylesheet" href="css/public/swiper.min.css" />
-		<link rel="stylesheet" href="css/edit_index.css" />
+		<!--<link rel="stylesheet" href="../../css/phone/public/header.css">-->
+		<!--<link rel="stylesheet" href="../../css/phone/public/swiper.min.css" />-->
+		<link rel="stylesheet" href="../../css/pc/edit_index.css" />
 		<!-- 购物车样式 -->
-		<link rel="stylesheet" href="css/shopping_cart.css">
+		<!--<link rel="stylesheet" href="../../css/phone/shopping_cart.css">-->
 	</head>
 
 	<body>
@@ -70,7 +70,7 @@
 							<!--00写在-本页面00-->
 							<div id="wrap_new">
 								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" style="display: block;" src="img/0005.png" alt="" />
+									<img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
 									<div class="cursor_box remove_ele">
 										<!--1、删除按钮，生成html=>删除(remove_ele)-->
 										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
@@ -78,14 +78,14 @@
 								</div>
 								<!--111-->
 								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" style="display: block;" src="img/0004.png" alt="" />
+									<img class="sowingMapImgNQ" src="../../img/0004.png" alt="" />
 									<div class="cursor_box remove_ele">
 										<!--1、删除按钮，生成html=>删除(remove_ele)-->
 										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
 									</div>
 								</div>	
 								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" style="display: block;" src="img/0005.png" alt="" />
+									<img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
 									<div class="cursor_box remove_ele">
 										<!--1、删除按钮，生成html=>删除(remove_ele)-->
 										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
@@ -116,15 +116,11 @@
 					<div class="html_wrpa">
 						<!--水平居中-->
 						<div class="html_box">
-							<!--隐藏滚动条-->
-							<div class="html_box_new">
-								<include src="new_index.html"></include>
-							</div>
+							<iframe src="../phone/classify/classify.html"></iframe>
 						</div>
 					</div>
 					<p class="phone_bottom"></p>
 				</div>
-				<div class="right_box"></div>
 			</div>
 			<!-- 购物车 -->
 			<div class="content clearfloat" style="display:none">
@@ -140,13 +136,12 @@
 						<div class="html_box">
 							<!--隐藏滚动条-->
 							<!--<div class="html_box_new"">-->
-							<iframe class="html_box_new" src="shopping_cart.html" frameborder="0"></iframe>
+							<iframe class="html_box_new" src="../phone/shopping_cart/shopping_cart.html" frameborder="0"></iframe>
 							<!--</div>-->
 						</div>
 					</div>
 					<p class="phone_bottom"></p>
 				</div>
-				<div class="right_box"></div>
 			</div>
 			<!-- 个人中心 -->
 			<div class="content clearfloat" style="display:none">
@@ -159,26 +154,24 @@
 					<!--模拟手机的 wrap，背景图两边（img）-->
 					<div class="html_wrpa">
 						<!--水平居中-->
-						<div class="html_box">
+						<div class="html_box" style="overflow: hidden;">
 							<!--隐藏滚动条-->
-							<div class="html_box_new">
-								<include src="new_index.html"></include>
-							</div>
+								<iframe class="html_box_new" src="../phone/my/user.html"></iframe>
 						</div>
 					</div>
+				
 					<p class="phone_bottom"></p>
 				</div>
-				<div class="right_box"></div>
 			</div>
 		</div>
 
 		<!--引入另外一个页面的js-->
-		<!--<script src="js/include.js"></script>-->
-		<script src="js/public/jquery-1.8.3.js"></script>
-		<!--<script src="js/public/swiper.min.js"></script>-->
+		<!--<script src="./../js/include.js"></script>-->
+		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
+		<!--<script src="./../js/public/swiper.min.js"></script>-->
 		<!--public的js-->
-		<script src="js/edit_index.js"></script>
-		<!-- <script src="js/public/rem.js"></script> -->
+		<script src="./../js/pc/edit_index.js"></script>
+		<!-- <script src="./../js/public/rem.js"></script> -->
 		<!--拖拽js-->
 		
 		<script>

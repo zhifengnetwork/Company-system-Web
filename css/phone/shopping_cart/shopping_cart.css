@@ -916,3 +916,50 @@ img {
     width: 50%;
     z-index: 1000;
 }
+
+/* 购物车为空 */
+.cart-zero {
+    height: auto;
+    padding-bottom: 20%;
+    padding-top: .88rem;
+    width: 100%;
+}
+
+.cart-zero a, .cart-zero p {
+    display: block;
+    font-size: .24rem;
+    text-align: center;
+}
+.cart-zero p {
+    color: #444;
+    padding: .24rem 0;
+}
+
+.cart-zero a {
+    background: #444;
+    border: 1px solid #505050;
+    border-radius: 5PX;
+    color: #fff;
+    height: .56rem;
+    line-height: .56rem;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 27%;
+}
+
+.cart-zero a, .cart-zero p {
+    display: block;
+    font-size: .24rem;
+    text-align: center;
+}
+
+.cart-zero i {
+    background: url(../img/shopping_cart/empty_car.png) no-repeat;
+    width: 1rem;
+    height: 1rem;
+    color: #505050;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    background-size:100%; 
+}

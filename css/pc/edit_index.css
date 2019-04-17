@@ -33,9 +33,7 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	/*width: 288px;*/
 	width: 96%;
-	/*height: 455px;*/
 	height: auto;
 	border: 1px solid #d6d6d8;
 }
@@ -55,16 +53,6 @@
 	background: -ms-linear-gradient(top, #fff 0%, #dddce1 100%);
 }
 .fun_box_content {
-	/*display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-justify-content: space-around;
-	justify-content: space-around;
-	-moz-box-pack: space-around;
-	-webkit-box-pack: space-around;
-	box-pack: space-around;*/
 	padding-left: 7px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -111,7 +99,7 @@
 .html_wrpa {
 	width: 100%;
 	height: auto;
-    background: url(../img/phone/phone_center.png) 0 0 repeat-y;
+    background: url(../../img/pc/phone/phone_center.png) 0 0 repeat-y;
 }
 /*另外一个页面显示 box*/
 .html_box {
@@ -119,7 +107,7 @@
 	/*加多342px+17px的滚动条*/
 	width: 342px;
 	height: 600px;
-	overflow-y: hidden;
+	overflow: hidden;
 	background-color: #fff; 
 }
 /*隐藏滚动条*/
@@ -133,7 +121,7 @@
 .phone_top {
 	width: 100%;
 	height: 83px;
-    background: url(../img/phone/phone_top.png) 0 0 no-repeat;
+    background: url(../../img/pc/phone/phone_top.png) 0 0 no-repeat;
 }
 .phone_left {
 	position: absolute;
@@ -142,7 +130,7 @@
 	z-index: 1;
 	height: 293px;
     width: 5px;
-    background: url(../img/phone/phone_left.png) 0px 88px no-repeat;
+    background: url(../../img/pc/phone/phone_left.png) 0px 88px no-repeat;
 }
 .phone_right {
 	position: absolute;
@@ -151,13 +139,13 @@
 	z-index: 1;
 	height: 220px;
     width: 6px;
-    background: url(../img/phone/phone_right.png) 0px 158px no-repeat;
+    background: url(../../img/pc/phone/phone_right.png) 0px 158px no-repeat;
     float: left;
 }
 .phone_bottom {
 	height: 92px;
     width: 372px;
-    background: url(../img/phone/phone_bottom.png) 0 0 no-repeat;
+    background: url(../../img/pc/phone/phone_bottom.png) 0 0 no-repeat;
 }
 /*右 box*/
 .right_box {
@@ -208,6 +196,12 @@
 }
 
 /*Tab切换*/
+iframe{
+	width:100%;
+	height:100%;
+	border: 0;
+}
+
 .tab{
 	width: 100%;
 	position: relative;
