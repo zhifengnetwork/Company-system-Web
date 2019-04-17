@@ -5,7 +5,7 @@
 }
 /*包=>轮播图 wrap*/
 .sowingMapWrap {
-	padding-top: .32rem;
+	/*padding-top: .32rem;*/
 	box-sizing: border-box;
 	moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -39,23 +39,20 @@
 /*轮播-img*/
 .sowingMapImgNQ {
 	display: block;
-	margin: 0 auto;
-	/*width: 6.9rem;*/
-	width: 92%;
-	height: auto;
-	/*height: 2rem;*/
-	border-radius: .06rem;
+	/*margin: 0 auto;*/
+	/*width: 92%;*/
+	width: 100%;
 	/*box-shadow: 0 .13rem .06rem #ededed;*/
 	
 }
 /*指示器的-整体位置,绝对定位*/
 .swiper-pagination-bullets {
-	bottom: 0 !important;
+	bottom: .2rem !important;
 }
 /*指示器的-Tab切换背景色,*/
 .swiper-pagination-bullet {
-	width: 6px !important;
-	height: 6px !important;
+	width: .1rem !important;
+	height: .1rem !important;
 	background-color: #fff !important;
 	filter: alpha(opacity=.3);
 	-moz-opacity: .3;

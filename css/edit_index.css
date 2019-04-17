@@ -10,21 +10,6 @@
 	border: 1px solid #d6d6d8;
 	/*overflow-y: scroll;*/
 }
-/*head*/
-.head_box {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	width: 100%;
-	height: 39px;
-	line-height: 39px;
-	font-size: 14px;
-	letter-spacing: 1px;
-	text-indent: 10px;
-	color: #333;
-	border-bottom: 1px solid #d6d6d8;
-	
-}
 /*内容*/
 .content {
 	padding-left: 10px;
@@ -131,10 +116,10 @@
 /*另外一个页面显示 box*/
 .html_box {
 	margin: 0 auto;
-	/*加多17px的滚动条*/
+	/*加多342px+17px的滚动条*/
 	width: 342px;
 	height: 600px;
-	overflow-x: hidden;
+	overflow-y: hidden;
 	background-color: #fff; 
 }
 /*隐藏滚动条*/
@@ -180,9 +165,49 @@
 	width: 500px;
 	height: auto;
 }
+/*包裹 传给后台style*/
+#wrap_new {
+	/*position: relative;*/
+	width: 100%;
+	height: auto;
+}
+/*鼠标悬浮 删除 wrap*/
+.cursor_wrap {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+/*鼠标悬浮 删除 box*/
+.cursor_box {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: auto;
+	background-color: rgba(0,0,0,.3);
+}
 
+/* 删除按钮*/
+.cursor_box_del {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 14%;
+	height: auto;
+	color: #fff;
+	text-align: center;
+	font-size: 12px;
+	line-height: 24px;
+	letter-spacing: 2px;
+}
+.cursor_box_del:hover {
+	cursor: pointer;
+}
 
-
+/*Tab切换*/
 .tab{
 	width: 100%;
 	position: relative;
@@ -194,18 +219,15 @@
 	line-height:40px; text-align:center;
 	display:inline-block;
 }
-
 .tabs {
  z-index: 100;
 }
-
 .tabs>li{
   float:left;
   width: 25%;
 	border-bottom:1px solid #000;
 	text-align: center;
 }
-
 .tabs .active>a{
 	color: #fff;
 }

@@ -13,27 +13,59 @@
 	</head>
 
 	<body class="new_body">
+		<div class="remove_ele">
+			<!--删除元素=>生成HTML时-->
+			<link rel="stylesheet" href="css/edit_index.css" />
+		</div>
 		<div class="wrap_new">
-			<div class="sowingMapWrap chart_wrap" onclick="removerEle(this)">
+			<div class="sowingMapWrap cursor_wrap chart_wrap ">
 				<div class="swiper-container swiper_start">
 					<div class="swiper-wrapper clearfloat">
-						<div class="swiper-slide"><img class="sowingMapImgNQ" src="img/0005.png" alt="" /></div>
+						<div class="swiper-slide">
+							<img class="sowingMapImgNQ" src="img/0005.png" alt="" />
+						</div>
 						<div class="swiper-slide"><img class="sowingMapImgNQ" src="img/0005.png" alt="" /></div>
 						<div class="swiper-slide"><img class="sowingMapImgNQ" src="img/0005.png" alt="" /></div>
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
+				<!--删除按钮-->
+				<div class="cursor_box">
+					<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
+				</div>
 			</div>
-
 		</div>
 
+
+		
 		<script src="js/public/jquery-1.8.3.js"></script>
-		<!--操作-页面编辑-->
-		<script src="js/public/edit_index.js"></script>
 		<script src="js/public/swiper.min.js"></script>
+		
+		<div class="remove_ele">
+			<!--删除元素=>生成HTML时-->
+			<!--操作-页面编辑-->
+			<script src="js/edit_index.js"></script>
+		</div>
+		
 		<script>
 			$(function() {
-
+				var swiper = new Swiper('.swiper_start', {
+					/*方向*/
+					direction: 'horizontal',
+					/*轮播项-循环*/
+					loop: true,
+					//设置自动循环播放
+					autoplay: {
+						/*时间间隔*/
+						delay: 3000,
+						/*允许客户操作后，自动轮播*/
+						disableOnInteraction: false,
+					},
+					/*分页器*/
+					pagination: {
+						el: '.swiper-pagination',
+					},
+				})
 			})
 		</script>
 	</body>
