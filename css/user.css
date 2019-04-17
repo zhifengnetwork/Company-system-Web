@@ -15,10 +15,6 @@ i, em {
     font-style: normal;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
 .user_box{
     background: #f0f0f0;
     position: relative;
@@ -64,7 +60,7 @@ i, em {
     position: absolute;
     top: .89rem;
     right: .3rem;
-    line-height: .4rem;
+    line-height: .44rem;
     height: .4rem;
     padding: 0 10px;
     border-radius: 10px;
@@ -86,7 +82,7 @@ i, em {
     position: relative;
     background-color: #fff;
     margin-top: .2rem;
-    border-top: 1px solid #e0e0e0;
+    /* border-top: 1px solid #e0e0e0; */
 }
 
 .order_look{
@@ -197,12 +193,12 @@ i, em {
     position: relative;
 }
 
- .btn-item .item_icon{
+.btn-item .item_icon {
     position: absolute;
-    top: .2rem;
+    top: .3rem;
     left: .2rem;
-    width: .5rem;
-    height: .5rem;
+    width: .4rem;
+    height: .4rem;
 }
 
  .btn-item .item-name{
@@ -215,5 +211,9 @@ i, em {
     border: 0;
 }
 .btn-bar{
+    border: 0;
+}
+
+.btn-bar .btn-item:last-child .item-name,.help-bar .btn-item:last-child .item-name{
     border: 0;
 }

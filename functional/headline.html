@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>标题</title>
+        <script src="../js/public/rem.js"></script>
+        <link rel="stylesheet" href="../css/public/public.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+</head>
+<style>
+ /* 
+ 标题
+ */
+ .fe-mod-select {
+    border: 2px dashed #6c9;
+}
+ .fe-mod-3 {
+    height: auto;
+    padding: .2rem;
+    overflow: hidden;
+}
+
+
+.fe-mod {
+    height: auto;
+    border: 2px dashed rgba(0,0,0,0);
+    position: relative;
+}
+
+.fe-mod-3 h2 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.fe-mod-3 h4 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 100;
+    padding-top: 3px;
+}
+
+.compile_editor-title{
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #999;
+            border-bottom: 1px dashed #ccc;
+            padding-left: 5px;
+ }
+
+
+ .compile_editor-name {
+        height: 40px;
+        width: 90px;
+        font-size: 14px;
+        text-align: center;
+        line-height: 40px;
+        color: #999;
+        float: left;
+}
+  .compile_editor-con{
+        min-height: 40px;
+        float: left;
+        line-height: 40px;
+        color: #999;
+        font-size: 10px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        content: "...";
+  }
+
+  .compile_editor-input{
+        height: 30px;
+        /* width: 545px; */
+        width: 200px;
+        padding-left: 8px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        margin-top: 4px;
+        line-height: 30px;
+        color: #aaa;
+        outline: none;
+        -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+        -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+  }
+
+  .compile_editor-input2 {
+    height: 30px;
+    width: 70px;
+    padding-left: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+}
+</style>
+<body>
+    <div id="headline">
+        <div class="fe-mod-parent ng-scope" id="M1555486962642"  >
+            <div class="fe-mod fe-mod-3 ng-scope fe-mod-select"   style="text-align: left; color: rgb(0, 0, 0);">
+            <h2  class="ng-binding" style="font-size: .3rem;">主标题</h2>
+            <h4  class="ng-binding" style="font-size: .2rem;">副标题</h4>
+        </div>
+      </div>
+      <!-- 编辑 -->
+       <div class="ve-scope">
+           <div class="compile_editor-title">标题设置</div>
+           <div class="compile_editor-line clearfloat">
+                <div class="compile_editor-name">主标题内容</div>
+                <div class="compile_editor-con">
+                 <input type="text" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏"  >
+                </div>
+           </div>
+           <div class="compile_editor-line clearfloat">
+                <div class="compile_editor-name">主标题大小</div>
+                <div class="compile_editor-con">
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px"  class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px"  class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px"  class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px"  class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px"  class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" ></label>
+                </div>
+            </div>
+           <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">显示副标题</div>
+                    <div class="compile_editor-con">
+                            <label style="cursor:pointer; margin-right: 10px;">
+                                <input type="radio" name="headline" value="1"   class="ng-valid " v-model="scroll"> 显示</label>
+                            <label style="cursor:pointer; margin-right: 10px;">
+                                <input type="radio" name="headline" value="0"   class="ng-valid " v-model="scroll"> 不显示</label>
+                    </div>
+            </div>
+           <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">公告内容</div>
+                    <div class="compile_editor-con">
+                     <input type="text" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏"  >
+                    </div>
+               </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">福标题大小</div>
+                    <div class="compile_editor-con">
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px"  class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px"  class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px"  class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px"  class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px"  class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" ></label>
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">对齐方向</div>
+                    <div class="compile_editor-con">
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="left" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居左</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="center" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居中</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="right" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居右</label>
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">文字颜色</div>
+                    <div class="compile_editor-con">
+                            <input class="compile_editor-input2 " type="color" v-model="colorSize">
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">背景颜色</div>
+                    <div class="compile_editor-con">
+                            <input class="compile_editor-input2 " type="color" v-model="colorSize">
+                    </div>
+            </div>
+       </div>
+    </div>
+    <script> 
+            var vm=new Vue({
+             el:"#headline", 
+             data:{
+                
+             },created(){
+                
+             },methods:{
+                
+             }
+         })
+            </script>
+</body>
+</html>

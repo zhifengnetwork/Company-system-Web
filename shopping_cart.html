@@ -603,9 +603,9 @@
            let num = $(this).prev().children('.good-num').attr('value')
            $('.num>div>.good-num ').attr('value',num)
             _this = $(this).children('.down')  //当前this
-            Top = $(window).scrollTop();
-            $('body').css("top", -Top + "px"); //给body一个负的top值；
-            $('body').addClass('fixed');
+            // Top = $(window).scrollTop();
+            // $('body').css("top", -Top + "px"); //给body一个负的top值；
+            // $('body').addClass('fixed');
             _color = $(_this).parent().parent().parent().prev().children('.color-size-row').find('.color').html().split(':')[1] // 完成界面当前颜色
             _size  = $(_this).parent().parent().parent().prev().children('.color-size-row').find('.size').html().split(':')[1]  // 完成界面当前颜色
             let item =  $('.chose-items').children().eq(0).find('.chosed')  //当前默认选中的颜色
@@ -675,21 +675,26 @@
            sumTotal()
            // loading
            loa();
-           $('body').removeClass('fixed'); //去掉给body的类
-            $('body').removeAttr("style");//去掉内联样式
-            $(window).scrollTop(Top);
+        //    $('body').removeClass('fixed'); //去掉给body的类
+        //     $('body').removeAttr("style");//去掉内联样式
+        //     $(window).scrollTop(Top);
         })
 
         //关闭确认
         $('.close,.chose-panel').click(function(){
             $('.chose-panel').hide();
-            $('body').removeClass('fixed'); //去掉给body的类
-            $('body').removeAttr("style");//去掉内联样式
-            $(window).scrollTop(Top);
+            // $('body').removeClass('fixed'); //去掉给body的类
+            // $('body').removeAttr("style");//去掉内联样式
+            // $(window).scrollTop(Top);
         })
 
-       
-
+       var edit = $('.chose-panel')
+       edit.on('touchmove', function (e) { e.preventDefault(); }, false);//弹出层的背景层阻止默认滑动事件
+    //    edit.addEventListener("touchstart",function(e){
+    //                 e.stopPropagation();
+    //                 e.preventDefault();
+    //             },false);
+            
         
         </script>
 </body>
