@@ -285,43 +285,46 @@
 							/*pc渲染data-排序*/
 							this.dataobj[k]['index'] = k;
 							for(var j=0;j<this.backData.length;j++){
-								if(this.backData[j]['id'] == this.dataobj[k]['id']){
+								if(this.dataobj[k]['id'] == this.backData[j]['uid'] ){
+									console.log(333,this.backData[j]);
 									/*找到对应的id，放在thisBackData*/
-									thisBackData[k] = this.backData[j]['id'];
+									thisBackData[k] = this.backData[j];
 								}
 							}
 							
 						}
+						// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+						// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+						function clones(_type, _memory){
+							var newMemory = null;
+							// 判断传过来的数据类型
+							if(_type instanceof Array) {
+								newMemory = _memory || [];
+							} else {
+								newMemory = _memory || {};
+							}
+							for(var x in _type) {
+								//引用数据类型的 typeof为 object
+								if(typeof _type[x] == "object") {
+									newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+									clones(_type[x], newMemory[x]); //递归
+								} else {
+									// 数据赋值
+									newMemory[x] = _type[x];
+								}
+							}
+							return newMemory;
+						}
 						/*通过深克隆，赋值数据*/
-						this.backData = this.$options.methods.clones(thisBackData);
+						this.backData = clones(thisBackData);
 						/*初始化*/
 						thisBackData = [];	
+						console.log('后台666',this.backData);
 						
 						
 					},
 					/* 拖拽 >>*/
-					// 深克隆，把引用数据类型的，分解成基础类型（克隆）
-					// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
-					clones(_type, _memory) {
-						var newMemory = null;
-						// 判断传过来的数据类型
-						if(_type instanceof Array) {
-							newMemory = _memory || [];
-						} else {
-							newMemory = _memory || {};
-						}
-						for(var x in _type) {
-							//引用数据类型的 typeof为 object
-							if(typeof _type[x] == "object") {
-								newMemory[x] = (_type[x].constructor == Array) ? [] : {};
-								clones(_type[x], newMemory[x]); //递归
-							} else {
-								// 数据赋值
-								newMemory[x] = _type[x];
-							}
-						}
-						return newMemory;
-					},
+					
 					
 					/*组件选项-按钮*/
 					comTremFun(_id){
