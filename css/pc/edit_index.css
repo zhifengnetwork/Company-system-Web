@@ -230,3 +230,61 @@ iframe{
     background-color: #418bca;
 }
 
+
+.drag_box{
+	    cursor: move;
+	}
+
+/* botton */
+.modle_bottons {
+    height: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+
+
+.modle_mod {
+    height: auto;
+    border: 2px dashed rgba(0,0,0,0);
+    position: relative;
+}
+
+.modle_mod_nav {
+    height: auto;
+    width: 25%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modle_mod_img {
+    height: auto;
+    margin: 0px 12px;
+}
+
+.modle_mod_img img {
+    width: 100%;
+    border-radius: 0%;
+}
+
+.modle_mod_text {
+    height: 20px;
+    line-height: 25px;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    overflow: hidden;
+}
+/* 按钮图片 圆形样式 */
+.modle_mod_garden{
+	border-radius: 100%;
+}
+
+/* botton */
+
+/* 公共边框 */
+.mod_select {
+	border: 2px dashed #6c9;
+}
