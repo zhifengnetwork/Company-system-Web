@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>公告</title>
+        <script src="../js/public/rem.js"></script>
+        <link rel="stylesheet" href="../css/public/public.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <style>
+    /* 
+    公告
+     */
+     .label {
+    font-weight: 400;
+   }
+      .fe-mod {
+            height: auto;
+            border: 2px dashed rgba(0,0,0,0);
+            position: relative;
+        }
+            .fe-mod-1 {
+            height: .5rem;
+            background: #ffc;
+            font-size: .3rem;
+            color: #fc0;
+            padding: .2rem;
+            line-height: .5rem;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .select {
+            border: 2px dashed #6c9;
+        }
+
+        .hide{
+            display: none;
+        }
+       
+
+        /* 编辑 */
+        .compile_box{
+            position: relative;
+            padding-top:.88rem;
+        }
+
+        .compile_editor-title{
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #999;
+            border-bottom: 1px dashed #ccc;
+            padding-left: 5px;
+        }
+
+        .compile_box .tips {
+            font-size: 12px;
+            margin-left: 10px;
+       }
+          
+       .compile_editor-name {
+        height: 40px;
+        width: 90px;
+        font-size: 14px;
+        text-align: center;
+        line-height: 40px;
+        color: #999;
+        float: left;
+}
+  .compile_editor-con{
+        min-height: 40px;
+        float: left;
+        line-height: 40px;
+        color: #999;
+        font-size: 14px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        content: "...";
+  }
+
+.compile_editor-input{
+        height: 30px;
+        /* width: 545px; */
+        width: 200px;
+        padding-left: 8px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        margin-top: 4px;
+        line-height: 30px;
+        color: #aaa;
+        outline: none;
+        -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+        -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+       }
+
+.compile_editor-input2 {
+    height: 30px;
+    width: 70px;
+    padding-left: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+}
+    </style>
+<body>
+    <div id="notice">
+    <div  class="fe-mod-parent ng-scope" ><div class="fe-mod fe-mod-1 ng-scope" :class="{select:isblur}" @mouseenter="isblurR"  :style="{background:colorBack}">
+        <a href="#">
+            <div class="scroll-notice"  :class="{hide:scroll==1}" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; content:'...';" >
+                <marquee scrollamount="3" class="ng-binding" :style="{color:colorSize}" >{{noticeMsg}}</marquee>
+            </div>
+            <div class="scroll-notice ng-binding" :class="{hide:scroll==0}"  style="overflow: hidden;" :style="{color:colorSize}">{{noticeMsg}}</div>
+        </a>
+    </div>
+   </div>
+   <!-- 编辑 -->
+   <div class="compile_box">
+       <div class="compile_list">
+            <div class="compile_editor-title ">公告设置<span class="tips">Tips:文字不滚动时超出宽度将隐藏</span></div>
+            <div class="compile_editor-line clearfloat">
+                <div class="compile_editor-name">公告内容</div>
+                <div class="compile_editor-con">
+                 <input type="text" placeholder="这里填写公告内容，可设置是否滚动显示" v-model="xnoticeMsg" class="compile_editor-input"  @keyup="dl">
+                </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">公告链接</div>
+                    <div class="compile_editor-con">
+                     <input type="text" placeholder="请以http://开头(可链接至公众平台文章等)" class="compile_editor-input" >
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">滚动显示</div>
+                    <div class="compile_editor-con">
+                            <label style="cursor:pointer; margin-right: 10px;">
+                                <input type="radio" name="scroll" value="1"   class="ng-valid " v-model="scroll"> 不滚动</label>
+                            <label style="cursor:pointer; margin-right: 10px;">
+                                <input type="radio" name="scroll" value="0"   class="ng-valid " v-model="scroll"> 滚动显示</label>
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">文字颜色</div>
+                    <div class="compile_editor-con">
+                            <input class="compile_editor-input2 " type="color" v-model="colorSize">
+                    </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                    <div class="compile_editor-name">背景颜色</div>
+                    <div class="compile_editor-con">
+                            <input class="compile_editor-input2 " type="color" v-model="colorBack">
+                    </div>
+            </div>
+       </div>
+   </div>
+</div>
+           <script> 
+           var vm=new Vue({
+            el:"#notice", 
+            data:{
+                noticeMsg:'这里填写公告内容，可设置是否滚动显示', //公告内容
+                xnoticeMsg:"",                 //更该的内容
+                colorSize:'', //文字颜色,
+                colorBack:'', //背景颜色,
+                scroll:0,     //是否滚动
+                isblur:false,  //边框,
+                // current:0,
+            },created(){
+                console.log(this.colorSize)
+            },methods:{
+                dl(){  //输入的时候 把当前的公告内容换成更换后的
+                    this.noticeMsg=this.xnoticeMsg 
+             },isblurR(){
+                //  this.current=index,
+                 this.isblur=true
+             }
+            }
+        })
+           </script>
+</body>
+</html>

@@ -5,16 +5,15 @@
 		<meta charset="utf-8" />
 		<title>客户_手动创建页面_给固定模板</title>
 		<link rel="stylesheet" href="../../css/pc/public/public.css" />
-		<!-- 公用头部 -->
-		<!--<link rel="stylesheet" href="../../css/phone/public/header.css">-->
 		<!--<link rel="stylesheet" href="../../css/phone/public/swiper.min.css" />-->
 		<link rel="stylesheet" href="../../css/pc/edit_index.css" />
-		<!-- 购物车样式 -->
-		<!--<link rel="stylesheet" href="../../css/phone/shopping_cart.css">-->
+		<link rel="stylesheet" href="">
 	</head>
-
+  <style>
+ 
+  </style>
 	<body>
-		<div class="wrapper">
+		<div class="wrapper" id="edit_app_wrap">
 			<div class="tab ">
 				<ul class="tabs clearfloat">
 					<li class="active">
@@ -40,15 +39,7 @@
 						<p class="fun_box_top">功能插件</p>
 						<div class="fun_box_content clearfloat">
 							<!--项-->
-							<p class="fun_box_content_term">搜索款</p>
-							<p class="fun_box_content_term rotationChart">轮播</p>
-							<p class="fun_box_content_term">按钮组</p>
-							<p class="fun_box_content_term">店招</p>
-							<p class="fun_box_content_term">商品组</p>
-							<p class="fun_box_content_term">公告</p>
-							<p class="fun_box_content_term">辅助空白</p>
-							<p class="fun_box_content_term">头部</p>
-							
+							<p class="fun_box_content_term"  v-for="(v,i) in componentTerm" @click="comTremFun(v.id)">{{v.name}}</p>
 						</div>
 					</div>
 				</div>
@@ -66,43 +57,103 @@
 							<!--<div class="html_box_new" id="view">
 								<include src="new_index.html"></include>
 							</div>-->
-							<!--<iframe src="new_index.html" frameborder="0" width="100%"></iframe>-->
-							<!--00写在-本页面00-->
+							<!-- <iframe src="new_index.html" frameborder="0" width="100%"></iframe> -->
+                      <!--00写在-本页面00-->
 							<div id="wrap_new">
-								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
-									<div class="cursor_box remove_ele">
-										<!--1、删除按钮，生成html=>删除(remove_ele)-->
-										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
+								<div class="drag_box" v-for="(v,i) in dataobj"  
+									draggable="true" 
+									@dragstart="handleDragStart($event, v)" 
+									@dragover.prevent="handleDragOver($event, v)" 
+									@dragenter="handleDragEnter($event, v)" 
+									@dragend="handleDragEnd($event, v)">
+									<!--模块 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
+										 <img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
+										<div class="cursor_box remove_ele">
+											<!--1、删除按钮，生成html=>删除(remove_ele)-->
+											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
+										</div>
+									</div>
+									
+									<!--搜索模块 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+										搜索
+									</div>
+									<!-- 按钮组 拖拽div -->
+								<div class="drag_box" v-if="v.id == 'bottons'? true:''" :key="v.id" @click="editMode(v.index)">
+									<!--模块 box-->
+									<div class="modle_box">
+										<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+										</div>
 									</div>
 								</div>
-								<!--111-->
-								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" src="../../img/0004.png" alt="" />
-									<div class="cursor_box remove_ele">
-										<!--1、删除按钮，生成html=>删除(remove_ele)-->
-										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
-									</div>
-								</div>	
-								<div class="sowingMapWrap drag cursor_wrap chart_wrap">
-									<img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
-									<div class="cursor_box remove_ele">
-										<!--1、删除按钮，生成html=>删除(remove_ele)-->
-										<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
-									</div>
-								</div>	
-								<!--111-->
-								
-								
+									
+									
+								</div>
 								
 							</div>
-							<!--0000-->
+							
 							
 						</div>
 					</div>
 					<p class="phone_bottom"></p>
 				</div>
-				<div class="right_box"></div>
+				<div class="right_box">
+					<!--编辑模板-->
+					<div class="edit_modle">
+										
+					</div>
+				</div>
 			</div>
 			<!-- 分类 -->
 			<div class="content clearfloat" style="display:none">
@@ -170,8 +221,9 @@
 		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
 		<!--<script src="./../js/public/swiper.min.js"></script>-->
 		<!--public的js-->
-		<script src="../../js/pc/edit_index.js"></script>
+		<!--<script src="../../js/pc/edit_index.js"></script>-->
 		<!--拖拽js-->
+		
 		<script>
 			$(document).ready(function() {
 
@@ -187,6 +239,181 @@
 				})
 
 			})
+		</script>
+		<script src="../../js/pc/public/vue.js"></script>
+		<script>
+			var newVue = new Vue({
+				el: "#edit_app_wrap",
+				data: {
+					/*公共存放 index*/
+					publiInd: 0,
+					/*组件-选项*/
+					componentTerm: [
+						{name:"轮播",id:'rotation'},
+						{name:"搜索框",id:'search'},
+						{name:"按钮组",id:'bottons'},
+						{name:"店招",id:'signage'},
+						{name:"商品组",id:'productList'},
+						{name:"公告",id:'notice'},
+						{name:"辅助空白",id:'blank'},
+						{name:"广告",id:'banner'},
+						{name:'标题',id:'title'}
+					],
+					/*（pc端）渲染-组件，数组形式*/
+					dataobj: [
+						//数据格式
+						/*{
+							id: _id,
+							index: _index,
+						}*/
+					],
+					/*传个后台-data ，对象形式*/
+					backData: [
+						/*数据格式*/
+//						{
+//							uid:'',
+//							/*0=>正方形，1=>长方形，2=>圆形*/
+//							butStyle: 0,
+//							/*left=>左，middle=>中间，right=>右*/
+//							butPosition: 'middle',
+//							/*按钮颜色*/
+//							butColor: '',
+//							/*轮播的图片路径*/
+//							imgUrl: [
+//								'../../img/0005.png',
+//								'../../img/0005.png',
+//								'../../img/0005.png',	
+//							],
+//						}
+					],
+					/*轮播图，数据初始化*/
+					roObj: {
+						/*id*/
+						uid:'rotation',
+						/*0=>正方形，1=>长方形，2=>圆形*/
+						butStyle: 0,
+						/*left=>左，middle=>中间，right=>右*/
+						butPosition: 'middle',
+						/*按钮颜色*/
+						butColor: '',
+						/*轮播的图片路径*/
+						imgUrl: [
+							'../../img/0005.png',
+							'../../img/0005.png',
+							'../../img/0005.png',	
+						],
+					},
+					/*搜索框，数据初始化*/
+					reObj: {
+						/*id*/
+						uid:'search',
+						/*提示文字*/
+						tipeText: '你会了么？',
+						/*0=>样式一，1=>样式二*/
+						reStyle: 0,
+						/*文字颜色*/
+						textColor: '#999',
+						/*边框颜色*/
+						borderColor: '#ccc',
+						/*背景颜色*/
+						backColor: '#000',
+					},
+					// 按钮组，数据初始化
+					reObj: {
+						/*id*/
+						uid:'bottons',
+						/*图标样式*/
+						iconStyle: 0,
+						/*0=>样式一，1=>样式二*/
+						iconNum: '20%',
+						/*背景颜色*/
+						iconColor: '',
+						iconList:[
+							{id:'1',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'2',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'3',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'4',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'5',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''}
+						]	
+					},
+					
+				},
+				methods: {
+						/*<< 拖拽*/
+					handleDragStart(e, item) {
+						this.dragging = item;
+					},
+					handleDragEnd(e, item) {
+						this.dragging = null
+					},
+					//首先把div变成可以放置的元素，即重写dragenter/dragover
+					handleDragOver(e) {
+						e.dataTransfer.dropEffect = 'move' // e.dataTransfer.dropEffect="move";//在dragenter中针对放置目标来设置!
+					},
+					handleDragEnter(e, item) {
+						e.dataTransfer.effectAllowed = "move" //为需要移动的元素设置dragstart事件
+						if(item === this.dragging) {
+							return
+						}
+						/*pc数据渲染的data*/
+						const newItems = [...this.dataobj]
+						console.log(newItems)
+						const src = newItems.indexOf(this.dragging)
+						const dst = newItems.indexOf(item)
+
+						newItems.splice(dst, 0, ...newItems.splice(src, 1))
+						/*重置--pc数据渲染的data*/
+						this.dataobj = newItems
+					},
+					/* 拖拽 >>*/
+					/*组件选项-按钮*/
+					comTremFun(_id){
+						var that = this;
+						console.log(_id,that.dataobj.length );
+						/*存储当前的数据*/
+						var thisState = {
+							id: _id,
+							/*pc渲染数据=>下标=> 编辑页面*/
+							index: that.dataobj.length,
+						}
+						/*轮播图*/
+						if(_id === 'rotation'){
+							/*pc端页面渲染-data*/
+							that.dataobj.push(thisState);
+							/*APP页面渲染-data*/
+							that.backData.push(that.roObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+						/*搜索框*/
+						if(_id === "search"){
+							that.dataobj.push(thisState);
+							that.backData.push(that.roObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+                        /*按钮组*/
+						if(_id === "bottons"){
+							that.dataobj.push(thisState);
+							that.backData.push(that.roObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+						
+						
+						
+					},
+					/*编辑对应的模板*/
+					editMode(_index){
+						console.log(_index);
+						this.publiInd = _index;
+					},					handleDragStart(e, item) {
+						this.dragging = item;
+					},
+					
+				}
+			});
+			
 		</script>
 	</body>
 
