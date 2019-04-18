@@ -51,44 +51,51 @@
 						<!--水平居中-->
 						<div class="html_box">
 							<!--隐藏滚动条-->
-							<div class="html_box_new">
-								<!--轮播图-->
-								<div class="drag_box" v-for="(v,i) in dataobj"  
-									draggable="true" 
-									@dragstart="handleDragStart($event, v)" 
-									@dragover.prevent="handleDragOver($event, v)" 
-									@dragenter="handleDragEnter($event, v)" 
-									@dragend="handleDragEnd($event, v)">
-									<!--模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
-										<img src="../../img/0005.png" style="width: 100%;" alt="" />
+							<!--<div class="html_box_new" id="view">
+								<include src="new_index.html"></include>
+							</div>-->
+							<!--<iframe src="new_index.html" frameborder="0" width="100%"></iframe>-->
+							<!--00写在-本页面00-->
+							<div id="wrap_new" v-for="(v,i) in dataobj">
+								<!--轮播图，拖拽的div-->
+								<div class="drag_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
+									<!--模块 box-->
+									<div class="modle_box">
+										<img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
 											<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
 										</div>
 									</div>
+									<!--编辑模板-->
+									<div class="edit_modle">
+										
+									</div>
 									
-									<!--搜索模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+								</div>
+								<!--搜索，拖拽的div-->
+								<div class="drag_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+									<!--模块 box-->
+									<div class="modle_box">
 										搜索
+									</div>
+									<!--编辑模板-->
+									<div class="edit_modle">
+										
 									</div>
 									
 								</div>
 								
 							</div>
-							<!--隐藏滚动条-->
+							<!--0000-->
 							
 						</div>
 					</div>
-					<!--模拟手机的 wrap，背景图两边（img）-->
 					<p class="phone_bottom"></p>
 				</div>
 				<!--编辑模板 box-->
 				<div class="right_box">
-					<!--编辑模板-->
-					<div class="edit_modle">
-						
-					</div>
+					
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -152,9 +159,13 @@
 			</div>
 		</div>
 
+		<!--引入另外一个页面的js-->
+		<!--<script src="./../js/include.js"></script>-->
 		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
+		<!--<script src="./../js/public/swiper.min.js"></script>-->
 		<!--public的js-->
 		<!--<script src="../../js/pc/edit_index.js"></script>-->
+		<!--拖拽js-->
 		
 		<script>
 			$(document).ready(function() {
@@ -189,8 +200,6 @@
 						{name:"公告",id:'5'},
 						{name:"辅助空白",id:'6'},
 					],
-					/*拖拽需要的元素*/
-					dragging: null,
 					/*（pc端）渲染-组件，数组形式*/
 					dataobj: [
 						//数据格式
@@ -253,76 +262,6 @@
 					
 				},
 				methods: {
-					/*<< 拖拽*/
-					handleDragStart(e, item) {
-						this.dragging = item;
-					},
-					handleDragEnd(e, item) {
-						this.dragging = null
-					},
-					//首先把div变成可以放置的元素，即重写dragenter/dragover
-					handleDragOver(e) {
-						e.dataTransfer.dropEffect = 'move' // e.dataTransfer.dropEffect="move";//在dragenter中针对放置目标来设置!
-					},
-					handleDragEnter(e, item) {
-						e.dataTransfer.effectAllowed = "move" //为需要移动的元素设置dragstart事件
-						if(item === this.dragging) {
-							return
-						}
-						/*pc数据渲染的data*/
-						const newItems = [...this.dataobj]
-						console.log(newItems)
-						const src = newItems.indexOf(this.dragging)
-						const dst = newItems.indexOf(item)
-
-						newItems.splice(dst, 0, ...newItems.splice(src, 1));
-						/*重置--pc数据渲染的data*/
-						this.dataobj = newItems;
-						/*(存储)重新排序=>传给后台的数据*/
-						var thisBackData = [];
-						/*因为-拖拽-改变data的位置，重新编辑（传给后台的数据）*/
-						for(var k=0;k<this.dataobj.length;k++){
-							/*pc渲染data-排序*/
-							this.dataobj[k]['index'] = k;
-							for(var j=0;j<this.backData.length;j++){
-								if(this.backData[j]['id'] == this.dataobj[k]['id']){
-									/*找到对应的id，放在thisBackData*/
-									thisBackData[k] = this.backData[j]['id'];
-								}
-							}
-							
-						}
-						/*通过深克隆，赋值数据*/
-						this.backData = this.$options.methods.clones(thisBackData);
-						/*初始化*/
-						thisBackData = [];	
-						
-						
-					},
-					/* 拖拽 >>*/
-					// 深克隆，把引用数据类型的，分解成基础类型（克隆）
-					// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
-					clones(_type, _memory) {
-						var newMemory = null;
-						// 判断传过来的数据类型
-						if(_type instanceof Array) {
-							newMemory = _memory || [];
-						} else {
-							newMemory = _memory || {};
-						}
-						for(var x in _type) {
-							//引用数据类型的 typeof为 object
-							if(typeof _type[x] == "object") {
-								newMemory[x] = (_type[x].constructor == Array) ? [] : {};
-								clones(_type[x], newMemory[x]); //递归
-							} else {
-								// 数据赋值
-								newMemory[x] = _type[x];
-							}
-						}
-						return newMemory;
-					},
-					
 					/*组件选项-按钮*/
 					comTremFun(_id){
 						var that = this;
@@ -353,7 +292,7 @@
 						/*搜索框*/
 						if(_id === "search"){
 							that.dataobj.push(thisState);
-							that.backData.push(that.reObj);
+							that.backData.push(that.roObj);
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
