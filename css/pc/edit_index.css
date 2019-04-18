@@ -10,7 +10,6 @@
 	border: 1px solid #d6d6d8;
 	/*overflow-y: scroll;*/
 }
-
 /*内容*/
 .content {
 	padding-left: 10px;
@@ -34,9 +33,7 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	/*width: 288px;*/
 	width: 96%;
-	/*height: 455px;*/
 	height: auto;
 	border: 1px solid #d6d6d8;
 }
@@ -56,16 +53,6 @@
 	background: -ms-linear-gradient(top, #fff 0%, #dddce1 100%);
 }
 .fun_box_content {
-	/*display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-justify-content: space-around;
-	justify-content: space-around;
-	-moz-box-pack: space-around;
-	-webkit-box-pack: space-around;
-	box-pack: space-around;*/
 	padding-left: 7px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -112,12 +99,12 @@
 .html_wrpa {
 	width: 100%;
 	height: auto;
-    background: url(../img/phone/phone_center.png) 0 0 repeat-y;
+    background: url(../../img/pc/phone/phone_center.png) 0 0 repeat-y;
 }
 /*另外一个页面显示 box*/
 .html_box {
 	margin: 0 auto;
-	/*加多17px的滚动条*/
+	/*加多342px+17px的滚动条*/
 	width: 342px;
 	height: 600px;
 	overflow: hidden;
@@ -134,7 +121,7 @@
 .phone_top {
 	width: 100%;
 	height: 83px;
-    background: url(../img/phone/phone_top.png) 0 0 no-repeat;
+    background: url(../../img/pc/phone/phone_top.png) 0 0 no-repeat;
 }
 .phone_left {
 	position: absolute;
@@ -143,7 +130,7 @@
 	z-index: 1;
 	height: 293px;
     width: 5px;
-    background: url(../img/phone/phone_left.png) 0px 88px no-repeat;
+    background: url(../../img/pc/phone/phone_left.png) 0px 88px no-repeat;
 }
 .phone_right {
 	position: absolute;
@@ -152,13 +139,13 @@
 	z-index: 1;
 	height: 220px;
     width: 6px;
-    background: url(../img/phone/phone_right.png) 0px 158px no-repeat;
+    background: url(../../img/pc/phone/phone_right.png) 0px 158px no-repeat;
     float: left;
 }
 .phone_bottom {
 	height: 92px;
     width: 372px;
-    background: url(../img/phone/phone_bottom.png) 0 0 no-repeat;
+    background: url(../../img/pc/phone/phone_bottom.png) 0 0 no-repeat;
 }
 /*右 box*/
 .right_box {
@@ -166,7 +153,49 @@
 	width: 500px;
 	height: auto;
 }
+/*包裹 传给后台style*/
+#wrap_new {
+	/*position: relative;*/
+	width: 100%;
+	height: auto;
+}
+/*鼠标悬浮 删除 wrap*/
+.cursor_wrap {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+/*鼠标悬浮 删除 box*/
+.cursor_box {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: auto;
+	background-color: rgba(0,0,0,.3);
+}
 
+/* 删除按钮*/
+.cursor_box_del {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 14%;
+	height: auto;
+	color: #fff;
+	text-align: center;
+	font-size: 12px;
+	line-height: 24px;
+	letter-spacing: 2px;
+}
+.cursor_box_del:hover {
+	cursor: pointer;
+}
+
+/*Tab切换*/
 iframe{
 	width:100%;
 	height:100%;
@@ -184,18 +213,15 @@ iframe{
 	line-height:40px; text-align:center;
 	display:inline-block;
 }
-
 .tabs {
  z-index: 100;
 }
-
 .tabs>li{
   float:left;
   width: 25%;
 	border-bottom:1px solid #000;
 	text-align: center;
 }
-
 .tabs .active>a{
 	color: #fff;
 }
