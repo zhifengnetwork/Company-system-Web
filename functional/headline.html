@@ -104,13 +104,17 @@
     color: #aaa;
     outline: none;
 }
+
+.hide{
+    display: none;
+}
 </style>
 <body>
     <div id="headline">
         <div class="fe-mod-parent ng-scope" id="M1555486962642"  >
-            <div class="fe-mod fe-mod-3 ng-scope fe-mod-select"   style="text-align: left; color: rgb(0, 0, 0);">
-            <h2  class="ng-binding" style="font-size: .3rem;">主标题</h2>
-            <h4  class="ng-binding" style="font-size: .2rem;">副标题</h4>
+            <div class="fe-mod fe-mod-3 ng-scope fe-mod-select"   :style="{textAlign: headlinetextAlign,color: headlineColor,backgroundColor:headlineBack}">
+            <h2  class="ng-binding" style="font-size: .3rem;" :style="{fontSize:headlineSize}">{{headline}}</h2>
+            <h4  class="ng-binding" style="font-size: .2rem;" :class="{hide:subheadHide==0}" :style="{fontSize:subheadSize}">{{subhead}}</h4>
         </div>
       </div>
       <!-- 编辑 -->
@@ -119,64 +123,64 @@
            <div class="compile_editor-line clearfloat">
                 <div class="compile_editor-name">主标题内容</div>
                 <div class="compile_editor-con">
-                 <input type="text" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏"  >
+                 <input type="text" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏"  v-model="MainHeading" @keyup="mainB">
                 </div>
            </div>
            <div class="compile_editor-line clearfloat">
                 <div class="compile_editor-name">主标题大小</div>
                 <div class="compile_editor-con">
-                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px"  class="ng-pristine ng-untouched ng-valid"> 12像素</label>
-                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px"  class="ng-pristine ng-untouched ng-valid"> 14像素</label>
-                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px"  class="ng-pristine ng-untouched ng-valid"> 16像素</label>
-                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px"  class="ng-pristine ng-untouched ng-valid"> 18像素</label>
-                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px"  class="ng-pristine ng-untouched ng-valid"> 20像素</label>
-                    <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" ></label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                    <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" v-model="headlineSize" ></label>
                 </div>
             </div>
            <div class="compile_editor-line clearfloat">
                     <div class="compile_editor-name">显示副标题</div>
                     <div class="compile_editor-con">
                             <label style="cursor:pointer; margin-right: 10px;">
-                                <input type="radio" name="headline" value="1"   class="ng-valid " v-model="scroll"> 显示</label>
+                                <input type="radio" name="headline" value="1"   class="ng-valid " v-model="subheadHide"> 显示</label>
                             <label style="cursor:pointer; margin-right: 10px;">
-                                <input type="radio" name="headline" value="0"   class="ng-valid " v-model="scroll"> 不显示</label>
+                                <input type="radio" name="headline" value="0"   class="ng-valid " v-model="subheadHide"> 不显示</label>
                     </div>
             </div>
-           <div class="compile_editor-line clearfloat">
-                    <div class="compile_editor-name">公告内容</div>
+           <div class="compile_editor-line clearfloat" :class="{hide:subheadHide==0}">
+                    <div class="compile_editor-name">副标题内容</div>
                     <div class="compile_editor-con">
-                     <input type="text" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏"  >
+                     <input type="text" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model='MainSubhead' @keyup="mainA">
                     </div>
                </div>
-            <div class="compile_editor-line clearfloat">
+            <div class="compile_editor-line clearfloat" :class="{hide:subheadHide==0}">
                     <div class="compile_editor-name">福标题大小</div>
                     <div class="compile_editor-con">
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px"  class="ng-pristine ng-untouched ng-valid"> 12像素</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px"  class="ng-pristine ng-untouched ng-valid"> 14像素</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px"  class="ng-pristine ng-untouched ng-valid"> 16像素</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px"  class="ng-pristine ng-untouched ng-valid"> 18像素</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px"  class="ng-pristine ng-untouched ng-valid"> 20像素</label>
-                        <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" ></label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                        <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" v-model="subheadSize"></label>
                     </div>
             </div>
             <div class="compile_editor-line clearfloat">
                     <div class="compile_editor-name">对齐方向</div>
                     <div class="compile_editor-con">
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="left" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居左</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="center" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居中</label>
-                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="right" ng-model="Edit.params.align" class="ng-pristine ng-untouched ng-valid"> 居右</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="left" v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居左</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="center"  v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居中</label>
+                        <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="right"  v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居右</label>
                     </div>
             </div>
             <div class="compile_editor-line clearfloat">
                     <div class="compile_editor-name">文字颜色</div>
                     <div class="compile_editor-con">
-                            <input class="compile_editor-input2 " type="color" v-model="colorSize">
+                            <input class="compile_editor-input2 " type="color" v-model="headlineColor">
                     </div>
             </div>
             <div class="compile_editor-line clearfloat">
                     <div class="compile_editor-name">背景颜色</div>
                     <div class="compile_editor-con">
-                            <input class="compile_editor-input2 " type="color" v-model="colorSize">
+                            <input class="compile_editor-input2 " type="color" v-model="headlineBack">
                     </div>
             </div>
        </div>
@@ -185,11 +189,25 @@
             var vm=new Vue({
              el:"#headline", 
              data:{
-                
+                headline:'主标题', //主标题
+                MainHeading:'',   //主标题输入内容
+                headlineSize:'',  //主标题字体大小
+                subheadHide:1,    //显示副标题
+                subhead:'副标题',  //副标题
+                MainSubhead:'',    //副标题内容
+                subheadSize:'',   //副标题字体大小
+                headlinetextAlign:'left',     //文字对齐方式
+                headlineColor:'rgb(0, 0, 0)',     //文字颜色
+                headlineBack:'',      //背景
              },created(){
                 
              },methods:{
-                
+                mainB(){    //输入的时候 把当前的公告内容换成更换后的 主标题
+                this.headline=this.MainHeading
+                },
+                mainA(){    //输入的时候 把当前的公告内容换成更换后的 副标题
+                this.subhead=this.MainSubhead
+                }
              }
          })
             </script>
