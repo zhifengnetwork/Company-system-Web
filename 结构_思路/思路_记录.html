@@ -15,7 +15,31 @@
                  {name: "商品组",id:'productList'}
                  {name: "公告",id:'notice'}
                  {name: "辅助空白",id:'blank'}]
-			2、
+			2、传给后台的数据结构：{
+				/**组件id*/
+				id:"rotationId",
+				/**组件名*/
+				temp:"rotation",
+				/**组件style*/
+				params:{									
+					/*0=>长方形，1=>正方形，2=>圆形*/
+					butStyle: 0,
+					/*left=>左，center=>中间，right=>右*/
+					butPosition: 'center',
+					/*按钮颜色*/
+					butColor: '',	
+				},
+				data:{
+					/*轮播的图片路径*/
+					imgUrl:[
+						'../../img/0005.png',
+						'../../img/0005.png',
+						'../../img/0005.png',	
+					],
+				},
+			},
+			
+			3、
 		-->
 	</body>
 </html>
