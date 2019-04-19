@@ -67,8 +67,8 @@
 									@dragenter="handleDragEnter($event, v)" 
 									@dragend="handleDragEnd($event, v)">
 									<!--模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
-										 <img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
+									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.id)">
+										<img src="../../img/0005.png" style="width: 100%;" alt="" />
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
 											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
@@ -76,19 +76,19 @@
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.id)">
 										搜索
 									</div>
 									<!-- 按钮组 拖拽div -->
-								<div class="drag_box" v-if="v.id == 'bottons'? true:''" :key="v.id" @click="editMode(v.index)">
+								<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id)">
 									<!--模块 box-->
 									<div class="modle_box">
-										<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);" :style="{backgroundColor:btnObj.iconColor}">
-											<div   class="botton-scope" v-for="item in btnObj.iconList">
+										<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);" :style="{backgroundColor:btnObj.params.iconColor}">
+											<div   class="botton-scope" v-for="item in btnObj.params.iconList" v-show="item.id!=5||btnObj.params.iconNum!='25%'">
 												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav"  :style="{width: btnObj.iconNum}">
+													<div class="modle_mod_nav"  :style="{width: btnObj.params.iconNum}">
 														<div class="modle_mod_img">
-															<img   :src="item.url" style=" height: 39px;" :style="{borderRadius:btnObj.iconStyle}">
+															<img   :src="item.url" style=" height: 39px;" :style="{borderRadius:btnObj.params.iconStyle}">
 														</div>
 														<div class="modle_mod_text">{{item.text}}</div>
 													</div>
@@ -112,30 +112,59 @@
 				<!--编辑模板 box-->
 				<div class="right_box">
 					<!--编辑模板-->
-					<div class="edit_modle">
-							<div  class="ng-scope"><div class="fe-panel-editor-title ng-scope">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
-							<div class="fe-panel-editor-line ng-scope">
-									<div class="fe-panel-editor-name">图标样式</div>
-									<div class="fe-panel-editor-con" >
-											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="btnObj.iconStyle" value="0"  class="ng-pristine ng-untouched ng-valid"> 正方形</label>
-											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="btnObj.iconStyle" value="100%"  class="ng-pristine ng-untouched ng-valid"> 圆形</label>
+					<div class="edit_modle" 	>
+							<div  class="v-scope"><div class="ve-panel-editor-title ">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
+							<div class="ve-panel-editor-line ng-scope clearfloat">
+									<div class="ve-panel-editor-name">图标样式</div>
+									<div class="ve-panel-editor-con" >
+											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="btnObj.params.iconStyle" value="0"  class="ve-pristine ve-untouched ve-valid"> 正方形</label>
+											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="btnObj.params.iconStyle" value="100%"  class="ve-pristine ve-untouched ve-valid"> 圆形</label>
 									</div>
 							</div>
-							<div class="fe-panel-editor-line ng-scope">
-									<div class="fe-panel-editor-name">按钮数量</div>
-									<div class="fe-panel-editor-con">
-											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="25%" v-model="btnObj.iconNum" class="ng-pristine ng-untouched ng-valid"> 四个按钮</label>
-											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="20%" v-model="btnObj.iconNum" class="ng-pristine ng-untouched ng-valid"> 五个按钮</label>
+							<div class="fe-panel-editor-line ng-scope clearfloat">
+									<div class="ve-panel-editor-name">按钮数量</div>
+									<div class="ve-panel-editor-con">
+											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="25%" v-model="btnObj.params.iconNum" class="ve-pristine ve-untouched ve-valid"> 四个按钮</label>
+											<label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="20%" v-model="btnObj.params.iconNum" class="ve-pristine ve-untouched ve-valid"> 五个按钮</label>
 									</div>
 							</div>
-							<div class="fe-panel-editor-line ng-scope">
-									<div class="fe-panel-editor-name">背景颜色</div>
-									<div class="fe-panel-editor-con">
-											<input class="fe-panel-editor-input2 ng-pristine ng-untouched ng-valid" type="color" v-model="btnObj.iconColor">
+							<div class="ve-panel-editor-line ng-scope clearfloat">
+									<div class="ve-panel-editor-name">背景颜色</div>
+									<div class="ve-panel-editor-con">
+											<input class="ve-panel-editor-input2 ve-pristine ve-untouched ve-valid" type="color" v-model="btnObj.params.iconColor">
+									</div>
+							</div>
+							<div v-for="(item,index) in btnObj.params.iconList"  class="ve-scope">
+									<div class="ve-panel-editor-line2">
+											<div class="ve-panel-editor-goodimg"  style="height:120px; width:120px;">
+													<img src="" width="100%" height="100%" class="ve-hide">
+													<div class="ve-panel-editor-goodimg-t1"  style="line-height:120px;"><i class="fa fa-plus-circle"></i> 选择图片</div>
+													<div class="ve-panel-editor-goodimg-t2 ve-hide"  style="width:118px;">重新选择图片</div>
+											</div>
+											<div class="ve-panel-editor-line2-right">
+													<div class="ve-panel-editor-line">
+															<div class="ve-panel-editor-name">按钮文字</div>
+															<div class="ve-panel-editor-con">
+																	<input class="ve-panel-editor-input1 ve-pristine ve-valid ve-touched" style="width:256px;" value="" v-model="item.texts" placeholder="请填写按钮文字" @keyup="dl(index,item.id)">
+															</div>
+													</div>
+													<div class="ve-panel-editor-line">
+															<div class="ve-panel-editor-name">链接地址</div>
+															<div class="ve-panel-editor-con">
+																	<input class="ve-panel-editor-input3 ve-pristine ve-valid ve-touched" value=""  placeholder="请手动输入链接(请以http://开头)或选择系统链接" style="width:175px;">
+																	<div class="ve-panel-editor-input4" >系统连接</div>
+															</div>
+													</div>
+													<div class="ve-panel-editor-line">
+															<div class="ve-panel-editor-name">文字颜色</div>
+															<div class="ve-panel-editor-con">
+																	<input class="ve-panel-editor-input2 ve-pristine ve-untouched ve-valid" type="color" >
+															</div>
+													</div>
+											</div>
 									</div>
 							</div>
 							</div>
-							<!-- <btn-set @getRadius="getRadiuss"></btn-set> -->
 					</div>
 				</div>
 			</div>
@@ -222,23 +251,47 @@
 		</script>
 		<script src="../../js/pc/public/vue.js"></script>
 		<script>
-	
+			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+			function clones(_type, _memory){
+				var newMemory = null;
+				// 判断传过来的数据类型
+				if(_type instanceof Array) {
+					newMemory = _memory || [];
+				} else {
+					newMemory = _memory || {};
+				}
+				for(var x in _type) {
+					//引用数据类型的 typeof为 object
+					if(typeof _type[x] == "object") {
+						newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+						clones(_type[x], newMemory[x]); //递归
+					} else {
+						// 数据赋值
+						newMemory[x] = _type[x];
+					}
+				}
+				return newMemory;
+			}
+			
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
 				data: {
 					/*公共存放 index*/
 					publiInd: 0,
+					/*按钮组id*/
+					btnId:1,
 					/*组件-选项*/
 					componentTerm: [
-						{name:"轮播",id:'rotation'},
-						{name:"搜索框",id:'search'},
-						{name:"按钮组",id:'bottons'},
-						{name:"店招",id:'signage'},
-						{name:"商品组",id:'productList'},
-						{name:"公告",id:'notice'},
-						{name:"辅助空白",id:'blank'},
-						{name:"广告",id:'banner'},
-						{name:'标题',id:'title'}
+						{name:"轮播",id:'rotationId'},
+						{name:"搜索框",id:'searchId'},
+						{name:"按钮组",id:'bottonsId'},
+						{name:"店招",id:'signageId'},
+						{name:"商品组",id:'productListId'},
+						{name:"公告",id:'noticeId'},
+						{name:"辅助空白",id:'blankId'},
+						{name:"广告",id:'bannerId'},
+						{name:'标题',id:'titleId'}
 					],
 					
 					/*拖拽需要的元素*/
@@ -273,27 +326,36 @@
 //						}
 					],
 					/*轮播图，数据初始化*/
-					roObj: {
-						/*id*/
-						uid:'rotation',
-						/*0=>正方形，1=>长方形，2=>圆形*/
-						butStyle: 0,
-						/*left=>左，middle=>中间，right=>右*/
-						butPosition: 'middle',
-						/*按钮颜色*/
-						butColor: '',
-						/*轮播的图片路径*/
-						imgUrl: [
-							'../../img/0005.png',
-							'../../img/0005.png',
-							'../../img/0005.png',	
-						],
-					},
+					  roObj:{
+            /*组件id*/
+            id:"rotationId",
+            /**组件名*/
+            temp:"rotation",
+            /**组件style*/
+            params:{                  
+              /*0=>长方形，1=>正方形，2=>圆形*/
+              butStyle: 0,
+              /*left=>左，center=>中间，right=>右*/
+              butPosition: 'center',
+              /*按钮颜色*/
+              butColor: '', 
+            },
+            data:{
+              /*轮播的图片路径*/
+              imgUrl:['../../img/0005.png',
+                    '../../img/0005.png',
+                    '../../img/0005.png', ],
+            },
+
+          },
 					/*搜索框，数据初始化*/
 					reObj: {
+						//组件id
+						id:"searchId",
 						/*id*/
-						uid:'search',
-						/*提示文字*/
+						temp:'search',
+						params:{
+								/*提示文字*/
 						tipeText: '你会了么？',
 						/*0=>样式一，1=>样式二*/
 						reStyle: 0,
@@ -303,24 +365,30 @@
 						borderColor: '#ccc',
 						/*背景颜色*/
 						backColor: '#000',
+						}
 					},
 					// 按钮组，数据初始化
 					btnObj: {
+						//组件id
+						id:'bottonsId',
 						/*id*/
-						uid:'bottons',
-						/*图标样式*/
+						temp:'bottons',
+						params:{
+							/*图标样式*/
 						iconStyle: 0,
 						/*0=>样式一，1=>样式二*/
 						iconNum: '20%',
 						/*背景颜色*/
 						iconColor: '',
 						iconList:[
-							{id:'1',text:'按钮文字',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-							{id:'2',text:'按钮文字',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-							{id:'3',text:'按钮文字',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-							{id:'4',text:'按钮文字',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-							{id:'5',text:'按钮文字',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'}
+							{id:'1',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+							{id:'2',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+							{id:'3',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+							{id:'4',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+							{id:'5',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39',show:0}
 						]	
+						}
+						
 					},
 				},
 				methods: {
@@ -342,7 +410,6 @@
 						}
 						/*pc数据渲染的data*/
 						const newItems = [...this.dataobj]
-						console.log(newItems)
 						const src = newItems.indexOf(this.dragging)
 						const dst = newItems.indexOf(item)
 
@@ -364,38 +431,14 @@
 							}
 							
 						}
-						// 深克隆，把引用数据类型的，分解成基础类型（克隆）
-						// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
-						function clones(_type, _memory){
-							var newMemory = null;
-							// 判断传过来的数据类型
-							if(_type instanceof Array) {
-								newMemory = _memory || [];
-							} else {
-								newMemory = _memory || {};
-							}
-							for(var x in _type) {
-								//引用数据类型的 typeof为 object
-								if(typeof _type[x] == "object") {
-									newMemory[x] = (_type[x].constructor == Array) ? [] : {};
-									clones(_type[x], newMemory[x]); //递归
-								} else {
-									// 数据赋值
-									newMemory[x] = _type[x];
-								}
-							}
-							return newMemory;
-						}
 						/*通过深克隆，赋值数据*/
 						this.backData = clones(thisBackData);
 						/*初始化*/
 						thisBackData = [];	
 						console.log('后台666',this.backData);
 						
-						
 					},
 					/* 拖拽 >>*/
-					
 					
 					/*组件选项-按钮*/
 					comTremFun(_id){
@@ -416,7 +459,7 @@
 							index: that.dataobj.length,
 						}
 						/*轮播图*/
-						if(_id === 'rotation'){
+						if(_id === 'rotationId'){
 							/*pc端页面渲染-data*/
 							that.dataobj.push(thisState);
 							/*APP页面渲染-data*/
@@ -425,14 +468,14 @@
 							return false;
 						}
 						/*搜索框*/
-						if(_id === "search"){
+						if(_id === "searchId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.reObj);
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
                         /*按钮组*/
-						if(_id === "bottons"){
+						if(_id === "bottonsId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.btnObj);
 							console.log('传给后台数据',that.backData);
@@ -443,13 +486,18 @@
 						
 					},
 					/*编辑对应的模板*/
-					editMode(_index){
-						console.log(_index);
-						this.publiInd = _index;
-					},					
-					handleDragStart(e, item) {
-						this.dragging = item;
+					editMode(_id){
+						this.publiInd = _id;
 					},
+					/*按钮组文字*/
+					dl(index,id){
+            this.btnId=index
+						console.log(index,id)
+						if(this.btnId=index){
+					       this.btnObj.params.iconList
+						}
+					} 
+				
 			
 					
 				},
