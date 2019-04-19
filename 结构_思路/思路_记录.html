@@ -20,14 +20,18 @@
 				id:"rotationId",
 				/**组件名*/
 				temp:"rotation",
+				/*页面渲染-组件位置，从0开始*/
+				key_num: null,
 				/**组件style*/
 				params:{									
-					/*0=>长方形，1=>正方形，2=>圆形*/
-					butStyle: 0,
-					/*left=>左，center=>中间，right=>右*/
+					/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+					butStyle: 'rectangle',
+					/*'left'=>左，'center'=>中间，'right'=>右*/
 					butPosition: 'center',
-					/*按钮颜色*/
-					butColor: '',	
+					/*按钮背景颜色，必须是16进制的色值，不能简写*/
+					butColor: '#000000',	
+					/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+					clickColor: '#f5f5f5',
 				},
 				data:{
 					/*轮播的图片路径*/
@@ -37,9 +41,14 @@
 						'../../img/0005.png',	
 					],
 				},
-			},
+			}
 			
 			3、
 		-->
+		
+		<script type="text/javascript">
+			
+		</script>
+		
 	</body>
 </html>

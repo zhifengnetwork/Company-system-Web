@@ -240,8 +240,8 @@ iframe{
 
 
 .drag_box{
-	    cursor: move;
-	}
+	cursor: move;
+}
 	
 /* 轮播图 slide */
 .slide{
@@ -336,14 +336,19 @@ iframe{
 }
 
 /* botton */
-
 /* 轮播图--编辑 */
 .slide_title{
+	height: 30px;
 	font-size: 16px;
 	line-height: 30px;
 	border-bottom: 1px dashed #000;
 }
 .edit_slide_content{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: 40px;
 	line-height: 40px;
 }
 .edit_slide_content>input{
@@ -354,7 +359,7 @@ iframe{
 .edit_slide_content_title{
 	display:inline-block;
 	width:20%;
-	text-align: center;
+	text-align: left;
 }
 .edit_slide_content_label{
 	margin-right: 15px;
@@ -363,6 +368,23 @@ iframe{
 	margin-right: 5px;
 	vertical-align: middle;
 }
+.edit_slide_content_button {
+	width: 20%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 6px;
+	color: #fff;
+	letter-spacing: 2px;
+	background-color: #418bca;
+}
+.edit_slide_content_padding {
+	padding-top: 10px;
+}
+.edit_slide_content_button:hover {
+	cursor: pointer;
+}
+/*public*/
 /* 公共边框 */
 .mod_select {
 	border: 2px dashed #6c9;
