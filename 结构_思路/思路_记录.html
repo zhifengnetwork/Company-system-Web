@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>思路_记录.html</title>
+	</head>
+	<body>
+		<!--
+            *重要:
+            1、组件对应的id:
+				 [{name: "轮播",id:'rotation'}
+                 {name: "搜索框",id:'search'}
+                 {name: "按钮组",id:'bottons'}
+                 {name: "店招",id:'signage'}
+                 {name: "商品组",id:'productList'}
+                 {name: "公告",id:'notice'}
+                 {name: "辅助空白",id:'blank'}]
+			2、传给后台的数据结构：{
+				/**组件id*/
+				id:"rotationId",
+				/**组件名*/
+				temp:"rotation",
+				/*页面渲染-组件位置，从0开始*/
+				key_num: null,
+				/**组件style*/
+				params:{									
+					/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+					butStyle: 'rectangle',
+					/*'left'=>左，'center'=>中间，'right'=>右*/
+					butPosition: 'center',
+					/*按钮背景颜色，必须是16进制的色值，不能简写*/
+					butColor: '#000000',	
+					/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+					clickColor: '#f5f5f5',
+				},
+				data:{
+					/*轮播的图片路径*/
+					imgUrl:[
+						'../../img/0005.png',
+						'../../img/0005.png',
+						'../../img/0005.png',	
+					],
+				},
+			}
+			
+			3、
+		-->
+		
+		<script type="text/javascript">
+			
+		</script>
+		
+	</body>
+</html>

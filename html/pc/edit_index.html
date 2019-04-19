@@ -54,21 +54,42 @@
 						<!--水平居中-->
 						<div class="html_box">
 							<!--隐藏滚动条-->
+<<<<<<< HEAD
 							<!--<div class="html_box_new" id="view">
 								<include src="new_index.html"></include>
 							</div>-->
 							<!-- <iframe src="new_index.html" frameborder="0" width="100%"></iframe> -->
                       <!--00写在-本页面00-->
 							<div id="wrap_new">
+=======
+							<div class="html_box_new">
+								<!--拖拽-包着拖拽的div-->
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 								<div class="drag_box" v-for="(v,i) in dataobj"  
 									draggable="true" 
 									@dragstart="handleDragStart($event, v)" 
 									@dragover.prevent="handleDragOver($event, v)" 
 									@dragenter="handleDragEnter($event, v)" 
 									@dragend="handleDragEnd($event, v)">
+<<<<<<< HEAD
 									<!--模块 box，拖拽的div-->
 									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.id)">
 										<img src="../../img/0005.png" style="width: 100%;" alt="" />
+=======
+									<!--轮播图 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="slide">
+											<div class="slide_item">
+												<img  :src="roObj.data.imgUrl[0]" alt="" />
+											</div>
+											<div class="slide_but" :style="{'text-align':roObj.params.butPosition}">
+												<!--第一个，模拟点击时颜色-->
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.clickColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+											</div>
+										</div>
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
 											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
@@ -76,6 +97,7 @@
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
+<<<<<<< HEAD
 									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.id)">
 										搜索
 									</div>
@@ -93,16 +115,79 @@
 														<div class="modle_mod_text">{{item.text}}</div>
 													</div>
 												</a>
+=======
+									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										搜索
+									</div>
+									<!-- 按钮组 拖拽div -->
+									<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<!--模块 box-->
+										<div class="modle_box">
+											<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 											</div>
 										</div>
 									</div>
-								</div>
 									
 									
 								</div>
 								
 							</div>
+<<<<<<< HEAD
 							
+=======
+							<!--隐藏滚动条-->
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 							
 						</div>
 					</div>
@@ -111,6 +196,7 @@
 				</div>
 				<!--编辑模板 box-->
 				<div class="right_box">
+<<<<<<< HEAD
 					<!--编辑模板-->
 					<div class="edit_modle" 	>
 							<div  class="v-scope"><div class="ve-panel-editor-title ">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
@@ -165,7 +251,39 @@
 									</div>
 							</div>
 							</div>
+=======
+					<!-- 轮播图--编辑 -->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
+						<div class="edit_slide">
+							<div class="slide_title">轮播设置</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮形状</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="rectangle">长方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="square">正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="roundness">圆形</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮位置</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="left">按钮居左</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="center">按钮居中</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="right">按钮居右</label>
+
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮背景颜色</span>
+								<input type="color" v-model="roObj.params.butColor">
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮点击颜色</span>
+								<input type="color" v-model="roObj.params.clickColor" value="roObj.params.clickColor">
+							</div>
+							<div class="edit_slide_content edit_slide_content_padding">
+								<p class="edit_slide_content_button" @click="depositFun(puStateObj['key_num'])">保存设置</p>
+							</div>
+						</div>		
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 					</div>
+					
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -276,11 +394,15 @@
 			
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
+<<<<<<< HEAD
 				data: {
 					/*公共存放 index*/
 					publiInd: 0,
 					/*按钮组id*/
 					btnId:1,
+=======
+				data: {					
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 					/*组件-选项*/
 					componentTerm: [
 						{name:"轮播",id:'rotationId'},
@@ -296,36 +418,57 @@
 					
 					/*拖拽需要的元素*/
 					dragging: null,
+<<<<<<< HEAD
 					/*公共state*/
 					puState: null,  
+=======
+					/**
+					 * 公共-对应显示-模板编辑;
+					 * id:判断模块；
+					 * key_num:判断-模块在页面的排序
+					 * **/
+					puStateObj: {
+						id: null,
+						key_num: null,
+					},
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 					/*（pc端）渲染-组件，数组形式*/
 					dataobj: [
 						//数据格式
 						/*{
 							id: _id,
-							index: _index,
+							key_num: '',
 						}*/
 					],
 					/*传个后台-data ，对象形式*/
 					backData: [
 						/*数据格式*/
 //						{
-//							uid:'',
-//							/*0=>正方形，1=>长方形，2=>圆形*/
-//							butStyle: 0,
-//							/*left=>左，middle=>中间，right=>右*/
-//							butPosition: 'middle',
-//							/*按钮颜色*/
-//							butColor: '',
-//							/*轮播的图片路径*/
-//							imgUrl: [
-//								'../../img/0005.png',
-//								'../../img/0005.png',
-//								'../../img/0005.png',	
-//							],
+//							/*组件id*/
+//							id:"rotationId",
+//							/**组件名*/
+//							temp:"rotation",
+//							/**组件style*/
+//							params:{									
+//								/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+//								butStyle: 'rectangle',
+//								/*left=>左，center=>中间，right=>右*/
+//								butPosition: 'center',
+//								/*按钮颜色*/
+//								butColor: '',	
+//							},
+//							data:{
+//								/*轮播的图片路径*/
+//								imgUrl:[
+//									'../../img/0005.png',
+//									'../../img/0005.png',
+//									'../../img/0005.png',	
+//								],
+//							},
 //						}
 					],
 					/*轮播图，数据初始化*/
+<<<<<<< HEAD
 					  roObj:{
             /*组件id*/
             id:"rotationId",
@@ -371,6 +514,61 @@
 					btnObj: {
 						//组件id
 						id:'bottonsId',
+=======
+					roObj:{
+						/**组件id*/
+						id:"rotationId",
+						/**组件名*/
+						temp:"rotation",
+						/*页面渲染-组件位置，从0开始*/
+						key_num: null,
+						/**组件style*/
+						params:{									
+							/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+							butStyle: 'rectangle',
+							/*'left'=>左，'center'=>中间，'right'=>右*/
+							butPosition: 'center',
+							/*按钮背景颜色，必须是16进制的色值，不能简写*/
+							butColor: '#000000',	
+							/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+							clickColor: '#f5f5f5',
+						},
+						data:{
+							/*轮播的图片路径*/
+							imgUrl:[
+								'../../img/0005.png',
+								'../../img/0005.png',
+								'../../img/0005.png',	
+							],
+						},
+					},
+					/*搜索框，数据初始化*/
+					seObj: {
+						/**组件id*/
+						id:"searchId",
+						/**组件名*/
+						temp:"rotation",
+						/*页面渲染-组件位置，从0开始*/
+						key_num: null,
+						/**组件style*/
+						params:{									
+							/*0=>样式一，1=>样式二*/
+							reStyle: 0,
+							/*文字颜色*/
+							textColor: '#999',
+							/*边框颜色*/
+							borderColor: '#ccc',
+							/*背景颜色*/
+							backColor: '#000',
+						},
+						data:{
+							/*提示文字*/
+							tipeText: '你会了么？',
+						},
+					},
+					// 按钮组，数据初始化
+					boObj: {
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 						/*id*/
 						temp:'bottons',
 						params:{
@@ -390,9 +588,16 @@
 						}
 						
 					},
+<<<<<<< HEAD
 				},
 				methods: {
 						/*<< 拖拽*/
+=======
+			
+				},
+				methods: {
+					/*<< 拖拽*/
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 					handleDragStart(e, item) {
 						this.dragging = item;
 					},
@@ -421,16 +626,17 @@
 						/*因为-拖拽-改变data的位置，重新编辑（传给后台的数据）*/
 						for(var k=0;k<this.dataobj.length;k++){
 							/*pc渲染data-排序*/
-							this.dataobj[k]['index'] = k;
+							this.dataobj[k]['key_num'] = k;
 							for(var j=0;j<this.backData.length;j++){
-								if(this.dataobj[k]['id'] == this.backData[j]['uid'] ){
-									console.log(333,this.backData[j]);
+								if(this.dataobj[k]['id'] == this.backData[j]['id'] ){
+									/*console.log(333,this.backData[j]);*/
 									/*找到对应的id，放在thisBackData*/
 									thisBackData[k] = this.backData[j];
 								}
 							}
 							
 						}
+						/*console.log('前台页面渲染data:',this.dataobj);*/
 						/*通过深克隆，赋值数据*/
 						this.backData = clones(thisBackData);
 						/*初始化*/
@@ -439,29 +645,26 @@
 						
 					},
 					/* 拖拽 >>*/
+<<<<<<< HEAD
 					
+=======
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 					/*组件选项-按钮*/
 					comTremFun(_id){
 						var that = this;
-						console.log(_id,that.dataobj.length );
-//						/*新的数据渲染*/
-//						var newPageData = [];
-//						/*拖拽-改变-数据渲染的位置。*/
-//						for(var i=0;i<that.backData.length;i++){
-//							if(that.backData[i]['index'] != i){
-//								that.backData[i]['index'] = i;
-//							}
-//						}
 						/*存储当前的数据*/
 						var thisState = {
 							id: _id,
 							/*pc渲染数据=>下标=> 编辑页面*/
-							index: that.dataobj.length,
+							key_num: that.dataobj.length,
 						}
 						/*轮播图*/
 						if(_id === 'rotationId'){
 							/*pc端页面渲染-data*/
 							that.dataobj.push(thisState);
+							console.log('当前数据渲染1',that.dataobj);
+							/*赋值对应的模块=>页面位置（PC或APP）*/
+							that.roObj['key_num'] = thisState['key_num'];
 							/*APP页面渲染-data*/
 							that.backData.push(that.roObj);
 							console.log('传给后台数据',that.backData);
@@ -470,15 +673,24 @@
 						/*搜索框*/
 						if(_id === "searchId"){
 							that.dataobj.push(thisState);
-							that.backData.push(that.reObj);
+							that.seObj['key_num'] = thisState['key_num'];
+							that.backData.push(that.seObj);
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
+<<<<<<< HEAD
                         /*按钮组*/
 						if(_id === "bottonsId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.btnObj);
 							console.log('传给后台数据',that.backData);
+=======
+						/*按钮组*/
+						if(_id === "bottonsId"){
+							that.dataobj.push(thisState);
+//							that.backData.push(that.roObj);
+//							console.log('传给后台数据',that.backData);
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 							return false;
 						}
 						
@@ -486,6 +698,7 @@
 						
 					},
 					/*编辑对应的模板*/
+<<<<<<< HEAD
 					editMode(_id){
 						this.publiInd = _id;
 					},
@@ -501,6 +714,23 @@
 			
 					
 				},
+=======
+					editMode(_id,_key){
+						console.log('点击对应模板:',_id,_key);
+						this.puStateObj = {
+							id: _id,
+							key_num: _key
+						}
+						console.log('对应的模板：',this.puStateObj);
+						console.log('对应的模板-传后台数据',this.backData);
+					},	
+					/*保存-对应模板设置*/
+					depositFun(_keyNum){
+						console.log(6969,_keyNum);
+					} 
+					
+				}
+>>>>>>> c2f0e5ccbd7ac0d3f1e358f98133d361573b916f
 			});
 			
 		</script>

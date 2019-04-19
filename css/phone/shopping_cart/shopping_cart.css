@@ -950,7 +950,7 @@ img {
 }
 
 .cart-zero i {
-    background: url(../img/shopping_cart/empty_car.png) no-repeat;
+    background: url(../../../img/phone/shopping_cart/empty_car.png) no-repeat;
     width: 1rem;
     height: 1rem;
     color: #505050;
