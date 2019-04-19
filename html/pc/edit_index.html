@@ -68,7 +68,16 @@
 									@dragend="handleDragEnd($event, v)">
 									<!--模块 box，拖拽的div-->
 									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
-										 <img class="sowingMapImgNQ" src="../../img/0005.png" alt="" />
+										<div class="slide">
+											<div class="slide_item">
+												<img  src="../../img/0005.png" alt="" />
+											</div>
+											<div class="slide_but">
+												<span class="rectangle"></span>
+												<span class="rectangle"></span>
+												<span class="rectangle"></span>
+											</div>
+										</div>
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
 											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
@@ -151,7 +160,18 @@
 				<div class="right_box">
 					<!--编辑模板-->
 					<div class="edit_modle">
-										
+						<!-- 轮播图--编辑 -->
+						<div class="edit_slide">
+							<div class="slide_title">轮播设置</div>
+							<div class="edit_slide_content">
+								<span>
+									按钮形状
+								</span>
+								<label>长方形<input type="radio" value="rectangle"></label>
+								<label>正方形<input type="radio" value="square"></label>
+								<label>圆形<input type="radio" value="roundness"></label>
+							</div>
+						</div>		
 					</div>
 				</div>
 			</div>
@@ -287,24 +307,29 @@
 //						}
 					],
 					/*轮播图，数据初始化*/
-					roObj: {
-						/*id*/
-						uid:'rotation',
-						/*0=>正方形，1=>长方形，2=>圆形*/
-						butStyle: 0,
-						/*left=>左，middle=>中间，right=>右*/
-						butPosition: 'middle',
-						/*按钮颜色*/
-						butColor: '',
-						/*轮播的图片路径*/
-						imgUrl: [
-							'../../img/0005.png',
-							'../../img/0005.png',
-							'../../img/0005.png',	
-						],
+					roObj:{
+						/*组件id*/
+						id:"rotationId",
+						/**组件名*/
+						temp:"rotation",
+						/**组件style*/
+						params:{									
+							/*0=>长方形，1=>正方形，2=>圆形*/
+							butStyle: 0,
+							/*left=>左，center=>中间，right=>右*/
+							butPosition: 'center',
+							/*按钮颜色*/
+							butColor: '',	
+						},
+						data:{
+							/*轮播的图片路径*/
+							imgUrl:['../../img/0005.png',
+										'../../img/0005.png',
+										'../../img/0005.png',	],
+						},
 					},
 					/*搜索框，数据初始化*/
-					reObj: {
+					seObj: {
 						/*id*/
 						uid:'search',
 						/*提示文字*/
@@ -319,7 +344,7 @@
 						backColor: '#000',
 					},
 					// 按钮组，数据初始化
-					reObj: {
+					boObj: {
 						/*id*/
 						uid:'bottons',
 						/*图标样式*/
@@ -336,7 +361,7 @@
 							{id:'5',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''}
 						]	
 					},
-					
+			
 				},
 				methods: {
 						/*<< 拖拽*/
@@ -407,8 +432,6 @@
 					editMode(_index){
 						console.log(_index);
 						this.publiInd = _index;
-					},					handleDragStart(e, item) {
-						this.dragging = item;
 					},
 					
 				}
