@@ -60,7 +60,7 @@
 									@dragenter="handleDragEnter($event, v)" 
 									@dragend="handleDragEnd($event, v)">
 									<!--模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.id,v.index)">
 										<img src="../../img/0005.png" style="width: 100%;" alt="" />
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
@@ -69,7 +69,7 @@
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.id,v.index)">
 										搜索
 									</div>
 									
@@ -87,7 +87,9 @@
 				<div class="right_box">
 					<!--编辑模板-->
 					<div class="edit_modle">
-						
+						<div class="" v-show="puState == 'rotation'">
+							轮播图
+						</div>
 					</div>
 				</div>
 			</div>
@@ -174,6 +176,29 @@
 		</script>
 		<script src="../../js/pc/public/vue.js"></script>
 		<script>
+			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+			function clones(_type, _memory){
+				var newMemory = null;
+				// 判断传过来的数据类型
+				if(_type instanceof Array) {
+					newMemory = _memory || [];
+				} else {
+					newMemory = _memory || {};
+				}
+				for(var x in _type) {
+					//引用数据类型的 typeof为 object
+					if(typeof _type[x] == "object") {
+						newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+						clones(_type[x], newMemory[x]); //递归
+					} else {
+						// 数据赋值
+						newMemory[x] = _type[x];
+					}
+				}
+				return newMemory;
+			}
+			
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
 				data: {
@@ -191,6 +216,8 @@
 					],
 					/*拖拽需要的元素*/
 					dragging: null,
+					/*公共state*/
+					puState: null,
 					/*（pc端）渲染-组件，数组形式*/
 					dataobj: [
 						//数据格式
@@ -271,7 +298,6 @@
 						}
 						/*pc数据渲染的data*/
 						const newItems = [...this.dataobj]
-						console.log(newItems)
 						const src = newItems.indexOf(this.dragging)
 						const dst = newItems.indexOf(item)
 
@@ -293,38 +319,14 @@
 							}
 							
 						}
-						// 深克隆，把引用数据类型的，分解成基础类型（克隆）
-						// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
-						function clones(_type, _memory){
-							var newMemory = null;
-							// 判断传过来的数据类型
-							if(_type instanceof Array) {
-								newMemory = _memory || [];
-							} else {
-								newMemory = _memory || {};
-							}
-							for(var x in _type) {
-								//引用数据类型的 typeof为 object
-								if(typeof _type[x] == "object") {
-									newMemory[x] = (_type[x].constructor == Array) ? [] : {};
-									clones(_type[x], newMemory[x]); //递归
-								} else {
-									// 数据赋值
-									newMemory[x] = _type[x];
-								}
-							}
-							return newMemory;
-						}
 						/*通过深克隆，赋值数据*/
 						this.backData = clones(thisBackData);
 						/*初始化*/
 						thisBackData = [];	
 						console.log('后台666',this.backData);
 						
-						
 					},
 					/* 拖拽 >>*/
-					
 					
 					/*组件选项-按钮*/
 					comTremFun(_id){
@@ -368,6 +370,7 @@
 					editMode(_index){
 						console.log(_index);
 						this.publiInd = _index;
+						console.log(this.$options.methods.clones(this.backData));
 					}
 				}
 			});
