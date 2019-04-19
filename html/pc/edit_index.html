@@ -14,7 +14,7 @@
   </style>
 	<body>
 		<div class="wrapper" id="edit_app_wrap">
-			<div class="tab ">
+			<div class="tab">
 				<ul class="tabs clearfloat">
 					<li class="active">
 						<a href="" data-toggle="0">首页编辑</a>
@@ -54,12 +54,8 @@
 						<!--水平居中-->
 						<div class="html_box">
 							<!--隐藏滚动条-->
-							<!--<div class="html_box_new" id="view">
-								<include src="new_index.html"></include>
-							</div>-->
-							<!-- <iframe src="new_index.html" frameborder="0" width="100%"></iframe> -->
-                      <!--00写在-本页面00-->
-							<div id="wrap_new">
+							<div class="html_box_new">
+								<!--轮播图-->
 								<div class="drag_box" v-for="(v,i) in dataobj"  
 									draggable="true" 
 									@dragstart="handleDragStart($event, v)" 
@@ -67,16 +63,15 @@
 									@dragenter="handleDragEnter($event, v)" 
 									@dragend="handleDragEnd($event, v)">
 									<!--模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id)">
 										<div class="slide">
 											<div class="slide_item">
 												<img  src="../../img/0005.png" alt="" />
 											</div>
-											<div class="slide_but" v-bind:style="{text_align:roObj.params.butPosition}">
-												<span class="rectangle"></span>
-												<span class="rectangle"></span>
-												<span class="rectangle"></span>
-												{{roObj.params.butPosition}}
+											<div class="slide_but" :style="{'text-align':roObj.params.butPosition}">
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
 											</div>
 										</div>
 										<div class="cursor_box remove_ele">
@@ -86,11 +81,11 @@
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.id)">
 										搜索
 									</div>
 									<!-- 按钮组 拖拽div -->
-								<div class="drag_box" v-if="v.id == 'bottons'? true:''" :key="v.id" @click="editMode(v.index)">
+								<div class="drag_box" v-if="v.id == 'bottons'? true:''" :key="v.id" @click="editMode(v.id)">
 									<!--模块 box-->
 									<div class="modle_box">
 										<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
@@ -152,12 +147,14 @@
 								</div>
 								
 							</div>
-							
+							<!--隐藏滚动条-->
 							
 						</div>
 					</div>
+					<!--模拟手机的 wrap，背景图两边（img）-->
 					<p class="phone_bottom"></p>
 				</div>
+				<!--编辑模板 box-->
 				<div class="right_box">
 					<!-- 轮播图--编辑 -->
 					<div class="edit_modle" v-show="puState == 'rotationId'">
@@ -167,9 +164,9 @@
 								<span class="edit_slide_content_title">
 									按钮形状
 								</span>
-								<label class="edit_slide_content_label"><input type="radio" value="rectangle">长方形</label>
-								<label class="edit_slide_content_label"><input type="radio" value="square">正方形</label>
-								<label class="edit_slide_content_label"><input type="radio" value="roundness">圆形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="rectangle">长方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="square">正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="roundness">圆形</label>
 							</div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">
@@ -184,10 +181,11 @@
 									<span class="edit_slide_content_title">
 										按钮颜色
 									</span>
-									<input type="color" >
+									<input type="color" v-model="roObj.params.butColor">
 								</div>
 						</div>		
 					</div>
+					
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -251,13 +249,9 @@
 			</div>
 		</div>
 
-		<!--引入另外一个页面的js-->
-		<!--<script src="./../js/include.js"></script>-->
 		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
-		<!--<script src="./../js/public/swiper.min.js"></script>-->
 		<!--public的js-->
 		<!--<script src="../../js/pc/edit_index.js"></script>-->
-		<!--拖拽js-->
 		
 		<script>
 			$(document).ready(function() {
@@ -277,6 +271,29 @@
 		</script>
 		<script src="../../js/pc/public/vue.js"></script>
 		<script>
+			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+			function clones(_type, _memory){
+				var newMemory = null;
+				// 判断传过来的数据类型
+				if(_type instanceof Array) {
+					newMemory = _memory || [];
+				} else {
+					newMemory = _memory || {};
+				}
+				for(var x in _type) {
+					//引用数据类型的 typeof为 object
+					if(typeof _type[x] == "object") {
+						newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+						clones(_type[x], newMemory[x]); //递归
+					} else {
+						// 数据赋值
+						newMemory[x] = _type[x];
+					}
+				}
+				return newMemory;
+			}
+			
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
 				data: {					
@@ -292,6 +309,8 @@
 						{name:"广告",id:'bannerId'},
 						{name:'标题',id:'titleId'}
 					],
+					/*拖拽需要的元素*/
+					dragging: null,
 					/*公共-对应显示-模板编辑*/
 					puState: null,
 					/*（pc端）渲染-组件，数组形式*/
@@ -305,41 +324,51 @@
 					backData: [
 						/*数据格式*/
 //						{
-//							uid:'',
-//							/*0=>正方形，1=>长方形，2=>圆形*/
-//							butStyle: 0,
-//							/*left=>左，middle=>中间，right=>右*/
-//							butPosition: 'middle',
-//							/*按钮颜色*/
-//							butColor: '',
-//							/*轮播的图片路径*/
-//							imgUrl: [
-//								'../../img/0005.png',
-//								'../../img/0005.png',
-//								'../../img/0005.png',	
-//							],
+//							/*组件id*/
+//							id:"rotationId",
+//							/**组件名*/
+//							temp:"rotation",
+//							/**组件style*/
+//							params:{									
+//								/*0=>长方形，1=>正方形，2=>圆形*/
+//								butStyle: 0,
+//								/*left=>左，center=>中间，right=>右*/
+//								butPosition: 'center',
+//								/*按钮颜色*/
+//								butColor: '',	
+//							},
+//							data:{
+//								/*轮播的图片路径*/
+//								imgUrl:[
+//									'../../img/0005.png',
+//									'../../img/0005.png',
+//									'../../img/0005.png',	
+//								],
+//							},
 //						}
 					],
 					/*轮播图，数据初始化*/
 					roObj:{
-						/*组件id*/
+						/**组件id*/
 						id:"rotationId",
 						/**组件名*/
 						temp:"rotation",
 						/**组件style*/
 						params:{									
 							/*0=>长方形，1=>正方形，2=>圆形*/
-							butStyle: 0,
+							butStyle: 'rectangle',
 							/*left=>左，center=>中间，right=>右*/
 							butPosition: 'center',
 							/*按钮颜色*/
-							butColor: '',	
+							butColor: '#000',	
 						},
 						data:{
 							/*轮播的图片路径*/
-							imgUrl:['../../img/0005.png',
-										'../../img/0005.png',
-										'../../img/0005.png',	],
+							imgUrl:[
+								'../../img/0005.png',
+								'../../img/0005.png',
+								'../../img/0005.png',	
+							],
 						},
 					},
 					/*搜索框，数据初始化*/
@@ -378,7 +407,7 @@
 			
 				},
 				methods: {
-						/*<< 拖拽*/
+					/*<< 拖拽*/
 					handleDragStart(e, item) {
 						this.dragging = item;
 					},
@@ -396,24 +425,45 @@
 						}
 						/*pc数据渲染的data*/
 						const newItems = [...this.dataobj]
-						console.log(newItems)
 						const src = newItems.indexOf(this.dragging)
 						const dst = newItems.indexOf(item)
 
-						newItems.splice(dst, 0, ...newItems.splice(src, 1))
+						newItems.splice(dst, 0, ...newItems.splice(src, 1));
 						/*重置--pc数据渲染的data*/
-						this.dataobj = newItems
+						this.dataobj = newItems;
+						/*(存储)重新排序=>传给后台的数据*/
+						var thisBackData = [];
+						/*因为-拖拽-改变data的位置，重新编辑（传给后台的数据）*/
+						for(var k=0;k<this.dataobj.length;k++){
+							/*pc渲染data-排序*/
+							this.dataobj[k]['index'] = k;
+							for(var j=0;j<this.backData.length;j++){
+								if(this.dataobj[k]['id'] == this.backData[j]['uid'] ){
+									console.log(333,this.backData[j]);
+									/*找到对应的id，放在thisBackData*/
+									thisBackData[k] = this.backData[j];
+								}
+							}
+							
+						}
+						/*通过深克隆，赋值数据*/
+						this.backData = clones(thisBackData);
+						/*初始化*/
+						thisBackData = [];	
+						console.log('后台666',this.backData);
+						
 					},
 					/* 拖拽 >>*/
+					
 					/*组件选项-按钮*/
 					comTremFun(_id){
 						var that = this;
-						console.log(_id,that.dataobj.length );
+						console.log(_id,that.dataobj);
 						/*存储当前的数据*/
 						var thisState = {
 							id: _id,
 							/*pc渲染数据=>下标=> 编辑页面*/
-							index: that.dataobj.length,
+//							index: that.dataobj.length,
 						}
 						/*轮播图*/
 						if(_id === 'rotationId'){
@@ -427,11 +477,11 @@
 						/*搜索框*/
 						if(_id === "searchId"){
 							that.dataobj.push(thisState);
-							that.backData.push(that.roObj);
+							that.backData.push(that.reObj);
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
-                        /*按钮组*/
+						/*按钮组*/
 						if(_id === "bottonsId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.roObj);
@@ -444,9 +494,10 @@
 					},
 					/*编辑对应的模板*/
 					editMode(_id){
-						console.log(_id);
+						console.log('点击对应模板:',_id,);
 						this.puState = _id;
-					},
+					},					
+				
 					
 				}
 			});
