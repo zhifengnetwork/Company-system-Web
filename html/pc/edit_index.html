@@ -7,8 +7,11 @@
 		<link rel="stylesheet" href="../../css/pc/public/public.css" />
 		<!--<link rel="stylesheet" href="../../css/phone/public/swiper.min.css" />-->
 		<link rel="stylesheet" href="../../css/pc/edit_index.css" />
+		<link rel="stylesheet" href="">
 	</head>
-
+  <style>
+ 
+  </style>
 	<body>
 		<div class="wrapper" id="edit_app_wrap">
 			<div class="tab">
@@ -64,7 +67,7 @@
 										<img src="../../img/0005.png" style="width: 100%;" alt="" />
 										<div class="cursor_box remove_ele">
 											<!--1、删除按钮，生成html=>删除(remove_ele)-->
-											<p class="cursor_box_del" onclick="removerEle(this)">删除</p>
+											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
 										</div>
 									</div>
 									
@@ -72,6 +75,65 @@
 									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.id,v.index)">
 										搜索
 									</div>
+									<!-- 按钮组 拖拽div -->
+								<div class="drag_box" v-if="v.id == 'bottons'? true:''" :key="v.id" @click="editMode(v.id,v.index)">
+									<!--模块 box-->
+									<div class="modle_box">
+										<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+											<div   class="botton-scope">
+												<a href="unsafe:javascript:;">
+													<div class="modle_mod_nav"  style="width: 20%;">
+														<div class="modle_mod_img">
+															<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+														</div>
+														<div class="modle_mod_text">按钮文字</div>
+													</div>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+									
 									
 								</div>
 								
@@ -208,11 +270,13 @@
 					componentTerm: [
 						{name:"轮播",id:'rotation'},
 						{name:"搜索框",id:'search'},
-						{name:"按钮组",id:'2'},
-						{name:"店招",id:'3'},
-						{name:"商品组",id:'4'},
-						{name:"公告",id:'5'},
-						{name:"辅助空白",id:'6'},
+						{name:"按钮组",id:'bottons'},
+						{name:"店招",id:'signage'},
+						{name:"商品组",id:'productList'},
+						{name:"公告",id:'notice'},
+						{name:"辅助空白",id:'blank'},
+						{name:"广告",id:'banner'},
+						{name:'标题',id:'title'}
 					],
 					/*拖拽需要的元素*/
 					dragging: null,
@@ -276,7 +340,25 @@
 						borderColor: '#ccc',
 						/*背景颜色*/
 						backColor: '#000',
-					}
+					},
+					// 按钮组，数据初始化
+					reObj: {
+						/*id*/
+						uid:'bottons',
+						/*图标样式*/
+						iconStyle: 0,
+						/*0=>样式一，1=>样式二*/
+						iconNum: '20%',
+						/*背景颜色*/
+						iconColor: '',
+						iconList:[
+							{id:'1',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'2',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'3',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'4',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''},
+							{id:'5',text:'',location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:''}
+						]	
+					},
 					
 				},
 				methods: {
@@ -332,14 +414,6 @@
 					comTremFun(_id){
 						var that = this;
 						console.log(_id,that.dataobj.length );
-//						/*新的数据渲染*/
-//						var newPageData = [];
-//						/*拖拽-改变-数据渲染的位置。*/
-//						for(var i=0;i<that.backData.length;i++){
-//							if(that.backData[i]['index'] != i){
-//								that.backData[i]['index'] = i;
-//							}
-//						}
 						/*存储当前的数据*/
 						var thisState = {
 							id: _id,
@@ -362,6 +436,13 @@
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
+                        /*按钮组*/
+						if(_id === "bottons"){
+							that.dataobj.push(thisState);
+							that.backData.push(that.roObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
 						
 						
 						
@@ -370,8 +451,9 @@
 					editMode(_index){
 						console.log(_index);
 						this.publiInd = _index;
-						console.log(this.$options.methods.clones(this.backData));
-					}
+					},					
+				
+					
 				}
 			});
 			
