@@ -343,8 +343,25 @@ iframe{
 	line-height: 30px;
 	border-bottom: 1px dashed #000;
 }
-.edit_slide_content span{
-	
+.edit_slide_content{
+	line-height: 40px;
+}
+.edit_slide_content>input{
+	border: 0;
+	padding: 3px 10px;
+	border-radius: 4px;
+}
+.edit_slide_content_title{
+	display:inline-block;
+	width:20%;
+	text-align: center;
+}
+.edit_slide_content_label{
+	margin-right: 15px;
+}
+.edit_slide_content_label input{
+	margin-right: 5px;
+	vertical-align: middle;
 }
 /* 公共边框 */
 .mod_select {

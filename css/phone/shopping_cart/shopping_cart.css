@@ -589,12 +589,12 @@ img {
 }
 
 .cart_box .opt .check,.cart_box.edit .check-all .check,.check-all .check{
-    background: url(../img/shopping_cart/check-circle-fill.png)no-repeat 50%;
+    background: url(../../../img/phone/shopping_cart/check-circle-fill.png)no-repeat 50%;
     background-size: 100%
 }
 
 .select,.check-all .edit,.opt .edit{
-    background: url(../img/shopping_cart/clos.png)no-repeat 50%;
+    background: url(../../../img/phone/shopping_cart/clos.png)no-repeat 50%;
     background-size: 100%
 }
 
@@ -950,7 +950,7 @@ img {
 }
 
 .cart-zero i {
-    background: url(../img/shopping_cart/empty_car.png) no-repeat;
+    background: url(../../../img/phone/shopping_cart/empty_car.png) no-repeat;
     width: 1rem;
     height: 1rem;
     color: #505050;

@@ -67,15 +67,16 @@
 									@dragenter="handleDragEnter($event, v)" 
 									@dragend="handleDragEnd($event, v)">
 									<!--模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'rotation'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.index)">
 										<div class="slide">
 											<div class="slide_item">
 												<img  src="../../img/0005.png" alt="" />
 											</div>
-											<div class="slide_but">
+											<div class="slide_but" v-bind:style="{text_align:roObj.params.butPosition}">
 												<span class="rectangle"></span>
 												<span class="rectangle"></span>
 												<span class="rectangle"></span>
+												{{roObj.params.butPosition}}
 											</div>
 										</div>
 										<div class="cursor_box remove_ele">
@@ -85,7 +86,7 @@
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'search'? true:''" :key="v.id" @click="editMode(v.index)">
+									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.index)">
 										搜索
 									</div>
 									<!-- 按钮组 拖拽div -->
@@ -158,19 +159,33 @@
 					<p class="phone_bottom"></p>
 				</div>
 				<div class="right_box">
-					<!--编辑模板-->
-					<div class="edit_modle">
-						<!-- 轮播图--编辑 -->
+					<!-- 轮播图--编辑 -->
+					<div class="edit_modle" v-show="puState == 'rotationId'">
 						<div class="edit_slide">
 							<div class="slide_title">轮播设置</div>
 							<div class="edit_slide_content">
-								<span>
+								<span class="edit_slide_content_title">
 									按钮形状
 								</span>
-								<label>长方形<input type="radio" value="rectangle"></label>
-								<label>正方形<input type="radio" value="square"></label>
-								<label>圆形<input type="radio" value="roundness"></label>
+								<label class="edit_slide_content_label"><input type="radio" value="rectangle">长方形</label>
+								<label class="edit_slide_content_label"><input type="radio" value="square">正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" value="roundness">圆形</label>
 							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">
+									按钮位置
+								</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="left">按钮居左</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="center">按钮居中</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="right">按钮居右</label>
+
+							</div>
+							<div class="edit_slide_content">
+									<span class="edit_slide_content_title">
+										按钮颜色
+									</span>
+									<input type="color" >
+								</div>
 						</div>		
 					</div>
 				</div>
@@ -264,27 +279,26 @@
 		<script>
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
-				data: {
-					/*公共存放 index*/
-					publiInd: 0,
+				data: {					
 					/*组件-选项*/
 					componentTerm: [
-						{name:"轮播",id:'rotation'},
-						{name:"搜索框",id:'search'},
-						{name:"按钮组",id:'bottons'},
-						{name:"店招",id:'signage'},
-						{name:"商品组",id:'productList'},
-						{name:"公告",id:'notice'},
-						{name:"辅助空白",id:'blank'},
-						{name:"广告",id:'banner'},
-						{name:'标题',id:'title'}
+						{name:"轮播",id:'rotationId'},
+						{name:"搜索框",id:'searchId'},
+						{name:"按钮组",id:'bottonsId'},
+						{name:"店招",id:'signageId'},
+						{name:"商品组",id:'productListId'},
+						{name:"公告",id:'noticeId'},
+						{name:"辅助空白",id:'blankId'},
+						{name:"广告",id:'bannerId'},
+						{name:'标题',id:'titleId'}
 					],
+					/*公共-对应显示-模板编辑*/
+					puState: null,
 					/*（pc端）渲染-组件，数组形式*/
 					dataobj: [
 						//数据格式
 						/*{
 							id: _id,
-							index: _index,
 						}*/
 					],
 					/*传个后台-data ，对象形式*/
@@ -402,7 +416,7 @@
 							index: that.dataobj.length,
 						}
 						/*轮播图*/
-						if(_id === 'rotation'){
+						if(_id === 'rotationId'){
 							/*pc端页面渲染-data*/
 							that.dataobj.push(thisState);
 							/*APP页面渲染-data*/
@@ -411,14 +425,14 @@
 							return false;
 						}
 						/*搜索框*/
-						if(_id === "search"){
+						if(_id === "searchId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.roObj);
 							console.log('传给后台数据',that.backData);
 							return false;
 						}
                         /*按钮组*/
-						if(_id === "bottons"){
+						if(_id === "bottonsId"){
 							that.dataobj.push(thisState);
 							that.backData.push(that.roObj);
 							console.log('传给后台数据',that.backData);
@@ -429,9 +443,9 @@
 						
 					},
 					/*编辑对应的模板*/
-					editMode(_index){
-						console.log(_index);
-						this.publiInd = _index;
+					editMode(_id){
+						console.log(_id);
+						this.puState = _id;
 					},
 					
 				}
