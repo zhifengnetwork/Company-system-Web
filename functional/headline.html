@@ -118,7 +118,75 @@
         </div>
       </div>
       <!-- 编辑 -->
-       <div class="ve-scope">
+      <template id="view">
+        <div class="ve-scope">
+            <div class="compile_editor-title">标题设置</div>
+            <div class="compile_editor-line clearfloat">
+                 <div class="compile_editor-name">主标题内容</div>
+                 <div class="compile_editor-con">
+                  <input type="text" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏"  v-model="MainHeading" @keyup="mainB">
+                 </div>
+            </div>
+            <div class="compile_editor-line clearfloat">
+                 <div class="compile_editor-name">主标题大小</div>
+                 <div class="compile_editor-con">
+                     <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                     <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                     <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                     <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                     <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px" v-model="headlineSize" class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                     <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" v-model="headlineSize" ></label>
+                 </div>
+             </div>
+            <div class="compile_editor-line clearfloat">
+                     <div class="compile_editor-name">显示副标题</div>
+                     <div class="compile_editor-con">
+                             <label style="cursor:pointer; margin-right: 10px;">
+                                 <input type="radio" name="headline" value="1"   class="ng-valid " v-model="subheadHide"> 显示</label>
+                             <label style="cursor:pointer; margin-right: 10px;">
+                                 <input type="radio" name="headline" value="0"   class="ng-valid " v-model="subheadHide"> 不显示</label>
+                     </div>
+             </div>
+            <div class="compile_editor-line clearfloat" :class="{hide:subheadHide==0}">
+                     <div class="compile_editor-name">副标题内容</div>
+                     <div class="compile_editor-con">
+                      <input type="text" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model='MainSubhead' @keyup="mainA">
+                     </div>
+                </div>
+             <div class="compile_editor-line clearfloat" :class="{hide:subheadHide==0}">
+                     <div class="compile_editor-name">福标题大小</div>
+                     <div class="compile_editor-con">
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="12px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 12像素</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="14px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 14像素</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="16px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 16像素</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="18px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 18像素</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="_fontsize1" value="20px" v-model="subheadSize" class="ng-pristine ng-untouched ng-valid"> 20像素</label>
+                         <label style="cursor:pointer; margin-right: 10px;">自定义：<input class="compile_editor-input2" style="line-height: 20px;" value="" v-model="subheadSize"></label>
+                     </div>
+             </div>
+             <div class="compile_editor-line clearfloat">
+                     <div class="compile_editor-name">对齐方向</div>
+                     <div class="compile_editor-con">
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="left" v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居左</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="center"  v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居中</label>
+                         <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555486962642_align" value="right"  v-model="headlinetextAlign" class="ng-pristine ng-untouched ng-valid"> 居右</label>
+                     </div>
+             </div>
+             <div class="compile_editor-line clearfloat">
+                     <div class="compile_editor-name">文字颜色</div>
+                     <div class="compile_editor-con">
+                             <input class="compile_editor-input2 " type="color" v-model="headlineColor">
+                     </div>
+             </div>
+             <div class="compile_editor-line clearfloat">
+                     <div class="compile_editor-name">背景颜色</div>
+                     <div class="compile_editor-con">
+                             <input class="compile_editor-input2 " type="color" v-model="headlineBack">
+                     </div>
+             </div>
+        </div>
+      </template>
+       <!-- <div class="ve-scope">
            <div class="compile_editor-title">标题设置</div>
            <div class="compile_editor-line clearfloat">
                 <div class="compile_editor-name">主标题内容</div>
@@ -183,9 +251,16 @@
                             <input class="compile_editor-input2 " type="color" v-model="headlineBack">
                     </div>
             </div>
-       </div>
+       </div> -->
     </div>
     <script> 
+
+           var vu = {
+               template:'#view',
+               data:{
+                   
+               }
+           }
             var vm=new Vue({
              el:"#headline", 
              data:{

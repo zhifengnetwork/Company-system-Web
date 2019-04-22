@@ -10,6 +10,19 @@
 	border: 1px solid #d6d6d8;
 	/*overflow-y: scroll;*/
 }
+
+/*清除浮动代码 '父元素'*/
+.clearfloat:after{
+	display: block;
+	clear: both;
+	content:" ";
+	visibility: hidden;
+	height: 0;
+}
+.clearfloat{
+	zoom: 1;
+}
+
 /*内容*/
 .content {
 	padding-left: 10px;
@@ -333,6 +346,162 @@ iframe{
 /* 按钮图片 圆形样式 */
 .modle_mod_garden{
 	border-radius: 100%;
+}
+
+/* 按钮编辑 */
+.ve-panel-editor-title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #999;
+    border-bottom: 1px dashed #ccc;
+    padding-left: 5px;
+}
+
+.ve-panel-editor-line {
+    min-height: 40px;
+    overflow: hidden;
+}
+
+.ve-panel-editor-name {
+    height: 40px;
+    width: 90px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 40px;
+    color: #999;
+    float: left;
+}
+
+.ve-panel-editor-con {
+    min-height: 40px;
+    float: left;
+    line-height: 40px;
+    color: #999;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    content: "...";
+}
+
+.ve-panel-editor-input1 {
+    height: 30px;
+    width: 545px;
+    padding-left: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+    -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+}
+
+.ve-panel-editor-input2 {
+    height: 30px;
+    width: 70px;
+    padding-left: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+}
+
+.ve-panel-editor-input3 {
+    height: 30px;
+    width: 320px;
+    padding-left: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px 0px 0px 3px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+    float: left;
+    -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
+}
+
+.ve-panel-editor-input4 {
+    height: 30px;
+    width: 80px;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-left: 0px;
+    border-radius: 0px 3px 3px 0px;
+    margin-top: 4px;
+    line-height: 30px;
+    color: #aaa;
+    outline: none;
+    float: left;
+    cursor: pointer;
+}
+
+.ve-panel-editor .tips {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.ve-panel-editor-line2 {
+    min-height: 100px;
+    overflow: hidden;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.ve-panel-editor-goodimg {
+    min-height: 40px;
+    width: 138px;
+    border: 1px solid #ccc;
+    float: left;
+    position: relative;
+    background: #fff;
+    cursor: pointer;
+}
+
+.ve-panel-editor-goodimg-t1 {
+    line-height: 78px;
+    font-size: 16px;
+    text-align: center;
+    color: #999;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
+
+.ve-panel-editor-goodimg-t2 {
+    height: 26px;
+    width: 136px;
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 26px;
+    color: #fff;
+}
+
+.ve-panel-editor-line2-right {
+    min-height: 80px;
+    width: 356px;
+    float: left;
 }
 
 /* botton */
