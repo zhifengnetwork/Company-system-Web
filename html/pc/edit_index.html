@@ -74,11 +74,13 @@
 												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
 												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
 											</div>
+											
 										</div>
-										<div class="cursor_box remove_ele">
-											<!--1、删除按钮，生成html=>删除(remove_ele)-->
-											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
+										<!--删除按钮 wrap-->
+										<div class="cursor_wrap">
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p >
 										</div>
+										
 									</div>
 									
 									<!--搜索模块 box，拖拽的div-->
@@ -327,6 +329,7 @@
 						/*初始化*/
 						key_num: 0,
 					},
+					delState: false,
 					/* 页面渲染data || 传个后台-data ，对象形式*/
 					backData: [
 						/**初始化=>生产对应组件=>删除第一条数据array[0]。
@@ -442,6 +445,36 @@
 						console.log('传-后台=>"拖拽" ',this.backData);
 					},
 					/* 拖拽 >>*/
+					/*鼠标悬浮*/
+					enter(){
+						console.log('进入');
+					},
+					/*鼠标移除*/
+					leave(){
+						console.log('移除');
+					},
+					/*删除对应=>data*/
+					delDataFun(_index){
+						console.log("删除index:",_index);
+						if(this.backData.length == 1){
+							/*根据对应index=> 删除*/
+							this.backData.splice(_index,1,{params:{},data:{}});
+							console.log('给个空的key值，好对应数据渲染',this.backData);
+							/*初始化*/
+							this.puStateObj = {
+								id: null,
+								/*初始化*/
+								key_num: 0,
+							}
+							console.log('删除-对应模板!',this.puStateObj);
+							return false;
+						}
+						this.backData.splice(_index,1);
+						for(var l=_index;l<backData.length;l++){
+							this.backData[l]['key_num'] = l;
+						}
+						console.log('删除后-对应的data:',this.backData);
+					},
 					/*组件选项-按钮*/
 					comTremFun(_id){
 						var that = this;
@@ -457,7 +490,7 @@
 							 * **/
 							if(that.backData[0]['id'] == undefined){
 								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
+								that.backData[0]['key_num'] = 0;
 								console.log('清除掉-无用的值（数据双向绑定！）！');
 							}
 							console.log('传给后台数据',that.backData);
@@ -471,7 +504,7 @@
 							/*改if语句-放在最后*/
 							if(that.backData[0]['id'] == undefined){
 								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
+								that.backData[0]['key_num'] = 0;
 								console.log('清除掉-无用的值（数据双向绑定！）！');
 							}
 							return false;
@@ -483,7 +516,7 @@
 							/*改if语句-放在最后*/
 							if(that.backData[0]['id'] == undefined){
 								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
+								that.backData[0]['key_num'] = 0;
 								console.log('清除掉-无用的值（数据双向绑定！）！');
 							}
 							return false;
@@ -501,10 +534,19 @@
 							key_num: _key
 						}
 						console.log('对应的模板：',this.puStateObj);
+						
 					},	
 					/*保存-模板*/
 					depositFun(){
-						console.log('保存模板！！',this.backData);
+						var that = this;
+						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						 * 最上面。
+						 * **/
+						if(that.backData[0]['id'] == undefined){
+							alert('请手动生产页面！');
+							return false;
+						}
+						console.log('保存模板！！',that.backData);
 					} 
 					
 				},

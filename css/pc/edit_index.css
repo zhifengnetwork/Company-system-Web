@@ -202,21 +202,22 @@
 	width: 100%;
 	height: auto;
 }
+/*拖拽的div*/
+.modle_box {
+	position: relative;
+}
+.modle_box:hover .cursor_wrap{
+	display: block;
+}
 /*鼠标悬浮 删除 wrap*/
 .cursor_wrap {
-	position: relative;
-	width: 100%;
-	height: auto;
-}
-/*鼠标悬浮 删除 box*/
-.cursor_box {
 	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 100;
 	width: 100%;
-	height: auto;
+	height: 100%;
 	background-color: rgba(0,0,0,.3);
 }
 
@@ -272,7 +273,6 @@ iframe{
     letter-spacing: 1px;
     background-color: #418bca;
 }
-
 
 .drag_box{
 	cursor: move;
