@@ -148,7 +148,14 @@
 											</div>
 										</div>
 									</div>
-									
+
+									<!--标题模块 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'titleId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="title" :style="{textAlign:v.params.alignPosition,color:v.params.textColor,backgroundColor:v.params.bgColor}">
+											<h2 :style="{fontSize:v.params.fontSize}">{{v.data.title}}</h2>
+											<h4 :class="{hide:v.data.subTitleState == 0}" :style="{fontSize:v.params.subfontSize}">{{v.data.subTitle}}</h4>
+										</div>
+									</div>
 									
 								</div>
 								
@@ -234,6 +241,85 @@
 									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.backColor">
 								</div>
 							</div>
+						</div>
+					</div>
+
+					<!-- 标题 -->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'titleId'">
+						<!-- 编辑模板 -->
+						<div class="edit_title">
+							<div class="editor_icon"></div>
+							<div class="editor_title">标题设置</div>
+		
+							<div class="editor_line">
+								<div class="editor_name">主标题内容</div>
+								<div class="editor_con">
+									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" @keyup="changTitle">
+								</div>
+							</div>
+		
+							<div class="editor_line">
+								<div class="editor_name">主标题大小</div>
+								<div class="editor_con">
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="12px">12像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="14px">14像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="16px">16像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="18px">18像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="20px">20像素</label>
+									<label>自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.fontSize"></label>
+								</div>
+							</div>
+		
+							<div class="editor_line">
+								<div class="editor_name">显示副标题</div>
+								<div class="editor_con">
+									<label><input type="radio" value="1" v-model="backData[puStateObj['key_num']].data.subTitleState">显示</label>
+									<label><input type="radio" value="0" v-model="backData[puStateObj['key_num']].data.subTitleState">不显示</label>
+								</div>
+							</div>
+		
+							<div class="editor_line" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="editor_name">副标题内容</div>
+								<div class="editor_con">
+									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏"  v-model="backData[puStateObj['key_num']].data.subTitle1" @keyup="changsubTitle">
+								</div>
+							</div>
+		
+							<div class="editor_line" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="editor_name">副标题大小</div>
+								<div class="editor_con">
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="12px">12像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="14px">14像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="16px">16像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="18px">18像素</label>
+									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="20px">20像素</label>
+									<label>自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.subfontSize"></label>
+								</div>
+							</div>
+
+							<div class="editor_line">
+								<div class="editor_name">对齐方向</div>
+								<div class="editor_con">
+									<label><input type="radio" value="left" v-model="backData[puStateObj['key_num']].params.alignPosition">居左</label>
+									<label><input type="radio" value="center" v-model="backData[puStateObj['key_num']].params.alignPosition">居中</label>
+									<label><input type="radio" value="right" v-model="backData[puStateObj['key_num']].params.alignPosition">居右</label>
+								</div>
+							</div>
+
+							<div class="editor_line">
+								<div class="editor_name">文字颜色</div>
+								<div class="editor_con">
+									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+								</div>
+							</div>
+
+							<div class="editor_line">
+								<div class="editor_name">背景颜色</div>
+								<div class="editor_con">
+									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
+								</div>
+							</div>
+									
 						</div>
 					</div>
 
@@ -461,8 +547,41 @@
 								{id:'5',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39',show:0}
 							]	
 						}
-						
 					},
+
+					// 标题，数据初始化
+					titObj: {
+						// 组件id
+						id:"titleId",
+						// 组件名
+						temp:"title",
+						// 页面渲染-组件位置，从0开始
+						key_num: null,
+						// 组件style
+						params:{									
+							//主标题大小
+							fontSize: '18px',
+							// 文字颜色
+							subfontSize:'14px',
+							// 对齐方向
+							alignPosition: 'left',
+							// 文字颜色
+							textColor: '',
+							// 背景颜色
+							bgColor: '',
+						},
+						data:{
+							// 主标题
+							title: '主标题',
+							title1:'',
+							// 副标题
+							subTitle:'副标题',
+							subTitle1:'',
+							// 是否显示副标题
+							subTitleState:'1'
+
+						},
+					}
 			
 				},
 				methods: {
@@ -502,7 +621,7 @@
 							that.roObj['key_num'] = that.backData.length;
 							/*深克隆=>页面渲染-data*/
 							that.backData.push(clones(that.roObj));
-//							console.log(that.backData[0]['id']);
+							//console.log(that.backData[0]['id']);
 							/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
 							 * 该函数-'最后'执行的语句;
 							 * **/
@@ -539,11 +658,40 @@
 							}
 							return false;
 						}
-						
-						
-						
+						// 标题
+						if(_id === "titleId"){
+							that.titObj['key_num'] = that.backData.length;
+							that.backData.push(clones(that.titObj));
+							/*改if语句-放在最后*/
+							if(that.backData[0]['id'] == undefined){
+								that.backData.shift();
+								that.backData[0]['key_num'] = 0;
+								console.log('清除掉-无用的值（数据双向绑定！）！');
+							}
+							return false;
+						}
+												
+					},
+
+					//输入的时候 把当前的主标题换成更换后的主标题
+					changTitle(){    
+						if( this.backData[this.puStateObj.key_num].data.title1 !== ''){
+							this.backData[this.puStateObj.key_num].data.title = this.backData[this.puStateObj.key_num].data.title1;
+						}else{
+							this.backData[this.puStateObj.key_num].data.title = '主标题'
+						}
 						
 					},
+					//输入的时候 把当前的副标题换成更换后的副标题
+					changsubTitle(){   
+						if( this.backData[this.puStateObj.key_num].data.subTitle1 !== ''){
+							this.backData[this.puStateObj.key_num].data.subTitle = this.backData[this.puStateObj.key_num].data.subTitle1;
+						}else{
+							this.backData[this.puStateObj.key_num].data.subTitle = '主标题'
+						} 
+					},
+
+
 					/*编辑对应的模板*/
 					editMode(_id,_key){
 						console.log('点击对应模板:',_id,_key);
@@ -556,7 +704,8 @@
 					/*保存-模板*/
 					depositFun(){
 						console.log('保存模板！！',this.backData);
-					} 
+					}
+
 					
 				},
 				
