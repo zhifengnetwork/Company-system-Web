@@ -93,60 +93,27 @@
 									<!-- 按钮组 拖拽div -->
 									<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<!--模块 box-->
-										<div class="modle_box">
-											<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
-												<div   class="botton-scope">
-													<a href="unsafe:javascript:;">
-														<div class="modle_mod_nav"  style="width: 20%;">
-															<div class="modle_mod_img">
-																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+										<div class="modle_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+												<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);" :style="{backgroundColor:v.params.iconColor}">
+													<div   class="botton-scope" v-for="item in v.data.iconList" v-show="item.id!=5||v.params.iconNum!='25%'">
+														<a :href="item.location">
+															<div class="modle_mod_nav"  :style="{width: v.params.iconNum}">
+																<div class="modle_mod_img">
+																	<img   :src="item.url" style=" height: 39px;" :style="{borderRadius:v.params.iconStyle}">
+																</div>
+																<div class="modle_mod_text" :style="{color:item.siezColor}">{{item.text}}</div>
 															</div>
-															<div class="modle_mod_text">按钮文字</div>
-														</div>
-													</a>
-												</div>
-												<div class="botton-scope">
-													<a href="unsafe:javascript:;">
-														<div class="modle_mod_nav"  style="width: 20%;">
-															<div class="modle_mod_img">
-																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
-															</div>
-															<div class="modle_mod_text">按钮文字</div>
-														</div>
-													</a>
-												</div>
-												<div class="botton-scope">
-													<a href="unsafe:javascript:;">
-														<div class="modle_mod_nav"  style="width: 20%;">
-															<div class="modle_mod_img">
-																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
-															</div>
-															<div class="modle_mod_text">按钮文字</div>
-														</div>
-													</a>
-												</div>
-												<div class="botton-scope">
-													<a href="unsafe:javascript:;">
-														<div class="modle_mod_nav"  style="width: 20%;">
-															<div class="modle_mod_img">
-																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
-															</div>
-															<div class="modle_mod_text">按钮文字</div>
-														</div>
-													</a>
-												</div>
-												<div class="botton-scope">
-													<a href="unsafe:javascript:;">
-														<div class="modle_mod_nav"  style="width: 20%;">
-															<div class="modle_mod_img">
-																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
-															</div>
-															<div class="modle_mod_text">按钮文字</div>
-														</div>
+															
 													</a>
 												</div>
 											</div>
-										</div>
+												<!--删除按钮 wrap-->
+											<div class="cursor_wrap">
+													<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+												</div>
+												<!--选中-虚框-->
+												<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+											</div>
 									</div>
 
 									<!--标题模块 box，拖拽的div-->
@@ -323,6 +290,62 @@
 						</div>
 					</div>
 
+					<div class="edit_modle" v-show="puStateObj['id'] == 'bottonsId'">
+							<div  class="v-scope"><div class="ve-panel-editor-title ">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
+								  <div class="ve-panel-editor-line ng-scope clearfloat">
+										  <div class="ve-panel-editor-name">图标样式</div>
+										  <div class="ve-panel-editor-con" >
+												  <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="0"  class="ve-pristine ve-untouched ve-valid"> 正方形</label>
+												  <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="100%"  class="ve-pristine ve-untouched ve-valid"> 圆形</label>
+										  </div>
+								  </div>
+								  <div class="fe-panel-editor-line ng-scope clearfloat">
+										  <div class="ve-panel-editor-name">按钮数量</div>
+										  <div class="ve-panel-editor-con">
+												  <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="25%" v-model="backData[puStateObj['key_num']].params.iconNum" class="ve-pristine ve-untouched ve-valid"> 四个按钮</label>
+												  <label style="cursor:pointer; margin-right: 10px;"><input type="radio" name="M1555639821352_num" value="20%" v-model="backData[puStateObj['key_num']].params.iconNum" class="ve-pristine ve-untouched ve-valid"> 五个按钮</label>
+										  </div>
+								  </div>
+								  <div class="ve-panel-editor-line ng-scope clearfloat">
+										  <div class="ve-panel-editor-name">背景颜色</div>
+										  <div class="ve-panel-editor-con">
+												  <input class="ve-panel-editor-input2 ve-pristine ve-untouched ve-valid" type="color" v-model="backData[puStateObj['key_num']].params.iconColor">
+										  </div>
+								  </div>
+								  <div v-for="(item,index) in backData[puStateObj['key_num']].data.iconList"  class="ve-scope" v-show="item.id!=5||backData[puStateObj['key_num']].params.iconNum!='25%'">
+										  <div class="ve-panel-editor-line2">
+												  <div class="ve-panel-editor-goodimg"  style="height:120px; width:110px;">
+														  <img :src="item.url" width="100%" height="100%" :class="{hide:ishide}">
+														  <div class="ve-panel-editor-goodimg-t1"  style="line-height:120px;"  @click="upload(index)">
+															  <i class="fa fa-plus-circle"></i> 选择图片</div>
+														  <div class="ve-panel-editor-goodimg-t2 "  style="width:110px;" :class="{hide:ishide}">重新选择图片</div>
+												  </div>
+												  <div class="ve-panel-editor-line2-right">
+														  <div class="ve-panel-editor-line">
+																  <div class="ve-panel-editor-name">按钮文字</div>
+																  <div class="ve-panel-editor-con">
+																		  <input class="ve-panel-editor-input1 ve-pristine ve-valid ve-touched" style="width:256px;" value="" v-model="item.texts" placeholder="请填写按钮文字" @keyup="text(index,item)">
+																  </div>
+														  </div>
+														  <div class="ve-panel-editor-line">
+																  <div class="ve-panel-editor-name">链接地址</div>
+																  <div class="ve-panel-editor-con">
+																		  <input class="ve-panel-editor-input3 ve-pristine ve-valid ve-touched" value=""  placeholder="请手动输入链接(请以http://开头)或选择系统链接" style="width:175px;" @keyup="imgA(index,item.id)" v-model="item.newLoc">
+																		  <div class="ve-panel-editor-input4" >系统连接</div>
+																  </div>
+														  </div>
+														  <div class="ve-panel-editor-line">
+																  <div class="ve-panel-editor-name">文字颜色</div>
+																  <div class="ve-panel-editor-con">
+																		  <input class="ve-panel-editor-input2 ve-pristine ve-untouched ve-valid" type="color" v-model="item.siezColor" >
+																  </div>
+														  </div>
+												  </div>
+										  </div>
+								  </div>
+						  </div>
+						 </div>
+
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -389,6 +412,61 @@
 			<div class="bottom_wrap">
 				<p class="bottom_wrap_deposit hover_box" @click="depositFun()">保存模板</p>
 			</div>
+				<!-- 按钮上传图片 -->
+				<div  v-if="popup" style=" width: 450px; height: 300px; position: absolute; z-index: 811213; left: 624px; top: 220px;" class="ke-dialog-default ke-dialog">
+						<div class="ke-dialog-content">
+							<div class="ke-dialog-header">图片
+								<span class="ke-dialog-icon-close" title="关闭" @click="closePopup()"></span>
+							</div>
+							<div class="ke-dialog-body" style="height: 238px;">
+								<div style="padding:20px;">
+									<div style="display:block;" class="ke-tabs">
+										<ul class="ke-tabs-ul clearfloat">
+											<li class="ke-tabs-li" @click="liSelected($event)"  :data-index="1"  :class="{selected:inpop==1}">网络图片</li>
+											<li class="ke-tabs-li"  @click="liSelected($event)" :data-index="2"  :class="{selected:inpop==2}">本地上传</li>
+										</ul>
+									</div>
+									<div class="tab1" v-show="inpop==1">
+										<div class="ke-dialog-row">
+											<label for="remoteUrl" style="width:60px;">图片地址</label>
+											<input type="text" id="remoteUrl" class="ke-input-text" name="url" value="" style="width:200px;" v-model="imgUrlw"> &nbsp;
+											<span class="ke-button-common ke-button-outer">
+												<input type="button" class="ke-button-common ke-button" name="viewServer" value="图片空间">
+											</span>
+										</div>
+											<div class="ke-dialog-row">
+												<label for="remoteTitle" style="width:60px;">图片说明</label>
+												<input type="text" id="remoteTitle" class="ke-input-text" name="title" value="" style="width:200px;">
+											</div>
+										</div>
+										<div class="tab2" v-show="inpop==2">
+											<iframe name="kindeditor_upload_iframe_1555924276500" style="display:none;">
+											</iframe>
+											<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="kindeditor_upload_iframe_1555924276500" action="/member/upload_json.php?TableField=web_article&amp;dir=image">
+												<div class="ke-dialog-row"><label style="width:60px;">上传文件</label>
+													<input type="text" name="localUrl" class="ke-input-text" tabindex="-1" style="width:200px;" readonly="true"> &nbsp;<div class="ke-inline-block ke-upload-button"><div class="ke-upload-area">
+														<span class="ke-button-common"><input type="button" class="ke-button-common ke-button" value="浏览..."></span>
+														<input type="file" class="ke-upload-file" name="imgFile" tabindex="-1" style="width: 60px;" @change="uploadImg">
+													</div>
+												</div>
+												<input type="button" class="ke-upload-button" value="浏览..." style="display: none;">
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="ke-dialog-footer">
+										<span class="ke-button-common ke-button-outer ke-dialog-yes" title="确定" @click="Urlw()">
+											<input class="ke-button-common ke-button" type="button" value="确定">
+										</span>
+										<span class="ke-button-common ke-button-outer ke-dialog-no" title="取消">
+											<input class="ke-button-common ke-button" type="button" value="取消" @click="closePopup()">
+										</span>
+									</div>
+								</div>
+										<div class="ke-dialog-shadow"></div>
+									</div>
+				<div  v-if="popup" style=" width: 1697px; height: 2154px; position: absolute; left: 0px; top: 0px; z-index: 811212;" class="ke-dialog-mask"></div>
 		</div>
 
 		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
@@ -438,7 +516,17 @@
 			
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
-				data: {					
+				data: {			
+					// 按钮组上传图片状态
+					popup:false,
+					// 按钮组tab切换
+					inpop:1,
+					// 图片路径
+					imgUrlw:"",
+					// 按钮图片id
+					imgId:"",
+					// 图片显示状态
+					ishide:true,		
 					/*组件-选项*/
 					componentTerm: [
 						{name:"轮播",id:'rotationId'},
@@ -539,13 +627,15 @@
 							iconNum: '20%',
 							/*背景颜色*/
 							iconColor: '',
+							data:{
 							iconList:[
-								{id:'1',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-								{id:'2',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-								{id:'3',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-								{id:'4',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
-								{id:'5',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39',show:0}
+								{id:'1',text:'按钮文字',texts:"",location:'javascript:;',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'',newLoc:'',},
+								{id:'2',text:'按钮文字',texts:"",location:'javascript:;',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'',newLoc:'',},
+								{id:'3',text:'按钮文字',texts:"",location:'javascript:;',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'',newLoc:'',},
+								{id:'4',text:'按钮文字',texts:"",location:'javascript:;',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'',newLoc:'',},
+								{id:'5',text:'按钮文字',texts:"",location:'javascript:;',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'',newLoc:'',}
 							]	
+						}	
 						}
 					},
 
@@ -671,8 +761,53 @@
 							return false;
 						}
 												
+					},// 按钮组文字
+					text(index,id){
+                        //输入的时候 把当前的内容换成更换后的
+						if(!this.backData[this.puStateObj.key_num].data.iconList[index].texts==""){
+							this.backData[this.puStateObj.key_num].data.iconList[index].text=this.backData[this.puStateObj.key_num].data.iconList[index].texts;
+						}else{
+							this.backData[this.puStateObj.key_num].data.iconList[index].text='按钮文字'
+						}
 					},
-
+					//图片跳转
+					imgA(index,id){
+                        //输入的时候 把当前的内容换成更换后的
+						if(!this.backData[this.puStateObj.key_num].data.iconList[index].texts==""){
+							this.backData[this.puStateObj.key_num].data.iconList[index].location=this.backData[this.puStateObj.key_num].data.iconList[index].newLoc;
+						}else{
+							this.backData[this.puStateObj.key_num].data.iconList[index].text='javascript:;'
+						}
+					},
+					//按钮上传图片
+					upload(index){
+						  this.imgIndex = index;
+						  this.popup=true;
+					},
+					//关闭按钮上传图片
+					closePopup(){
+						  this.popup=false;
+					},
+					//上传图片tab切换
+					liSelected(e){
+						this.inpop = e.target.dataset.index
+					},
+					//上传图片路径
+					Urlw(){
+								//输入的时候 把当前的内容换成更换后的
+								if(!this.backData[this.puStateObj.key_num].data.iconList[this.imgIndex].url==""){
+									this.backData[this.puStateObj.key_num].data.iconList[this.imgIndex].url=this.imgUrlw;
+									this.ishide=false
+									this.imgUrlw==''
+								}else{
+									this.backData[this.puStateObj.key_num].data.iconList[this.imgIndex].text='../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg'
+									this.ishide=true
+								}
+								this.popup=false;
+					},//按钮图片本地上传
+					uploadImg(e){
+						
+					},
 					//输入的时候 把当前的主标题换成更换后的主标题
 					changTitle(){    
 						if( this.backData[this.puStateObj.key_num].data.title1 !== ''){
