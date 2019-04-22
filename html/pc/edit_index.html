@@ -456,6 +456,7 @@
 					/*删除对应=>data*/
 					delDataFun(_index){
 						console.log("删除index:",_index);
+						console.log("后台data:",this.backData.length);
 						if(this.backData.length == 1){
 							/*根据对应index=> 删除*/
 							this.backData.splice(_index,1,{params:{},data:{}});
@@ -470,7 +471,13 @@
 							return false;
 						}
 						this.backData.splice(_index,1);
-						for(var l=_index;l<backData.length;l++){
+						/*初始化=>防止=>编辑-对应页面(报错)*/
+						this.puStateObj = {
+							id: null,
+							/*初始化*/
+							key_num: 0,
+						}
+						for(var l=_index;l<this.backData.length;l++){
 							this.backData[l]['key_num'] = l;
 						}
 						console.log('删除后-对应的data:',this.backData);
