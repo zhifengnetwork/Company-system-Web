@@ -56,7 +56,7 @@
 							<!--隐藏滚动条-->
 							<div class="html_box_new">
 								<!--拖拽-包着拖拽的div-->
-								<div class="drag_box" v-for="(v,i) in backData"  
+								<div class="drag_box" v-for="(v,i) in dataobj"  
 									draggable="true" 
 									@dragstart="handleDragStart($event, v)" 
 									@dragover.prevent="handleDragOver($event, v)" 
@@ -66,13 +66,13 @@
 									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<div class="slide">
 											<div class="slide_item">
-												<img  :src="v.data.imgUrl[0]" alt="" />
+												<img  :src="roObj.data.imgUrl[0]" alt="" />
 											</div>
-											<div class="slide_but" :style="{'text-align':v.params.butPosition}">
+											<div class="slide_but" :style="{'text-align':roObj.params.butPosition}">
 												<!--第一个，模拟点击时颜色-->
-												<span :class="v.params.butStyle" :style="{'background':v.params.clickColor}"></span>
-												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
-												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.clickColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
 											</div>
 										</div>
 										<div class="cursor_box remove_ele">
@@ -100,7 +100,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="botton-scope">
+												<div   class="botton-scope">
 													<a href="unsafe:javascript:;">
 														<div class="modle_mod_nav"  style="width: 20%;">
 															<div class="modle_mod_img">
@@ -110,7 +110,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="botton-scope">
+												<div   class="botton-scope">
 													<a href="unsafe:javascript:;">
 														<div class="modle_mod_nav"  style="width: 20%;">
 															<div class="modle_mod_img">
@@ -120,7 +120,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="botton-scope">
+												<div   class="botton-scope">
 													<a href="unsafe:javascript:;">
 														<div class="modle_mod_nav"  style="width: 20%;">
 															<div class="modle_mod_img">
@@ -130,7 +130,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="botton-scope">
+												<div   class="botton-scope">
 													<a href="unsafe:javascript:;">
 														<div class="modle_mod_nav"  style="width: 20%;">
 															<div class="modle_mod_img">
@@ -162,27 +162,29 @@
 						<div class="edit_slide">
 							<div class="slide_title">轮播设置</div>
 							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮形状</span>										
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="square">正方形</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
+								<span class="edit_slide_content_title">按钮形状</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="rectangle">长方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="square">正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="roundness">圆形</label>
 							</div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">按钮位置</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="left">按钮居左</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="center">按钮居中</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="right">按钮居右</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="left">按钮居左</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="center">按钮居中</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="right">按钮居右</label>
 
 							</div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">按钮背景颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.butColor" value="backData[puStateObj['key_num']].params.butColor">
+								<input type="color" v-model="roObj.params.butColor">
 							</div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">按钮点击颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
+								<input type="color" v-model="roObj.params.clickColor" value="roObj.params.clickColor">
 							</div>
-							
+							<div class="edit_slide_content edit_slide_content_padding">
+								<p class="edit_slide_content_button" @click="depositFun(puStateObj['id'],puStateObj['key_num'])">保存设置</p>
+							</div>
 						</div>		
 					</div>
 					
@@ -246,11 +248,6 @@
 				
 					<p class="phone_bottom"></p>
 				</div>
-			</div>
-			
-			<!--底部 wrap-->
-			<div class="bottom_wrap">
-				<p class="bottom_wrap_deposit hover_box" @click="depositFun()">保存模板</p>
 			</div>
 		</div>
 
@@ -324,18 +321,43 @@
 					 * **/
 					puStateObj: {
 						id: null,
-						/*初始化*/
-						key_num: 0,
+						key_num: null,
 					},
-					/* 页面渲染data || 传个后台-data ，对象形式*/
+					/*（pc端）渲染-组件，数组形式*/
+					dataobj: [
+						//数据格式
+						/*{
+							id: _id,
+							key_num: '',
+						}*/
+					],
+					/*传个后台-data ，对象形式*/
 					backData: [
-						/**初始化=>生产对应组件=>删除第一条数据array[0]。
-						 * 如果，编辑页面=>先删除-下面的数据。
-						 * **/
-						{
-							params:{},
-							data:{}
-						},
+						/*固定=>最后（）还是要删除的*/
+						/*数据格式*/
+//						{
+//							/*组件id*/
+//							id:"rotationId",
+//							/**组件名*/
+//							temp:"rotation",
+//							/**组件style*/
+//							params:{									
+//								/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+//								butStyle: 'rectangle',
+//								/*left=>左，center=>中间，right=>右*/
+//								butPosition: 'center',
+//								/*按钮颜色*/
+//								butColor: '',	
+//							},
+//							data:{
+//								/*轮播的图片路径*/
+//								imgUrl:[
+//									'../../img/0005.png',
+//									'../../img/0005.png',
+//									'../../img/0005.png',	
+//								],
+//							},
+//						}
 					],
 					/*轮播图，数据初始化*/
 					roObj:{
@@ -370,7 +392,7 @@
 						/**组件id*/
 						id:"searchId",
 						/**组件名*/
-						temp:"search",
+						temp:"rotation",
 						/*页面渲染-组件位置，从0开始*/
 						key_num: null,
 						/**组件style*/
@@ -432,63 +454,76 @@
 							return
 						}
 						/*pc数据渲染的data*/
-						const newItems = [...this.backData]
+						const newItems = [...this.dataobj]
 						const src = newItems.indexOf(this.dragging)
 						const dst = newItems.indexOf(item)
 
 						newItems.splice(dst, 0, ...newItems.splice(src, 1));
 						/*重置--pc数据渲染的data*/
-						this.backData = newItems;
-						console.log('传-后台=>"拖拽" ',this.backData);
+						this.dataobj = newItems;
+						/*(存储)重新排序=>传给后台的数据*/
+						var thisBackData = [];
+						/*因为-拖拽-改变data的位置，重新编辑（传给后台的数据）*/
+						for(var k=0;k<this.dataobj.length;k++){
+							/*pc渲染data-排序*/
+							this.dataobj[k]['key_num'] = k;
+							for(var j=0;j<this.backData.length;j++){
+								if(this.dataobj[k]['id'] == this.backData[j]['id'] ){
+									/*console.log(333,this.backData[j]);*/
+									/*找到对应的id，放在thisBackData*/
+									thisBackData[k] = this.backData[j];
+								}
+							}
+							
+						}
+						/*console.log('前台页面渲染data:',this.dataobj);*/
+						/*通过深克隆，赋值数据*/
+						this.backData = clones(thisBackData);
+						/*初始化*/
+						thisBackData = [];	
+						console.log('后台666',this.backData);
+						
 					},
 					/* 拖拽 >>*/
 					/*组件选项-按钮*/
 					comTremFun(_id){
 						var that = this;
+						/*存储当前的数据*/
+						var thisState = {
+							id: _id,
+							/*pc渲染数据=>下标=> 编辑页面*/
+							key_num: that.dataobj.length,
+						}
 						/*轮播图*/
 						if(_id === 'rotationId'){
-							/*赋值对应的模块=>页面位置key_num*/
-							that.roObj['key_num'] = that.backData.length;
-							/*深克隆=>页面渲染-data*/
-							that.backData.push(clones(that.roObj));
-//							console.log(that.backData[0]['id']);
-							/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
-							 * 该函数-'最后'执行的语句;
-							 * **/
-							if(that.backData[0]['id'] == undefined){
-								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							/*pc端页面渲染-data*/
+							that.dataobj.push(thisState);
+//							that.dataobj.push(clones(thisState));
+//							console.log('当前数据渲染1',that.dataobj);
+							/*赋值对应的模块=>页面位置（PC或APP）*/
+							that.roObj['key_num'] = thisState['key_num'];
+							/*APP页面渲染-data*/
+							that.backData.push(that.roObj);
+//							that.backData.push(clones(that.roObj));
 							console.log('传给后台数据',that.backData);
 							return false;
-							
 						}
 						/*搜索框*/
 						if(_id === "searchId"){
-							that.seObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.seObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined){
-								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							that.dataobj.push(thisState);
+							that.seObj['key_num'] = thisState['key_num'];
+							that.backData.push(that.seObj);
+							console.log('传给后台数据',that.backData);
 							return false;
 						}
 						/*按钮组*/
 						if(_id === "bottonsId"){
-							that.boObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.boObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined){
-								that.backData.shift();
-								this.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							that.dataobj.push(thisState);
+							that.boObj['key_num'] = thisState['key_num'];
+							that.backData.push(that.boObj);
+							console.log('传给后台数据',that.backData);
 							return false;
 						}
-						
 						
 						
 						
@@ -501,14 +536,47 @@
 							key_num: _key
 						}
 						console.log('对应的模板：',this.puStateObj);
+						/*在后台数据中=>存在，同时=>id对得上=>数据双向绑定*/
+						if(this.backData[_key] && _id === this.backData[_key]['id']){
+							console.log('编辑--对应模板！edit');
+							this.roObj = clones(this.backData[_key]);
+						}
+//						console.log('对应的模板-传后台数据',this.backData);
 					},	
-					/*保存-模板*/
-					depositFun(){
-						console.log('保存模板！！',this.backData);
+					/*保存-对应模板设置*/
+					depositFun(_id,_keyNum){
+						console.log(6969,_id,_keyNum);
+						/*在后台数据中=>存在，同时=>id对得上=>存储*/
+						if(this.backData[_keyNum] && _id === this.backData[_keyNum]['id']){
+							console.log('保存--对应模板..');
+							if(_id === "rotationId"){
+								this.backData[_keyNum] = clones(this.roObj);
+								console.log('传后台数据',this.backData);
+								this.roObj = {
+									id:"rotationId",
+									temp:"rotation",
+									key_num: null,
+									params:{									
+										butStyle: 'rectangle',
+										butPosition: 'center',
+										butColor: '#000000',	
+										clickColor: '#f5f5f5',
+									},
+									data:{
+										imgUrl:[
+											'../../img/0005.png',
+											'../../img/0005.png',
+											'../../img/0005.png',	
+										],
+									},
+								}
+								
+								
+							}
+						}
 					} 
 					
-				},
-				
+				}
 			});
 			
 		</script>
