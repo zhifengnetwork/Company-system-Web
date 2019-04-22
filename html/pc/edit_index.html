@@ -68,7 +68,7 @@
 											<div class="slide_item">
 												<img  :src="roObj.data.imgUrl[0]" alt="" />
 											</div>
-											<div class="slide_but" :style="{'text-align':roObj.params.butPosition}">
+											<div class="slide_but" :class="roObj.params.butPosition">
 												<!--第一个，模拟点击时颜色-->
 												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.clickColor}"></span>
 												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
