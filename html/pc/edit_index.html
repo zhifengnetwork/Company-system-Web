@@ -88,6 +88,7 @@
 											</form>
 										</div>
 									</div>
+
 									<!-- 按钮组 拖拽div -->
 									<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<!--模块 box-->
@@ -127,8 +128,15 @@
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
-									<!--商品组-->
 
+									<!--公告模板 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'noticeId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="notice">
+											<i></i>
+											<div class="more"></div>
+										</div>	
+									</div>
+									
 								</div>
 
 							</div>
