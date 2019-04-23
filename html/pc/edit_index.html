@@ -159,7 +159,7 @@
 								<!--公告模板 box，拖拽的div-->
 								<div class="modle_box" v-if="v.id == 'noticeId'? true:''" :key="v.id"
 									@click="editMode(v.id,v.key_num)">
-									<!-- <div class="notice_move"></div> -->
+									<div class="notice_move"></div>
 									<div class="notice" :style="{backgroundColor:v.params.bgColor}">
 										<div class="notice_icon">
 											<img src="../../img/pc/notice-icon.png" />
@@ -177,11 +177,11 @@
 										<div class="more" :class="{hide:v.params.moreState == 0}"><a v-bind:href="v.data.moreUrl">更多</a></div>
 									</div>
 									<!--删除按钮 wrap-->
-									<!-- <div class="cursor_wrap">
+									<div class="cursor_wrap">
 										<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
-									</div> -->
+									</div>
 									<!--选中-虚框-->
-									<!-- <p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p> -->
+									<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 								</div>
 
 							</div>
