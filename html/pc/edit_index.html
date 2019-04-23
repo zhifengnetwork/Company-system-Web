@@ -5,9 +5,7 @@
 		<meta charset="utf-8" />
 		<title>客户_手动创建页面_给固定模板</title>
 		<link rel="stylesheet" href="../../css/pc/public/public.css" />
-		<!--<link rel="stylesheet" href="../../css/phone/public/swiper.min.css" />-->
 		<link rel="stylesheet" href="../../css/pc/edit_index.css" />
-		<link rel="stylesheet" href="">
 	</head>
 	<style>
 
@@ -148,7 +146,126 @@
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
 									<!--商品组-->
-									
+									<!--商品组-->
+									<div class="modle_box" v-if="v.id == 'productListId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="modle_shop clearfloat">
+											<div class="modle_shop_title">请填写商品组标题</div>
+											<!-- 显示一个 -->
+											<div class="modle_shop_item">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<div class="modle_shop_item">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<!-- 显示俩个--(结构一样) -->
+											<div class="modle_shop_item2">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<div class="modle_shop_item2">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<!-- 显示三个--(结构一样) -->
+											<div class="modle_shop_item3">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<div class="modle_shop_item3">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+											<div class="modle_shop_item3">
+												<div class="modle_shop_img">
+													<img src="../../img/0004.png" alt="">
+													<div class="modle_shop_attr"></div>
+													<div class="modle_shop_price">
+														￥66666.00<s>￥88888.00</s>
+													</div>
+												</div>
+												<div class="modle_shop_info">
+													<div class="modle_shop_name">
+														富土康带盐人
+													</div>
+													<div class="modle_shop_buybtn"></div>
+												</div>
+											</div>
+										</div>
+										<!--删除按钮 wrap-->
+										<div class="cursor_wrap">
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+										</div>
+										<!--选中-虚框-->
+										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+									</div>
 									
 									
 								</div>
@@ -166,7 +283,7 @@
 					<!-- 轮播图--编辑 -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
 						<div class="edit_slide">
-							<div class="slide_title">轮播设置</div>
+							<div class="slide_title">轮播设置<span>提示:轮播图片的大小必须一样哦~</span></div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">按钮形状</span>
 								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
@@ -190,7 +307,7 @@
 							</div>
 							<!--轮播图-上传图片 -->
 							<div class="edit_slide_addimg"  v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
-								<div class="edit_slide_img" @click="call_off(i)">
+								<div class="edit_slide_img hover_box" @click="call_off(i)">
 									<img :src="v.imgUrl" alt="">
 								</div>
 								<div class="edit_slide_link">
@@ -198,9 +315,67 @@
 									<button>系统连接</button>
 								</div>
 								<!--删除按钮-->
-								<div class="edit_slide_del">X</div>
+								<div class="edit_slide_del" @click="">
+									<img src="../../img/pc/delete_icon.png" alt="">
+								</div>
 							</div>
 							
+						</div>
+					</div>
+					
+					<!-- 商品组--编辑 -->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'productListId'">
+						<div class="edit_shop">
+							<div class="slide_title">商品设置<span>提示: 商品组的图标可通过替换目录文件自定义</span></div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">样式选择</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">横排显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">双排显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">三排显示</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">显示标题</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">不显示</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">分组标题</span>
+								<input type="text" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏">
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">标题颜色</span>
+								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">商品属性</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">无</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">推荐</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">热销</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">新上</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">包邮</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">限时</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">促销</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">商品价格</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">不显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">原价+现价</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">只显示现价</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">商品名称</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">不显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">显示</label>
+								<span>提示:隐藏商品名称将默认隐藏购买按钮</span>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">购买按钮</span>
+								<label class="edit_slide_content_label"><input type="radio" value="">不显示</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">样式一</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">样式二</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">样式三</label>
+								<label class="edit_slide_content_label"><input type="radio" value="">样式四</label>
+							</div>
 						</div>
 					</div>
 					
@@ -210,31 +385,38 @@
 						<div class="slide_mask_content">
 							<div class="mask_content_title">
 								<span>图片</span>
-								<span @click="call_off"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
+								<span @click="call_off()"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
 							</div>
 							<div class="mask_content">
 								<div class="mask_content_tab clearfloat">
-									<span :class="{active:active.edit_slide}" @click="tabs">网络图片</span>
-									<span :class="{active:!active.edit_slide}" @click="tabs">本地上传</span>
+									<span :class="{active:active.edit_slide}" @click="tabs">本地上传</span>
+									<span :class="{active:!active.edit_slide}" @click="tabs">网络图片</span>
 								</div>
-								<div class="mask_content_list1" v-if="active.edit_slide">
+								<div class="mask_content_list2" v-if="active.edit_slide">
 									<div class="mask_content_item">
-										<label>图片地址</label><input type="text"><button>图片空间</button>
-									</div>
-									<div class="mask_content_item">
-										<label>图片说明</label><input type="text">
-									</div>
-								</div>
-								<div class="mask_content_list2" v-if="!active.edit_slide">
-									<div class="mask_content_item">
-										<label>上传文件</label><input type="text"><input class="type1" type="file">
+										<label>上传文件</label>
+										<input type="text" v-model="upImages.name">
+										<input class="type1" type="file" @change="up_imageFun($event)" accept="image/*">
+										<canvas id="canvas" hidden></canvas>
 									</div>
 								</div>
+								<div class="mask_content_list1" v-if="!active.edit_slide">
+									<div class="mask_content_item">
+										<label>图片地址</label>
+										<input type="text">
+										<!--<button>图片空间</button>-->
+									</div>
+									<!--<div class="mask_content_item">
+										<label>图片说明</label>
+										<input type="text">
+									</div>-->
+								</div>
+								
 							</div>
 							<div class="mask_content_btn">
 								<div class="btn_wrap">
-									<button>确定</button>
-									<button @click="call_off">取消</button>
+									<button @click="confirmFun()">确定</button>
+									<button @click="call_off()">取消</button>
 								</div>
 							</div>
 						</div>
@@ -329,6 +511,7 @@
 			})
 		</script>
 		<script src="../../js/pc/public/vue.js"></script>
+		<script src="../../js/pc/public/axios.min.js"></script>
 		<script>
 			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
 			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
@@ -412,7 +595,18 @@
 						/*初始化*/
 						key_num: 0,
 					},
-					delState: false,
+					/*点击=>对应上传图片=>index*/
+					upImgInd: null,
+					/*本地-上传图片(单图)-初始化*/
+					upImages: {
+						name: '',
+						baseUrl: '',
+					},
+					/*网络图片-上传-初始化*/
+					networkImg: {
+						name: '',
+						baseUrl: '',
+					},
 					/* 页面渲染data || 传个后台-data ，对象形式*/
 					backData: [
 						/**初始化=>生产对应组件=>删除第一条数据array[0]。
@@ -446,16 +640,20 @@
 							/*轮播的图片路径*/
 							images: [
 								{	
+									/*图片名字*/
+									name: '',
 									/*图片路径*/
 									imgUrl: '../../img/0005.png',
 									/*跳转路径*/
 									url: '',
 								},
 								{
+									name: '',
 									imgUrl: '../../img/0005.png',
 									url: '',
 								},
 								{
+									name: '',
 									imgUrl: '../../img/0005.png',
 									url: '',
 								}
@@ -544,6 +742,19 @@
 							]
 						}
 
+					},
+					/*商品组*/ 
+					prObj:{
+						/*id*/
+						id: "productListId",
+						temp: 'bottons',
+						key_num: null,
+						params: {
+							
+						},
+						data: {
+
+						}
 					},
 
 				},
@@ -654,6 +865,18 @@
 							}
 							return false;
 						}
+						/*商品组*/
+						if(_id === "productListId") {
+							that.prObj['key_num'] = that.backData.length;
+							that.backData.push(clones(that.prObj));
+							/*改if语句-放在最后*/
+							if(that.backData[0]['id'] == undefined) {
+								that.backData.shift();
+								that.backData[0]['key_num'] = 0;
+								console.log('清除掉-无用的值（数据双向绑定！）！');
+							}
+							return false;
+						}
 
 					},
 					/*编辑对应的模板*/
@@ -673,8 +896,101 @@
 					/*上传图片=>遮罩层(显隐)*/
 					call_off(_index) {
 						this.active.edit_slide_mask = !this.active.edit_slide_mask;
-						console.log('遮罩层:',_index);
+						if(_index != undefined){
+							/*点击'重新选择图片'时=>清除原始数据*/
+							/*本地-单图上传-初始化*/
+							this.upImages = {
+								name: '',
+								baseUrl: '',
+							}
+							/*网络-上传-初始化*/
+							this.networkImg = {
+								name: '',
+								baseUrl: '',
+							}
+							this.upImgInd = _index;
+							console.log('遮罩层:',_index);
+						}
+						
 					},
+					/*图片上传=> "确认"按钮*/
+					confirmFun(){
+						var that = this;
+						if(!that.upImages['baseUrl'] && !that.networkImg['baseUrl']){
+							alert('无数据上传，请选择需要上传的数据!');
+							return false;
+						}
+						console.log('base64=>',that.upImages['baseUrl']);
+						console.log('对应上传的index',that.upImgInd);
+						/*ajax*/
+						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/base_img', {
+							img: that.upImages['baseUrl'],
+						})
+						.then(function (response) {
+							console.log(response);
+							/*当前id*/
+							var thisID = that.puStateObj['id'];
+							/*当前index*/
+							var thisInd = that.puStateObj['key_num'];
+							/*对应上传的图片index=>this.upImgInd*/
+							/*轮播图*/
+							if(thisID == 'rotationId'){
+								that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data'];
+								console.log(that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
+							}
+						})
+						.catch(function (error) {
+							alert(error);
+							console.log(error);
+						});
+					},
+					/*图片上传*/
+					up_imageFun(even){
+						var that = this;
+						var f = even.target.files[0];
+						console.log(f,even.target.files);
+						if(f){
+						    fileType = f.type;  
+						    if(/image\/\w+/.test(fileType)) {  
+						        var fileReader = new FileReader();  
+						        fileReader.readAsDataURL(f);  
+						        fileReader.onload = function(event) {  
+						            var result = event.target.result; //返回的dataURL   
+						            var image = new Image();  
+						            image.src = result;  
+						            //若图片大小大于1M，压缩后再上传，否则直接上传  
+						            if(f.size>1024*1024){     
+						                    image.onload = function() { 
+						                    //创建一个image对象，给canvas绘制使用
+						                    var canvas = document.getElementById("canvas"); 
+						                    canvas.width = image.width;  
+						                    canvas.height = image.height; //计算等比缩小后图片宽高   
+						                    var ctx = canvas.getContext('2d');  
+						                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);  
+						                    var newImageData = canvas.toDataURL(fileType, 0.8); //重新生成图片
+						                   	/*图片=>base64、name*/
+						                   	that.upImages['name'] = f['name'];
+						                   	that.upImages['baseUrl'] = newImageData;
+						                   	console.log('压缩:',that.upImages);
+						                }  
+						            }else{  
+						            	//创建一个image对象，给canvas绘制使用 
+						                image.onload = function() { 
+						                	that.upImages['name'] = f['name'];
+						                	that.upImages['baseUrl'] = result;
+							                console.log('未-压缩:',that.upImages);
+						            	}  
+						            }  
+						        }  
+						    } else {  
+						        alert("请选择图片");  
+						    }  
+						    
+					    }else {
+					    	console.log('取消选择图片！')
+					    }
+					},
+					
 					/*保存-模板*/
 					depositFun() {
 						var that = this;
