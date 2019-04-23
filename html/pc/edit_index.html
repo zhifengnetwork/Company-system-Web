@@ -189,36 +189,18 @@
 								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
 							</div>
 							<!--轮播图-上传图片 -->
-							<div class="edit_slide_addimg">
-								<div class="edit_slide_term clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
-									<div class="edit_slide_img" @click="call_off(i)">
-										<img :src="v.imgUrl" alt="">
-									</div>
-									<div class="edit_slide_link">
-										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
-										<button>系统连接</button>
-									</div>
-									<!--删除按钮-->
-									<div class="edit_slide_del">X</div>
-								</div>
-	                           
-							</div>
-							<!--<div class="edit_slide_addimg">
-								<div class="edit_slide_img" @click="call_off">
-									<img src="../../img/0005.png" alt="">
+							<div class="edit_slide_addimg"  v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+								<div class="edit_slide_img" @click="call_off(i)">
+									<img :src="v.imgUrl" alt="">
 								</div>
 								<div class="edit_slide_link">
-									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" value="#"></label>
+									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
+									<button>系统连接</button>
 								</div>
+								<!--删除按钮-->
+								<div class="edit_slide_del">X</div>
 							</div>
-							<div class="edit_slide_addimg">
-								<div class="edit_slide_img" @click="call_off">
-									<img src="../../img/0005.png" alt="">
-								</div>
-								<div class="edit_slide_link">
-									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" value="#"></label>
-								</div>
-							</div>-->
+							
 						</div>
 					</div>
 					
@@ -593,14 +575,6 @@
 						console.log('传-后台=>"拖拽" ', this.backData);
 					},
 					/* 拖拽 >>*/
-					/*鼠标悬浮*/
-					enter() {
-						console.log('进入');
-					},
-					/*鼠标移除*/
-					leave() {
-						console.log('移除');
-					},
 					/*删除对应=>data*/
 					delDataFun(_index) {
 						console.log("删除index:", _index);
@@ -628,6 +602,7 @@
 							/*初始化*/
 							key_num: 0,
 						}
+						/*对应删除后=>对data渲染数据=>排序*/
 						for(var l = _index; l < this.backData.length; l++) {
 							this.backData[l]['key_num'] = l;
 						}
@@ -691,13 +666,14 @@
 						console.log('对应的模板：', this.puStateObj);
 
 					},
-					/*提交图片tab切换*/
+					/*遮罩层-tab切换*/
 					tabs() {
 						this.active.edit_slide = !this.active.edit_slide;
 					},
-					/*提交图片显示隐藏*/
-					call_off() {
+					/*上传图片=>遮罩层(显隐)*/
+					call_off(_index) {
 						this.active.edit_slide_mask = !this.active.edit_slide_mask;
+						console.log('遮罩层:',_index);
 					},
 					/*保存-模板*/
 					depositFun() {
