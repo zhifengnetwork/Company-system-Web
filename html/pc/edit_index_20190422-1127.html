@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>客户_手动创建页面_给固定模板</title>
+		<link rel="stylesheet" href="../../css/pc/public/public.css" />
+		<!--<link rel="stylesheet" href="../../css/phone/public/swiper.min.css" />-->
+		<link rel="stylesheet" href="../../css/pc/edit_index.css" />
+		<link rel="stylesheet" href="">
+	</head>
+  <style>
+ 
+  </style>
+	<body>
+		<div class="wrapper" id="edit_app_wrap">
+			<div class="tab">
+				<ul class="tabs clearfloat">
+					<li class="active">
+						<a href="" data-toggle="0">首页编辑</a>
+					</li>
+					<li>
+						<a href="" data-toggle="1">分类</a>
+					</li>
+					<li>
+						<a href="" data-toggle="2">购物车</a>
+					</li>
+					<li>
+						<a href="" data-toggle="3">个人中心</a>
+					</li>
+				</ul>
+			</div>
+			<!--首页编辑-->
+			<div class="content clearfloat">
+				<!--left box-->
+				<div class="left_box">
+					<!--功能插件-->
+					<div class="left_box_fun_box clearfloat">
+						<p class="fun_box_top">功能插件</p>
+						<div class="fun_box_content clearfloat">
+							<!--项-->
+							<p class="fun_box_content_term"  v-for="(v,i) in componentTerm" @click="comTremFun(v.id)">{{v.name}}</p>
+						</div>
+					</div>
+				</div>
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<!--隐藏滚动条-->
+							<div class="html_box_new">
+								<!--拖拽-包着拖拽的div-->
+								<div class="drag_box" v-for="(v,i) in dataobj"  
+									draggable="true" 
+									@dragstart="handleDragStart($event, v)" 
+									@dragover.prevent="handleDragOver($event, v)" 
+									@dragenter="handleDragEnter($event, v)" 
+									@dragend="handleDragEnd($event, v)">
+									<!--轮播图 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="slide">
+											<div class="slide_item">
+												<img  :src="roObj.data.imgUrl[0]" alt="" />
+											</div>
+											<div class="slide_but" :style="{'text-align':roObj.params.butPosition}">
+												<!--第一个，模拟点击时颜色-->
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.clickColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+												<span :class="roObj.params.butStyle" :style="{'background':roObj.params.butColor}"></span>
+											</div>
+										</div>
+										<div class="cursor_box remove_ele">
+											<!--1、删除按钮，生成html=>删除(remove_ele)-->
+											<p class="cursor_box_del" onclick="removerEle(this)">删除</p >
+										</div>
+									</div>
+									
+									<!--搜索模块 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'searchId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										搜索
+									</div>
+									<!-- 按钮组 拖拽div -->
+									<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<!--模块 box-->
+										<div class="modle_box">
+											<div class="modle_bottons rim-mod-select modle-mod "  style="background-color: rgb(255, 255, 255);">
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+												<div   class="botton-scope">
+													<a href="unsafe:javascript:;">
+														<div class="modle_mod_nav"  style="width: 20%;">
+															<div class="modle_mod_img">
+																<img   src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
+															</div>
+															<div class="modle_mod_text">按钮文字</div>
+														</div>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									
+								</div>
+								
+							</div>
+							<!--隐藏滚动条-->
+							
+						</div>
+					</div>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<p class="phone_bottom"></p>
+				</div>
+				<!--编辑模板 box-->
+				<div class="right_box">
+					<!-- 轮播图--编辑 -->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
+						<div class="edit_slide">
+							<div class="slide_title">轮播设置</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮形状</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="rectangle">长方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="square">正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butStyle" value="roundness">圆形</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮位置</span>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="left">按钮居左</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="center">按钮居中</label>
+								<label class="edit_slide_content_label"><input type="radio" v-model="roObj.params.butPosition" value="right">按钮居右</label>
+
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮背景颜色</span>
+								<input type="color" v-model="roObj.params.butColor">
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮点击颜色</span>
+								<input type="color" v-model="roObj.params.clickColor" value="roObj.params.clickColor">
+							</div>
+							<div class="edit_slide_content edit_slide_content_padding">
+								<p class="edit_slide_content_button" @click="depositFun(puStateObj['id'],puStateObj['key_num'])">保存设置</p>
+							</div>
+						</div>		
+					</div>
+					
+				</div>
+			</div>
+			<!-- 分类 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<iframe src="../phone/classify/classify.html"></iframe>
+						</div>
+					</div>
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
+			<!-- 购物车 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<!--隐藏滚动条-->
+							<!--<div class="html_box_new"">-->
+							<iframe class="html_box_new" src="../phone/shopping_cart/shopping_cart.html" frameborder="0"></iframe>
+							<!--</div>-->
+						</div>
+					</div>
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
+			<!-- 个人中心 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box" style="overflow: hidden;">
+							<!--隐藏滚动条-->
+								<iframe class="html_box_new" src="../phone/my/user.html"></iframe>
+						</div>
+					</div>
+				
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
+		<!--public的js-->
+		<!--<script src="../../js/pc/edit_index.js"></script>-->
+		
+		<script>
+			$(document).ready(function() {
+
+				// tba切换
+				$(".tabs>li>a").click(function(e) {
+					e.preventDefault();
+					var $tar = $(e.target);
+					var index = $tar.attr('data-toggle')
+					if($tar.is("[data-toggle]")) {
+						$tar.parent().addClass('active').siblings().removeClass('active')
+						$('.wrapper').children('.content').eq(index).show().siblings('.content').hide()
+					}
+				})
+
+			})
+		</script>
+		<script src="../../js/pc/public/vue.js"></script>
+		<script>
+			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+			function clones(_type, _memory){
+				var newMemory = null;
+				// 判断传过来的数据类型
+				if(_type instanceof Array) {
+					newMemory = _memory || [];
+				} else {
+					newMemory = _memory || {};
+				}
+				for(var x in _type) {
+					//引用数据类型的 typeof为 object
+					if(typeof _type[x] == "object") {
+						newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+						clones(_type[x], newMemory[x]); //递归
+					} else {
+						// 数据赋值
+						newMemory[x] = _type[x];
+					}
+				}
+				return newMemory;
+			}
+			
+			var newVue = new Vue({
+				el: "#edit_app_wrap",
+				data: {					
+					/*组件-选项*/
+					componentTerm: [
+						{name:"轮播",id:'rotationId'},
+						{name:"搜索框",id:'searchId'},
+						{name:"按钮组",id:'bottonsId'},
+						{name:"店招",id:'signageId'},
+						{name:"商品组",id:'productListId'},
+						{name:"公告",id:'noticeId'},
+						{name:"辅助空白",id:'blankId'},
+						{name:"广告",id:'bannerId'},
+						{name:'标题',id:'titleId'}
+					],
+					
+					/*拖拽需要的元素*/
+					dragging: null,
+					/**
+					 * 公共-对应显示-模板编辑;
+					 * id:判断模块；
+					 * key_num:判断-模块在页面的排序
+					 * **/
+					puStateObj: {
+						id: null,
+						key_num: null,
+					},
+					/*（pc端）渲染-组件，数组形式*/
+					dataobj: [
+						//数据格式
+						/*{
+							id: _id,
+							key_num: '',
+						}*/
+					],
+					/*传个后台-data ，对象形式*/
+					backData: [
+						/*固定=>最后（）还是要删除的*/
+						/*数据格式*/
+//						{
+//							/*组件id*/
+//							id:"rotationId",
+//							/**组件名*/
+//							temp:"rotation",
+//							/**组件style*/
+//							params:{									
+//								/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+//								butStyle: 'rectangle',
+//								/*left=>左，center=>中间，right=>右*/
+//								butPosition: 'center',
+//								/*按钮颜色*/
+//								butColor: '',	
+//							},
+//							data:{
+//								/*轮播的图片路径*/
+//								imgUrl:[
+//									'../../img/0005.png',
+//									'../../img/0005.png',
+//									'../../img/0005.png',	
+//								],
+//							},
+//						}
+					],
+					/*轮播图，数据初始化*/
+					roObj:{
+						/**组件id*/
+						id:"rotationId",
+						/**组件名*/
+						temp:"rotation",
+						/*页面渲染-组件位置，从0开始*/
+						key_num: null,
+						/**组件style*/
+						params:{									
+							/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+							butStyle: 'rectangle',
+							/*'left'=>左，'center'=>中间，'right'=>右*/
+							butPosition: 'center',
+							/*按钮背景颜色，必须是16进制的色值，不能简写*/
+							butColor: '#000000',	
+							/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+							clickColor: '#f5f5f5',
+						},
+						data:{
+							/*轮播的图片路径*/
+							imgUrl:[
+								'../../img/0005.png',
+								'../../img/0005.png',
+								'../../img/0005.png',	
+							],
+						},
+					},
+					/*搜索框，数据初始化*/
+					seObj: {
+						/**组件id*/
+						id:"searchId",
+						/**组件名*/
+						temp:"rotation",
+						/*页面渲染-组件位置，从0开始*/
+						key_num: null,
+						/**组件style*/
+						params:{									
+							/*0=>样式一，1=>样式二*/
+							reStyle: 0,
+							/*文字颜色*/
+							textColor: '#999',
+							/*边框颜色*/
+							borderColor: '#ccc',
+							/*背景颜色*/
+							backColor: '#000',
+						},
+						data:{
+							/*提示文字*/
+							tipeText: '你会了么？',
+						},
+					},
+					// 按钮组，数据初始化
+					boObj: {
+						/*id*/
+						id:"bottonsId",
+						temp:'bottons',
+						key_num: null,
+						params:{
+							/*图标样式*/
+							iconStyle: 0,
+							/*0=>样式一，1=>样式二*/
+							iconNum: '20%',
+							/*背景颜色*/
+							iconColor: '',
+							iconList:[
+								{id:'1',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+								{id:'2',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+								{id:'3',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+								{id:'4',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39'},
+								{id:'5',text:'按钮文字',texts:"",location:'',url:'../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',siezColor:'39',show:0}
+							]	
+						}
+						
+					},
+			
+				},
+				methods: {
+					/*<< 拖拽*/
+					handleDragStart(e, item) {
+						this.dragging = item;
+					},
+					handleDragEnd(e, item) {
+						this.dragging = null
+					},
+					//首先把div变成可以放置的元素，即重写dragenter/dragover
+					handleDragOver(e) {
+						e.dataTransfer.dropEffect = 'move' // e.dataTransfer.dropEffect="move";//在dragenter中针对放置目标来设置!
+					},
+					handleDragEnter(e, item) {
+						e.dataTransfer.effectAllowed = "move" //为需要移动的元素设置dragstart事件
+						if(item === this.dragging) {
+							return
+						}
+						/*pc数据渲染的data*/
+						const newItems = [...this.dataobj]
+						const src = newItems.indexOf(this.dragging)
+						const dst = newItems.indexOf(item)
+
+						newItems.splice(dst, 0, ...newItems.splice(src, 1));
+						/*重置--pc数据渲染的data*/
+						this.dataobj = newItems;
+						/*(存储)重新排序=>传给后台的数据*/
+						var thisBackData = [];
+						/*因为-拖拽-改变data的位置，重新编辑（传给后台的数据）*/
+						for(var k=0;k<this.dataobj.length;k++){
+							/*pc渲染data-排序*/
+							this.dataobj[k]['key_num'] = k;
+							for(var j=0;j<this.backData.length;j++){
+								if(this.dataobj[k]['id'] == this.backData[j]['id'] ){
+									/*console.log(333,this.backData[j]);*/
+									/*找到对应的id，放在thisBackData*/
+									thisBackData[k] = this.backData[j];
+								}
+							}
+							
+						}
+						/*console.log('前台页面渲染data:',this.dataobj);*/
+						/*通过深克隆，赋值数据*/
+						this.backData = clones(thisBackData);
+						/*初始化*/
+						thisBackData = [];	
+						console.log('后台666',this.backData);
+						
+					},
+					/* 拖拽 >>*/
+					/*组件选项-按钮*/
+					comTremFun(_id){
+						var that = this;
+						/*存储当前的数据*/
+						var thisState = {
+							id: _id,
+							/*pc渲染数据=>下标=> 编辑页面*/
+							key_num: that.dataobj.length,
+						}
+						/*轮播图*/
+						if(_id === 'rotationId'){
+							/*pc端页面渲染-data*/
+							that.dataobj.push(thisState);
+//							that.dataobj.push(clones(thisState));
+//							console.log('当前数据渲染1',that.dataobj);
+							/*赋值对应的模块=>页面位置（PC或APP）*/
+							that.roObj['key_num'] = thisState['key_num'];
+							/*APP页面渲染-data*/
+							that.backData.push(that.roObj);
+//							that.backData.push(clones(that.roObj));
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+						/*搜索框*/
+						if(_id === "searchId"){
+							that.dataobj.push(thisState);
+							that.seObj['key_num'] = thisState['key_num'];
+							that.backData.push(that.seObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+						/*按钮组*/
+						if(_id === "bottonsId"){
+							that.dataobj.push(thisState);
+							that.boObj['key_num'] = thisState['key_num'];
+							that.backData.push(that.boObj);
+							console.log('传给后台数据',that.backData);
+							return false;
+						}
+						
+						
+						
+					},
+					/*编辑对应的模板*/
+					editMode(_id,_key){
+						console.log('点击对应模板:',_id,_key);
+						this.puStateObj = {
+							id: _id,
+							key_num: _key
+						}
+						console.log('对应的模板：',this.puStateObj);
+						/*在后台数据中=>存在，同时=>id对得上=>数据双向绑定*/
+						if(this.backData[_key] && _id === this.backData[_key]['id']){
+							console.log('编辑--对应模板！edit');
+							this.roObj = clones(this.backData[_key]);
+						}
+//						console.log('对应的模板-传后台数据',this.backData);
+					},	
+					/*保存-对应模板设置*/
+					depositFun(_id,_keyNum){
+						console.log(6969,_id,_keyNum);
+						/*在后台数据中=>存在，同时=>id对得上=>存储*/
+						if(this.backData[_keyNum] && _id === this.backData[_keyNum]['id']){
+							console.log('保存--对应模板..');
+							if(_id === "rotationId"){
+								this.backData[_keyNum] = clones(this.roObj);
+								console.log('传后台数据',this.backData);
+								this.roObj = {
+									id:"rotationId",
+									temp:"rotation",
+									key_num: null,
+									params:{									
+										butStyle: 'rectangle',
+										butPosition: 'center',
+										butColor: '#000000',	
+										clickColor: '#f5f5f5',
+									},
+									data:{
+										imgUrl:[
+											'../../img/0005.png',
+											'../../img/0005.png',
+											'../../img/0005.png',	
+										],
+									},
+								}
+								
+								
+							}
+						}
+					} 
+					
+				}
+			});
+			
+		</script>
+	</body>
+
+</html>
