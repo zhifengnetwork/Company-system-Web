@@ -90,6 +90,7 @@
 											</form>
 										</div>
 									</div>
+
 									<!-- 按钮组 拖拽div -->
 									<div class="drag_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<!--模块 box-->
@@ -155,6 +156,14 @@
 											<h2 :style="{fontSize:v.params.fontSize}">{{v.data.title}}</h2>
 											<h4 :class="{hide:v.data.subTitleState == 0}" :style="{fontSize:v.params.subfontSize}">{{v.data.subTitle}}</h4>
 										</div>
+									</div>
+
+									<!--公告模板 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'noticeId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="notice">
+											<i></i>
+											<div class="more"></div>
+										</div>	
 									</div>
 									
 								</div>
