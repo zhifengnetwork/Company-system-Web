@@ -159,10 +159,29 @@
 								<!--公告模板 box，拖拽的div-->
 								<div class="modle_box" v-if="v.id == 'noticeId'? true:''" :key="v.id"
 									@click="editMode(v.id,v.key_num)">
-									<div class="notice">
-										<i></i>
-										<div class="more"></div>
+									<!-- <div class="notice_move"></div> -->
+									<div class="notice" :style="{backgroundColor:v.params.bgColor}">
+										<div class="notice_icon">
+											<img src="../../img/pc/notice-icon.png" />
+										</div>
+
+										<div class="scroll_notice">
+											<a href="#" v-bind:href="v.data.noticeUrl" :style="{color:v.params.textColor}">
+												<div class="notice_content" :class="{hide:v.params.rollState == 0}">
+													<marquee scrollamount="3">{{v.data.content}}</marquee>
+												</div>
+												<div class="notice_content" :class="{hide:v.params.rollState == 1}">{{v.data.content}}</div>
+											</a>
+										</div>
+										
+										<div class="more" :class="{hide:v.params.moreState == 0}"><a v-bind:href="v.data.moreUrl">更多</a></div>
 									</div>
+									<!--删除按钮 wrap-->
+									<!-- <div class="cursor_wrap">
+										<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+									</div> -->
+									<!--选中-虚框-->
+									<!-- <p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p> -->
 								</div>
 
 							</div>
@@ -449,6 +468,68 @@
 					</div>
 				</div>
 
+				<!-- 公告编辑 -->
+				<div class="edit_modle" v-show="puStateObj['id'] == 'noticeId'">
+					<div class="edit_notice">
+						<div class="editor_icon"></div>
+						<div class="editor_title">公告设置<span class="tips">Tips:文字不滚动时超出宽度将隐藏</span></div>
+
+						<div class="editor_line">
+							<div class="editor_name">公告内容</div>
+							<div class="editor_con">
+								<input class="editor_input1" placeholder="这里填写公告内容，可设置是否滚动显示" 
+									v-model="backData[puStateObj['key_num']].data.content1" @keyup="changeContent">
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">公告链接</div>
+							<div class="editor_con">
+								<input class="editor_input1" placeholder="请以http://开头(可链接至公众平台文章等)"
+									v-model="backData[puStateObj['key_num']].data.noticeUrl">
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">滚动显示</div>
+							<div class="editor_con">
+								<label><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="1">滚动显示</label>
+								<label><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="0">不滚动</label>								
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">更多按钮</div>
+							<div class="editor_con">
+								<label><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="1">显示</label>
+								<label><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="0">隐藏</label>
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">更多链接</div>
+							<div class="editor_con">
+								<input class="editor_input1" placeholder="请以http://开头(可链接至公众平台公告列表)"
+									v-model="backData[puStateObj['key_num']].data.moreUrl">
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">文字颜色</div>
+							<div class="editor_con">
+								<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+							</div>
+						</div>
+
+						<div class="editor_line">
+							<div class="editor_name">背景颜色</div>
+							<div class="editor_con">
+								<input class="editor_input2" type="color"
+									v-model="backData[puStateObj['key_num']].params.bgColor">
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- 分类 -->
@@ -734,7 +815,7 @@
 							'../../img/0005.png',
 							'../../img/0005.png',
 						],
-					},
+					}
 				},
 				/*搜索框，数据初始化*/
 				seObj: {
@@ -758,7 +839,7 @@
 					data: {
 						/*提示文字*/
 						tipeText: '搜索：输入关键字在店内搜索',
-					},
+					}
 				},
 				// 按钮组，数据初始化
 				btnObj: {
@@ -815,8 +896,36 @@
 						subTitle1: '',
 						// 是否显示副标题
 						subTitleState: '1'
-
+					}
+				},
+				// 公告，数据初始化
+				noticeObj: {
+					// 组件id
+					id: "noticeId",
+					// 组件名
+					temp: "notice",
+					// 页面渲染-组件位置，从0开始
+					key_num: null,
+					// 组件style
+					params: {
+						// 滚动状态
+						rollState:'1',
+						// 更多状态
+						moreState:'1',
+						// 文字颜色
+						textColor: '',
+						// 背景颜色
+						bgColor: ''
 					},
+					data:{
+						// 公告内容
+						content: '这里填写公告内容，可设置是否滚动显示',
+						content1: '',
+						// 公告链接
+						noticeUrl:'',
+						// 更多链接
+						moreUrl:''
+					}
 				}
 
 			},
@@ -938,8 +1047,20 @@
 						}
 						return false;
 					}
-
-				},// 按钮组文字
+					// 公告
+					if (_id === "noticeId") {
+						that.noticeObj['key_num'] = that.backData.length;
+						that.backData.push(clones(that.noticeObj));
+						/*改if语句-放在最后*/
+						if (that.backData[0]['id'] == undefined) {
+							that.backData.shift();
+							that.backData[0]['key_num'] = 0;
+							console.log('清除掉-无用的值（数据双向绑定！）！');
+						}
+						return false;
+					}
+				},
+				// 按钮组文字
 				text(index, id) {
 					//输入的时候 把当前的内容换成更换后的
 					if (!this.backData[this.puStateObj.key_num].data.iconList[index].texts == "") {
@@ -987,6 +1108,7 @@
 				uploadImg(e) {
 
 				},
+				// 标题
 				//输入的时候 把当前的主标题换成更换后的主标题
 				changTitle() {
 					if (this.backData[this.puStateObj.key_num].data.title1 !== '') {
@@ -1001,8 +1123,18 @@
 					if (this.backData[this.puStateObj.key_num].data.subTitle1 !== '') {
 						this.backData[this.puStateObj.key_num].data.subTitle = this.backData[this.puStateObj.key_num].data.subTitle1;
 					} else {
-						this.backData[this.puStateObj.key_num].data.subTitle = '主标题'
+						this.backData[this.puStateObj.key_num].data.subTitle = '副标题'
 					}
+				},
+
+				// 公告
+				changeContent() {
+					if (this.backData[this.puStateObj.key_num].data.content1 !== '') {
+						this.backData[this.puStateObj.key_num].data.content = this.backData[this.puStateObj.key_num].data.content1;
+					} else {
+						this.backData[this.puStateObj.key_num].data.content = '这里填写公告内容，可设置是否滚动显示'
+					}
+
 				},
 
 
