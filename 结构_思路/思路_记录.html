@@ -15,35 +15,61 @@
                  {name: "商品组",id:'productList'}
                  {name: "公告",id:'notice'}
                  {name: "辅助空白",id:'blank'}]
-			2、传给后台的数据结构：{
-				/**组件id*/
-				id:"rotationId",
-				/**组件名*/
-				temp:"rotation",
-				/*页面渲染-组件位置，从0开始*/
-				key_num: null,
-				/**组件style*/
-				params:{									
-					/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
-					butStyle: 'rectangle',
-					/*'left'=>左，'center'=>中间，'right'=>右*/
-					butPosition: 'center',
-					/*按钮背景颜色，必须是16进制的色值，不能简写*/
-					butColor: '#000000',	
-					/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
-					clickColor: '#f5f5f5',
-				},
-				data:{
-					/*轮播的图片路径*/
-					imgUrl:[
-						'../../img/0005.png',
-						'../../img/0005.png',
-						'../../img/0005.png',	
-					],
-				},
-			}
+			2、传给后台的数据结构：
+				{
+					/**组件id*/
+					id: "rotationId",
+					/**组件名*/
+					temp: "rotation",
+					/*页面渲染-组件位置，从0开始*/
+					key_num: null,
+					/**组件style*/
+					params: {
+						/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+						butStyle: 'rectangle',
+						/*'left'=>左，'center'=>中间，'right'=>右*/
+						butPosition: 'center',
+						/*按钮背景颜色，必须是16进制的色值，不能简写*/
+						butColor: '#000000',
+						/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+						clickColor: '#f5f5f5',
+					},
+					data: {
+						/*轮播的图片路径*/
+						images: [
+							{	
+								/*图片名字*/
+								name: '',
+								/*图片路径*/
+								imgUrl: '../../img/0005.png',
+								/*跳转路径*/
+								url: '',
+							},
+							{
+								name: '',
+								imgUrl: '../../img/0005.png',
+								url: '',
+							},
+							{
+								name: '',
+								imgUrl: '../../img/0005.png',
+								url: '',
+							}
+
+						],
+					},
+				}
 			
-			3、
+			3、逻辑纽带=>/**
+				 * 公共-对应显示-模板编辑;
+				 * id:判断模块；
+				 * key_num:判断-模块在页面的排序
+				 * **/
+				puStateObj: {
+					id: null,
+					/*初始化*/
+					key_num: 0,
+				},
 		-->
 		
 		<script type="text/javascript">

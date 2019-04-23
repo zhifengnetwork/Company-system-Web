@@ -86,56 +86,16 @@
 									</div>
 									<!--按钮组 模块 box-->
 									<div class="modle_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
-										<div class="modle_bottons rim-mod-select modle-mod " style="background-color: rgb(255, 255, 255);">
-											<div class="botton-scope">
-												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav" style="width: 20%;">
-														<div class="modle_mod_img">
-															<img src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
-														</div>
-														<div class="modle_mod_text">按钮文字</div>
-													</div>
-												</a>
-											</div>
-											<div class="botton-scope">
-												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav" style="width: 20%;">
-														<div class="modle_mod_img">
-															<img src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
-														</div>
-														<div class="modle_mod_text">按钮文字</div>
-													</div>
-												</a>
-											</div>
-											<div class="botton-scope">
-												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav" style="width: 20%;">
-														<div class="modle_mod_img">
-															<img src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style=" height: 39px;">
-														</div>
-														<div class="modle_mod_text">按钮文字</div>
-													</div>
-												</a>
-											</div>
-											<div class="botton-scope">
-												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav" style="width: 20%;">
-														<div class="modle_mod_img">
-															<img src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
-														</div>
-														<div class="modle_mod_text">按钮文字</div>
-													</div>
-												</a>
-											</div>
-											<div class="botton-scope">
-												<a href="unsafe:javascript:;">
-													<div class="modle_mod_nav" style="width: 20%;">
-														<div class="modle_mod_img">
-															<img src="../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg" style="border-radius: 0px; height: 39px;">
-														</div>
-														<div class="modle_mod_text">按钮文字</div>
-													</div>
-												</a>
+										<div class="modle_bottons" :style="{backgroundColor:v.params.iconColor}">
+											<div class="botton-scope"  v-for="item in v.data.iconList" >
+												<!--<a :href="item.location">-->
+												<div class="modle_mod_nav" :style="{width: v.params.iconNum}">
+													<p class="modle_mod_img">
+														<img :src="item.url" :style="{borderRadius:v.params.iconStyle}">
+													</p>
+													<p class="modle_mod_text" :style="{color:item.siezColor}">{{item.text}}</p>
+												</div>
+												<!--</a>-->
 											</div>
 										</div>
 										<!--删除按钮 wrap-->
@@ -145,7 +105,7 @@
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
-									<!--商品组-->
+
 									<!--商品组-->
 									<div class="modle_box" v-if="v.id == 'productListId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<div class="modle_shop clearfloat">
@@ -266,8 +226,7 @@
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
-									
-									
+
 								</div>
 
 							</div>
@@ -283,7 +242,7 @@
 					<!-- 轮播图--编辑 -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
 						<div class="edit_slide">
-							<div class="slide_title">轮播设置<span>提示:轮播图片的大小必须一样哦~</span></div>
+							<div class="slide_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~</span></div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">按钮形状</span>
 								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
@@ -306,7 +265,7 @@
 								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
 							</div>
 							<!--轮播图-上传图片 -->
-							<div class="edit_slide_addimg"  v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+							<div class="edit_slide_addimg" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
 								<div class="edit_slide_img hover_box" @click="call_off(i)">
 									<img :src="v.imgUrl" alt="">
 								</div>
@@ -315,18 +274,73 @@
 									<button>系统连接</button>
 								</div>
 								<!--删除按钮-->
-								<div class="edit_slide_del" @click="">
+								<div class="edit_slide_del" @click="delItem(i)">
 									<img src="../../img/pc/delete_icon.png" alt="">
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
-					
-					<!-- 商品组--编辑 -->
+					<!--按钮组-编辑-->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'bottonsId'">
+						<div class="edit_slide">
+							<div class="slide_title">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">图标样式</span>
+								<label class="edit_slide_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="0" >正方形</label>
+								<label class="edit_slide_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="50%" >圆形</label>
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">按钮数量</span>
+								<!--<label class="edit_slide_content_label"><input type="radio" name="M1555639821352_num" value="25%" v-model="backData[puStateObj['key_num']].params.iconNum" class="ve-pristine ve-untouched ve-valid">四个按钮</label>
+								<label class="edit_slide_content_label"><input type="radio" name="M1555639821352_num" value="20%" v-model="backData[puStateObj['key_num']].params.iconNum" class="ve-pristine ve-untouched ve-valid">五个按钮</label>-->
+								<label class="edit_slide_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="4" @change="butNumber()">四个按钮</label>
+								<label class="edit_slide_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="5" @change="butNumber()">五个按钮</label>
+
+							</div>
+							<div class="edit_slide_content">
+								<span class="edit_slide_content_title">背景颜色</span>
+								<input type="color" v-model="backData[puStateObj['key_num']].params.iconColor">
+							</div>
+							<!--按钮=>图片-->
+							<div v-for="(item,index) in backData[puStateObj['key_num']].data.iconList">
+								<div class="ve-panel-editor-line2">
+									<div class="ve-panel-editor-goodimg" style="height:120px; width:110px;">
+										<img :src="item.url" width="100%" height="100%" >
+										<div class="ve-panel-editor-goodimg-t1" style="line-height:120px;" @click="upload(index)">
+											<i class="fa fa-plus-circle"></i> 选择图片</div>
+										<div class="ve-panel-editor-goodimg-t2 " style="width:110px;" @click="upload(index)">重新选择图片</div>
+									</div>
+									<div class="ve-panel-editor-line2-right">
+										<div class="ve-panel-editor-line">
+											<div class="ve-panel-editor-name">按钮文字</div>
+											<div class="ve-panel-editor-con">
+												<input class="ve-panel-editor-input1 ve-pristine ve-valid ve-touched" style="width:256px;" value="" v-model="item.texts" placeholder="请填写按钮文字" @keyup="text(index,item)">
+											</div>
+										</div>
+										<div class="ve-panel-editor-line">
+											<div class="ve-panel-editor-name">链接地址</div>
+											<div class="ve-panel-editor-con">
+												<input class="ve-panel-editor-input3 ve-pristine ve-valid ve-touched" value="" placeholder="请手动输入链接(请以http://开头)或选择系统链接" style="width:175px;" @keyup="imgA(index,item.id)" v-model="item.newLoc">
+												<div class="ve-panel-editor-input4">系统连接</div>
+											</div>
+										</div>
+										<div class="ve-panel-editor-line">
+											<div class="ve-panel-editor-name">文字颜色</div>
+											<div class="ve-panel-editor-con">
+												<input class="ve-panel-editor-input2 ve-pristine ve-untouched ve-valid" type="color" v-model="item.siezColor">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 商品组-编辑 -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'productListId'">
 						<div class="edit_shop">
-							<div class="slide_title">商品设置<span>提示: 商品组的图标可通过替换目录文件自定义</span></div>
+							<div class="slide_title">商品设置<span class="tips">提示: 商品组的图标可通过替换目录文件自定义</span></div>
 							<div class="edit_slide_content">
 								<span class="edit_slide_content_title">样式选择</span>
 								<label class="edit_slide_content_label"><input type="radio" value="">横排显示</label>
@@ -378,8 +392,7 @@
 							</div>
 						</div>
 					</div>
-					
-					
+
 					<!--在该div=>最下边 遮罩层 -->
 					<div class="slide_mask" v-if="active.edit_slide_mask">
 						<div class="slide_mask_content">
@@ -411,7 +424,7 @@
 										<input type="text">
 									</div>-->
 								</div>
-								
+
 							</div>
 							<div class="mask_content_btn">
 								<div class="btn_wrap">
@@ -421,7 +434,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -511,7 +524,7 @@
 			})
 		</script>
 		<script src="../../js/pc/public/vue.js"></script>
-		<script src="../../js/pc/public/axios.min.js"></script>
+		<script src="../../js/pc/public/axios.js"></script>
 		<script>
 			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
 			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
@@ -638,8 +651,7 @@
 						},
 						data: {
 							/*轮播的图片路径*/
-							images: [
-								{	
+							images: [{
 									/*图片名字*/
 									name: '',
 									/*图片路径*/
@@ -657,7 +669,7 @@
 									imgUrl: '../../img/0005.png',
 									url: '',
 								}
-	
+
 							],
 						},
 					},
@@ -685,72 +697,75 @@
 							tipeText: '你会了么？',
 						},
 					},
-					// 按钮组，数据初始化
-					boObj: {
-						/*id*/
+					/*按钮组，数据初始化*/
+					btnObj: {
 						id: "bottonsId",
 						temp: 'bottons',
 						key_num: null,
 						params: {
 							/*图标样式*/
 							iconStyle: 0,
-							/*0=>样式一，1=>样式二*/
-							iconNum: '20%',
+							iconNum: 4,
 							/*背景颜色*/
 							iconColor: '',
+						},
+						data: {
 							iconList: [{
 									id: '1',
 									text: '按钮文字',
 									texts: "",
-									location: '',
+									location: 'javascript:;',
 									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '39'
+									siezColor: '',
+									newLoc: '',
 								},
 								{
 									id: '2',
 									text: '按钮文字',
 									texts: "",
-									location: '',
+									location: 'javascript:;',
 									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '39'
+									siezColor: '',
+									newLoc: '',
 								},
 								{
 									id: '3',
 									text: '按钮文字',
 									texts: "",
-									location: '',
+									location: 'javascript:;',
 									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '39'
+									siezColor: '',
+									newLoc: '',
 								},
 								{
 									id: '4',
 									text: '按钮文字',
 									texts: "",
-									location: '',
+									location: 'javascript:;',
 									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '39'
+									siezColor: '',
+									newLoc: '',
 								},
-								{
-									id: '5',
-									text: '按钮文字',
-									texts: "",
-									location: '',
-									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '39',
-									show: 0
-								}
-							]
+//								{
+//									id: '5',
+//									text: '按钮文字',
+//									texts: "",
+//									location: 'javascript:;',
+//									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+//									siezColor: '',
+//									newLoc: '',
+//								}
+							],
 						}
-
 					},
-					/*商品组*/ 
-					prObj:{
+					/*商品组*/
+					prObj: {
 						/*id*/
 						id: "productListId",
-						temp: 'bottons',
+						temp: 'productList',
 						key_num: null,
 						params: {
-							
+
 						},
 						data: {
 
@@ -786,7 +801,7 @@
 						console.log('传-后台=>"拖拽" ', this.backData);
 					},
 					/* 拖拽 >>*/
-					/*删除对应=>data*/
+					/*(页面渲染)删除对应=>data*/
 					delDataFun(_index) {
 						console.log("删除index:", _index);
 						console.log("后台data:", this.backData.length);
@@ -855,8 +870,8 @@
 						}
 						/*按钮组*/
 						if(_id === "bottonsId") {
-							that.boObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.boObj));
+							that.btnObj['key_num'] = that.backData.length;
+							that.backData.push(clones(that.btnObj));
 							/*改if语句-放在最后*/
 							if(that.backData[0]['id'] == undefined) {
 								that.backData.shift();
@@ -896,7 +911,7 @@
 					/*上传图片=>遮罩层(显隐)*/
 					call_off(_index) {
 						this.active.edit_slide_mask = !this.active.edit_slide_mask;
-						if(_index != undefined){
+						if(_index != undefined) {
 							/*点击'重新选择图片'时=>清除原始数据*/
 							/*本地-单图上传-初始化*/
 							this.upImages = {
@@ -909,88 +924,136 @@
 								baseUrl: '',
 							}
 							this.upImgInd = _index;
-							console.log('遮罩层:',_index);
+							console.log('遮罩层:', _index);
 						}
-						
+
 					},
 					/*图片上传=> "确认"按钮*/
-					confirmFun(){
+					confirmFun() {
 						var that = this;
-						if(!that.upImages['baseUrl'] && !that.networkImg['baseUrl']){
+						if(!that.upImages['baseUrl'] && !that.networkImg['baseUrl']) {
 							alert('无数据上传，请选择需要上传的数据!');
 							return false;
 						}
-						console.log('base64=>',that.upImages['baseUrl']);
-						console.log('对应上传的index',that.upImgInd);
+						console.log('base64=>', that.upImages['baseUrl']);
+						console.log('对应上传的index', that.upImgInd);
 						/*ajax*/
 						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/base_img', {
-							img: that.upImages['baseUrl'],
-						})
-						.then(function (response) {
-							console.log(response);
-							/*当前id*/
-							var thisID = that.puStateObj['id'];
-							/*当前index*/
-							var thisInd = that.puStateObj['key_num'];
-							/*对应上传的图片index=>this.upImgInd*/
-							/*轮播图*/
-							if(thisID == 'rotationId'){
-								that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data'];
-								console.log(that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
-							}
-						})
-						.catch(function (error) {
-							alert(error);
-							console.log(error);
-						});
+								img: that.upImages['baseUrl'],
+							})
+							.then(function(response) {
+								console.log(response.data);
+								/*当前id*/
+								var thisID = that.puStateObj['id'];
+								/*当前index*/
+								var thisInd = that.puStateObj['key_num'];
+								/*对应上传的图片index=>this.upImgInd*/
+								/*轮播图*/
+								if(thisID == 'rotationId') {
+									that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data'];
+									console.log(that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
+								}
+//								that.$options.methods.call_off(that.upImgInd);
+							})
+							.catch(function(error) {
+								alert(error);
+								console.log(error);
+							});
+//						$.ajax({
+//							type:"post",
+//							url:"http://zfwl.zhifengwangluo.c3w.cc/admin/shop/base_img",
+//							async:true,
+//							data: {
+//								img:that.upImages['baseUrl']
+//							},
+//							success: function(re){
+//								console.log(re.data);
+//							},
+//							error:function(err) {
+//								console.log(err)
+//							}
+//						});
 					},
 					/*图片上传*/
-					up_imageFun(even){
+					up_imageFun(even) {
 						var that = this;
 						var f = even.target.files[0];
-						console.log(f,even.target.files);
-						if(f){
-						    fileType = f.type;  
-						    if(/image\/\w+/.test(fileType)) {  
-						        var fileReader = new FileReader();  
-						        fileReader.readAsDataURL(f);  
-						        fileReader.onload = function(event) {  
-						            var result = event.target.result; //返回的dataURL   
-						            var image = new Image();  
-						            image.src = result;  
-						            //若图片大小大于1M，压缩后再上传，否则直接上传  
-						            if(f.size>1024*1024){     
-						                    image.onload = function() { 
-						                    //创建一个image对象，给canvas绘制使用
-						                    var canvas = document.getElementById("canvas"); 
-						                    canvas.width = image.width;  
-						                    canvas.height = image.height; //计算等比缩小后图片宽高   
-						                    var ctx = canvas.getContext('2d');  
-						                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);  
-						                    var newImageData = canvas.toDataURL(fileType, 0.8); //重新生成图片
-						                   	/*图片=>base64、name*/
-						                   	that.upImages['name'] = f['name'];
-						                   	that.upImages['baseUrl'] = newImageData;
-						                   	console.log('压缩:',that.upImages);
-						                }  
-						            }else{  
-						            	//创建一个image对象，给canvas绘制使用 
-						                image.onload = function() { 
-						                	that.upImages['name'] = f['name'];
-						                	that.upImages['baseUrl'] = result;
-							                console.log('未-压缩:',that.upImages);
-						            	}  
-						            }  
-						        }  
-						    } else {  
-						        alert("请选择图片");  
-						    }  
-						    
-					    }else {
-					    	console.log('取消选择图片！')
-					    }
+						console.log(f, even.target.files);
+						if(f) {
+							fileType = f.type;
+							if(/image\/\w+/.test(fileType)) {
+								var fileReader = new FileReader();
+								fileReader.readAsDataURL(f);
+								fileReader.onload = function(event) {
+									var result = event.target.result; //返回的dataURL   
+									var image = new Image();
+									image.src = result;
+									//若图片大小大于1M，压缩后再上传，否则直接上传  
+									if(f.size > 1024 * 1024) {
+										image.onload = function() {
+											//创建一个image对象，给canvas绘制使用
+											var canvas = document.getElementById("canvas");
+											canvas.width = image.width;
+											canvas.height = image.height; //计算等比缩小后图片宽高   
+											var ctx = canvas.getContext('2d');
+											ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+											var newImageData = canvas.toDataURL(fileType, 0.8); //重新生成图片
+											/*图片=>base64、name*/
+											that.upImages['name'] = f['name'];
+											that.upImages['baseUrl'] = newImageData;
+											console.log('压缩:', that.upImages);
+										}
+									} else {
+										//创建一个image对象，给canvas绘制使用 
+										image.onload = function() {
+											that.upImages['name'] = f['name'];
+											that.upImages['baseUrl'] = result;
+											console.log('未-压缩:', that.upImages);
+										}
+									}
+								}
+							} else {
+								alert("请选择图片");
+							}
+
+						} else {
+							console.log('取消选择图片！')
+						}
 					},
-					
+					/*删除-项(轮播，商品等)*/
+					delItem(_ind) {
+						/*轮播图*/
+						if(this.puStateObj['id'] == 'rotationId') {
+							console.log(_ind);
+							/*对应页面渲染-数据*/
+							var roImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
+							if(roImgData.length > 1) {
+								/*数组删除*/
+								this.backData[this.puStateObj['key_num']]['data']['images'].splice([_ind], 1);
+
+							} else {
+								alert('轮播图片最少需要一项');
+							}
+						}
+
+					},
+					/*商品组-按钮数*/
+					butNumber(){
+						console.log(this.backData[this.puStateObj['key_num']]['params']['iconNum']);
+						if(this.backData[this.puStateObj['key_num']]['params']['iconNum'] == 5 ){
+							this.backData[this.puStateObj['key_num']]['data']['iconList'].push({
+									id: '5',
+									text: '按钮文字',
+									texts: "",
+									location: 'javascript:;',
+									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+									siezColor: '',
+									newLoc: '',
+								})
+						}else if(this.backData[this.puStateObj['key_num']]['params']['iconNum'] == 4){
+							this.backData[this.puStateObj['key_num']]['data']['iconList'].splice(4,1)
+						}
+					},
 					/*保存-模板*/
 					depositFun() {
 						var that = this;
