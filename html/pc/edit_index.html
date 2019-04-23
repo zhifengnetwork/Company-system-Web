@@ -62,18 +62,15 @@
 									<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<div class="slide">
 											<div class="slide_item">
-												<img :src="v.data.imgUrl[0]" alt="" />
+												<img :src="v.data.images[0].imgUrl" alt="" />
 											</div>
-											<div class="slide_but" :style="{'text-align':v.params.butPosition}">
-												<!--第一个，模拟点击时颜色-->
-												<span :class="v.params.butStyle" :style="{'background':v.params.clickColor}"></span>
-												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
-												<span :class="v.params.butStyle" :style="{'background':v.params.butColor}"></span>
+											<div class="slide_but" :class="v.params.butPosition">
+												<span v-for="(val,index) in v.data.images" :class="v.params.butStyle" :style="{'background':index == 0?v.params.clickColor:v.params.butColor}"></span>
 											</div>
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
 										</div>
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
@@ -89,7 +86,7 @@
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
-									<!--模块 box-->
+									<!--按钮组 模块 box-->
 									<div class="modle_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<div class="modle_bottons rim-mod-select modle-mod " style="background-color: rgb(255, 255, 255);">
 											<div class="botton-scope">
@@ -151,7 +148,9 @@
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
 									<!--商品组-->
-
+									
+									
+									
 								</div>
 
 							</div>
@@ -189,10 +188,76 @@
 								<span class="edit_slide_content_title">按钮点击颜色</span>
 								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
 							</div>
-
+							<!--轮播图-上传图片 -->
+							<div class="edit_slide_addimg">
+								<div class="edit_slide_term clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+									<div class="edit_slide_img" @click="call_off(i)">
+										<img :src="v.imgUrl" alt="">
+									</div>
+									<div class="edit_slide_link">
+										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
+										<button>系统连接</button>
+									</div>
+									<!--删除按钮-->
+									<div class="edit_slide_del">X</div>
+								</div>
+	                           
+							</div>
+							<!--<div class="edit_slide_addimg">
+								<div class="edit_slide_img" @click="call_off">
+									<img src="../../img/0005.png" alt="">
+								</div>
+								<div class="edit_slide_link">
+									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" value="#"></label>
+								</div>
+							</div>
+							<div class="edit_slide_addimg">
+								<div class="edit_slide_img" @click="call_off">
+									<img src="../../img/0005.png" alt="">
+								</div>
+								<div class="edit_slide_link">
+									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" value="#"></label>
+								</div>
+							</div>-->
 						</div>
 					</div>
-
+					
+					
+					<!--在该div=>最下边 遮罩层 -->
+					<div class="slide_mask" v-if="active.edit_slide_mask">
+						<div class="slide_mask_content">
+							<div class="mask_content_title">
+								<span>图片</span>
+								<span @click="call_off"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
+							</div>
+							<div class="mask_content">
+								<div class="mask_content_tab clearfloat">
+									<span :class="{active:active.edit_slide}" @click="tabs">网络图片</span>
+									<span :class="{active:!active.edit_slide}" @click="tabs">本地上传</span>
+								</div>
+								<div class="mask_content_list1" v-if="active.edit_slide">
+									<div class="mask_content_item">
+										<label>图片地址</label><input type="text"><button>图片空间</button>
+									</div>
+									<div class="mask_content_item">
+										<label>图片说明</label><input type="text">
+									</div>
+								</div>
+								<div class="mask_content_list2" v-if="!active.edit_slide">
+									<div class="mask_content_item">
+										<label>上传文件</label><input type="text"><input class="type1" type="file">
+									</div>
+								</div>
+							</div>
+							<div class="mask_content_btn">
+								<div class="btn_wrap">
+									<button>确定</button>
+									<button @click="call_off">取消</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			<!-- 分类 -->
@@ -350,6 +415,11 @@
 
 					/*拖拽需要的元素*/
 					dragging: null,
+					/*上传图片 box=> 显隐*/
+					active: {
+						edit_slide_mask: false,
+						edit_slide: true,
+					},
 					/**
 					 * 公共-对应显示-模板编辑;
 					 * id:判断模块；
@@ -392,10 +462,22 @@
 						},
 						data: {
 							/*轮播的图片路径*/
-							imgUrl: [
-								'../../img/0005.png',
-								'../../img/0005.png',
-								'../../img/0005.png',
+							images: [
+								{	
+									/*图片路径*/
+									imgUrl: '../../img/0005.png',
+									/*跳转路径*/
+									url: '',
+								},
+								{
+									imgUrl: '../../img/0005.png',
+									url: '',
+								},
+								{
+									imgUrl: '../../img/0005.png',
+									url: '',
+								}
+	
 							],
 						},
 					},
@@ -608,6 +690,14 @@
 						}
 						console.log('对应的模板：', this.puStateObj);
 
+					},
+					/*提交图片tab切换*/
+					tabs() {
+						this.active.edit_slide = !this.active.edit_slide;
+					},
+					/*提交图片显示隐藏*/
+					call_off() {
+						this.active.edit_slide_mask = !this.active.edit_slide_mask;
 					},
 					/*保存-模板*/
 					depositFun() {
