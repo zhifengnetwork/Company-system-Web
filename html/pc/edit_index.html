@@ -84,7 +84,7 @@
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
 										</div>
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
@@ -146,10 +146,12 @@
 													<div class="modle_shop_buybtn" :class="v.params.btnStyle"></div>
 												</div>
 											</div>
+											<!--初始化(无商品)-->
+											<p class="modle_shop_init" v-if="v['data']['msg']">一个商品都没有...</p>
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
 										</div>
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
@@ -177,7 +179,7 @@
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
 										</div>
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
@@ -190,7 +192,7 @@
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">删除</p>
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
 										</div>
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
@@ -416,13 +418,11 @@
 									<div class="edit_slide_shop">商品价格<span>￥{{v.price}}<s>￥{{v.oldprice}}</s></span></div>
 								</div>
 								<!--删除按钮-->
-								<div class="edit_slide_del" @click="delItem(i)">
+								<p class="edit_slide_del" @click="delItem(i)">
 									<img src="../../img/pc/delete_icon.png" alt="">
-								</div>
+								</p>
 							</div>
-							<div class="edit_slide_sub">
-								添加一个商品
-							</div>
+							<p class="edit_slide_sub" @click="comDataRe()">添加一个商品</p>
 						</div>
 					</div>
 					<!-- 商品组--编辑-e -->
@@ -535,7 +535,7 @@
 							<div class="editor_line">
 								<div class="editor_name">主标题内容</div>
 								<div class="editor_con">
-									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" @keyup="changTitle">
+									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" v-on:input="changTitle">
 								</div>
 							</div>
 
@@ -570,7 +570,7 @@
 							<div class="editor_line" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
 								<div class="editor_name">副标题内容</div>
 								<div class="editor_con">
-									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.subTitle1" @keyup="changsubTitle">
+									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.subTitle1" v-on:input="changsubTitle">
 								</div>
 							</div>
 
@@ -759,7 +759,7 @@
 							id: 'bottonsId'
 						},
 						{
-							name: "店招",
+							name: "单图",
 							id: 'signageId'
 						},
 						{
@@ -789,6 +789,7 @@
 					/*上传图片 box=> 显隐*/
 					active: {
 						edit_slide_mask: false,
+						/*Tab切换*/
 						edit_slide: true,
 					},
 					/**
@@ -877,18 +878,18 @@
 						/**组件style*/
 						params: {
 							/*0=>样式一，1=>样式二*/
-							reStyle: 0,
+							reStyle: 'style1',
 							/*文字颜色*/
-							textColor: '#999999',
+							textColor: '',
 							/*边框颜色*/
-							borderColor: '#cccccc',
+							borderColor: '',
 							/*背景颜色*/
-							backColor: '#000000',
+							backColor: '',
 						},
 						data: {
 							/*提示文字*/
-							tipeText: '你会了么？',
-						},
+							tipeText: '搜索：输入关键字在店内搜索',
+						}
 					},
 					/*按钮组，数据初始化*/
 					btnObj: {
@@ -903,6 +904,7 @@
 							iconColor: '#ffffff',
 						},
 						data: {
+							/*默认:4个按钮*/
 							iconList: [{
 									id: '1',
 									text: '按钮文字',
@@ -939,15 +941,6 @@
 									siezColor: '#333333',
 									newLoc: '',
 								},
-								//								{
-								//									id: '5',
-								//									text: '按钮文字',
-								//									texts: '',
-								//									locationS: '',
-								//									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-								//									siezColor: '#333333',
-								//									newLoc: '',
-								//								}
 							],
 						}
 					},
@@ -959,8 +952,8 @@
 						key_num: null,
 						params: {
 							/*列表样式 显示一个'modle_shop_item' 显示俩个 'modle_shop_item2' 显示三个 'modle_shop_item3'*/
-							listStyle: 'modle_shop_item2',
-							/*是否显示商品标题*/
+							listStyle: '',
+							/*是否显示商品标题，true或false*/
 							title: 'false',
 							/*标题内容*/
 							titletext: '',
@@ -975,32 +968,33 @@
 							/*名字显示 sw==>显示 on==>隐藏 */
 							name: 'sw',
 							/*购买按钮样式*/
-							btnStyle: 'buy_3'
+							btnStyle: 'buy_2'
 						},
 						data: {
 							/*商品组的数据*/
-							msg: [{
-									/*商品名字*/
-									name: '捷和幸福一号（含装修）',
-									/*商品价格*/
-									price: '500000.00',
-									/*原价格*/
-									oldprice: '666666.00',
-									/*图片路径*/
-									imgUrl: '../../img/0004.png',
-								},
-								{
-									name: '捷和幸福一号（含装修）',
-									price: '500000.00',
-									oldprice: '666666.00',
-									imgUrl: '../../img/0004.png',
-								},
-								{
-									name: '捷和幸福一号（含装修）',
-									price: '500000.00',
-									oldprice: '666666.00',
-									imgUrl: '../../img/0004.png',
-								}
+							msg: [
+//							{
+//									/*商品名字*/
+//									name: '捷和幸福一号（含装修）',
+//									/*商品价格*/
+//									price: '500000.00',
+//									/*原价格*/
+//									oldprice: '666666.00',
+//									/*图片路径*/
+//									imgUrl: '../../img/0004.png',
+//								},
+//								{
+//									name: '捷和幸福一号（含装修）',
+//									price: '500000.00',
+//									oldprice: '666666.00',
+//									imgUrl: '../../img/0004.png',
+//								},
+//								{
+//									name: '捷和幸福一号（含装修）',
+//									price: '500000.00',
+//									oldprice: '666666.00',
+//									imgUrl: '../../img/0004.png',
+//								}
 
 							],
 						}
@@ -1129,6 +1123,26 @@
 						}
 						console.log('删除后-对应的data:', this.backData);
 					},
+					/*<< 提取--public 方法*/
+					/*添加--滚动条到底部*/
+					scroll_bottom(){
+						this.$nextTick(() => {
+					    	var div = document.getElementsByClassName('html_box_new')[0]
+					    	div.scrollTop = div.scrollHeight;
+					    })
+					},
+					/*删除-backData[0]的初始数据(用来双向绑定)*/
+					once_del(){
+						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						 * 该函数-'最后'执行的语句;
+						 * **/
+						if(this.backData[0]['id'] == undefined) {
+							this.backData.shift();
+							this.backData[0]['key_num'] = 0;
+							console.log('清除掉-无用的值（数据双向绑定！）！');
+						}
+					},
+					/* 提取--public 方法 >>*/
 					/*组件选项-按钮*/
 					comTremFun(_id) {
 						var that = this;
@@ -1138,16 +1152,11 @@
 							that.roObj['key_num'] = that.backData.length;
 							/*深克隆=>页面渲染-data*/
 							that.backData.push(clones(that.roObj));
-							//							console.log(that.backData[0]['id']);
-							/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
-							 * 该函数-'最后'执行的语句;
-							 * **/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
 							console.log('传给后台数据', that.backData);
+							/*删除-backData[0]的初始数据*/
+							this.once_del();
+							/*滚动条到底部*/
+							this.scroll_bottom();
 							return false;
 
 						}
@@ -1155,60 +1164,40 @@
 						if(_id === "searchId") {
 							that.seObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.seObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							this.once_del();
+							this.scroll_bottom();
 							return false;
 						}
 						/*按钮组*/
 						if(_id === "bottonsId") {
 							that.btnObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.btnObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							this.once_del();
+							this.scroll_bottom();
 							return false;
 						}
 						/*商品组*/
 						if(_id === "productListId") {
 							that.prObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.prObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							this.once_del();
+							this.scroll_bottom();
 							return false;
 						}
 						/*公告*/
 						if(_id === "noticeId") {
 							that.noticeObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.noticeObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							this.once_del();
+							this.scroll_bottom();
 							return false;
 						}
 						/*标题*/
 						if(_id === "titleId") {
 							that.titObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.titObj));
-							/*改if语句-放在最后*/
-							if(that.backData[0]['id'] == undefined) {
-								that.backData.shift();
-								that.backData[0]['key_num'] = 0;
-								console.log('清除掉-无用的值（数据双向绑定！）！');
-							}
+							this.once_del();
+							this.scroll_bottom();
 							return false;
 						}
 
@@ -1223,7 +1212,7 @@
 						console.log('对应的模板：', this.puStateObj);
 
 					},
-					/*遮罩层-tab切换*/
+					/*（上传图片）遮罩层-tab切换*/
 					tabs() {
 						this.active.edit_slide = !this.active.edit_slide;
 					},
@@ -1257,7 +1246,7 @@
 						console.log('base64=>', that.upImages['baseUrl']);
 						console.log('对应上传的index', that.upImgInd);
 						/*ajax*/
-						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/base_img', {
+						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/shop_img', {
 								img: that.upImages['baseUrl'],
 							})
 							.then(function(response) {
@@ -1398,8 +1387,8 @@
 							_item['locationS'] = _item['newLoc'];
 						}
 					},
-					/*标题*/
-					//输入的时候 把当前的主标题换成更换后的主标题
+					
+					/*标题--输入的时候 把当前的主标题换成更换后的主标题*/
 					changTitle() {
 						if(this.backData[this.puStateObj.key_num].data.title1 !== '') {
 							this.backData[this.puStateObj.key_num].data.title = this.backData[this.puStateObj.key_num].data.title1;
@@ -1408,13 +1397,24 @@
 						}
 
 					},
-					//输入的时候 把当前的副标题换成更换后的副标题
+					/*标题-输入的时候 把当前的副标题换成更换后的副标题*/
 					changsubTitle() {
 						if(this.backData[this.puStateObj.key_num].data.subTitle1 !== '') {
 							this.backData[this.puStateObj.key_num].data.subTitle = this.backData[this.puStateObj.key_num].data.subTitle1;
 						} else {
 							this.backData[this.puStateObj.key_num].data.subTitle = '副标题'
 						}
+					},
+					/*商品ajax=>渲染*/
+					comDataRe(){
+						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/gooodsList', {})
+							.then(function(response) {
+								console.log(response['data']);
+							})
+							.catch(function(error) {
+								alert(error);
+								console.log(error);
+							});
 					},
 					/*保存-模板*/
 					depositFun() {
