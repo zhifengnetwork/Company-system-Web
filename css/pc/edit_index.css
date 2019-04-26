@@ -1,16 +1,33 @@
 /*最外边框*/
-.wrapper {
+/*遮挡-滚动条*/
+.wrapper_wrap {
 	position: relative;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	margin: 0 auto;
 	/*width: 100%;*/
+	/*1338px+17px*/
+	width: 1307px;
+	height: 100vh;
+	overflow: hidden;
+}
+/*有-滚动条*/
+.wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	width: 1338px;
 	height: 100vh;
 	border: 1px solid #d6d6d8;
-	/*overflow-y: scroll;*/
+	overflow-y: scroll;
+	
 }
+
 
 /*内容*/
 
@@ -257,11 +274,10 @@
 .right_box {
 	display: none;
 	float: left;
-	margin: 90px 0 0 20px;
 	/*width: 480px;*/
 	width: 610px;
 	height: auto;
-	padding: 10px 10px 60px 10px;
+	padding: 100px 10px 60px 30px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -794,8 +810,9 @@
     text-align: center;
     border-radius: 3px;
     cursor: pointer;
-    background: #f8f8f8;
+    letter-spacing: 1px;
     border: 1px solid #e5e5e5;
+    background: #f8f8f8;
 }
 .edit_addimg {
 	position: relative;
@@ -1074,6 +1091,7 @@
 /*按钮编辑 -s*/
 /* 上传动画-s */
 .upload{
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
