@@ -422,7 +422,7 @@
 									<img src="../../img/pc/delete_icon.png" alt="">
 								</p>
 							</div>
-							<p class="edit_slide_sub" @click="comDataRe()">添加一个商品</p>
+							<p class="edit_slide_sub" @click="">添加一个商品</p>
 						</div>
 					</div>
 					<!-- 商品组--编辑-e -->
@@ -684,6 +684,57 @@
 				</div>
 			</div>
 
+			<!--商品组-添加一个商品-弹框 -s -->
+			<div class="modal_wrap">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2>选择商品</h2>
+							<span></span>
+						</div>
+						
+						<div class="modal-body">
+							<div class="row">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="请输入商品名称进行查询筛选">
+									<div class="btn" @click="comDataRe()">搜索</div>
+								</div>
+								
+								<div class="module-menus clearfloat">
+									<!--循环-->
+									<div class="ng-scope">
+										<div class="img">
+											<img src="../../img/pc/00001.jpg" />
+										</div>
+										<div>
+											<span class="primary" style="">￥186</span>
+											<del class="fracture">￥100</del>
+										</div>
+										<p>夏款连衣裙温柔仙女波点韩版休闲冷淡风小清新短袖T裙子	</p>
+									</div>
+									
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="modal-footer">
+							<div class="paging">
+								<p class="btns">上一页</p>
+								<p>1</p>
+								<p>2</p>
+								<p>3</p>
+								<p>4</p>
+								<p>5</p>
+								<p>6</p>
+								<p class="btns">下一页</p>
+							</div>
+							<div class="shut">关闭</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--商品组-添加一个商品-弹框 -e -->
 			<!--底部 wrap-->
 			<div class="bottom_wrap">
 				<div class="bottom_content">
