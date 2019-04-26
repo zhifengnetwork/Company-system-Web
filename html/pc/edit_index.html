@@ -214,40 +214,40 @@
 					<!-- 轮播图--编辑 -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
 						<div class="edit_slide">
-							<div class="slide_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~</span></div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮形状</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="square">正方形</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
+							<div class="edit_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~</span></div>
+							<div class="edit_content">
+								<span class="edit_content_title">按钮形状</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="square">正方形</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮位置</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="left">按钮居左</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="center">按钮居中</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="right">按钮居右</label>
+							<div class="edit_content">
+								<span class="edit_content_title">按钮位置</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="left">按钮居左</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="center">按钮居中</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="right">按钮居右</label>
 
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮背景颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.butColor" value="backData[puStateObj['key_num']].params.butColor">
+							<div class="edit_content">
+								<span class="edit_content_title">按钮背景颜色</span>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.butColor" value="backData[puStateObj['key_num']].params.butColor">
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮点击颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
+							<div class="edit_content">
+								<span class="edit_content_title">按钮点击颜色</span>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
 							</div>
 							<!--轮播图-上传图片 -->
-							<div class="edit_slide_addimg" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+							<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
 								<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
-								<div class="edit_slide_img hover_box" @click="call_off(i)">
+								<div class="edit_img hover_box" @click="call_off(i)">
 									<img :src="v.imgUrl" alt="">
 								</div>
-								<div class="edit_slide_link">
+								<div class="edit_link">
 									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
 									<button>系统连接</button>
 								</div>
 								<!--删除按钮-->
-								<div class="edit_slide_del" @click="delItem(i)">
+								<div class="edit_del" @click="delItem(i)">
 									<img src="../../img/pc/delete_icon.png" alt="">
 								</div>
 							</div>
@@ -258,66 +258,55 @@
 					<div class="edit_modle" v-show="puStateObj['id'] == 'searchId'">
 						<!-- 编辑模板 -->
 						<div class="edit_search">
-							<div class="editor_icon"></div>
-							<div class="editor_title">搜索框设置</div>
+							<div class="edit_title">搜索框设置</div>
 
-							<div class="editor_line">
-								<div class="editor_name">提示文字</div>
-								<div class="editor_con">
+							<div class="edit_content">
+								<div class="edit_content_title">提示文字</div>
+								<label class="edit_content_label">
 									<input class="editor_input1" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.tipeText">
-								</div>
+								</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">选择样式</div>
-								<div class="editor_con">
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle"
-											value="style1"> 样式一</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle"
-											value="style2"> 样式二</label>
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">选择样式</div>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle" value="style1"> 样式一</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle" value="style2"> 样式二</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">文字颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
-									<span class="tips">提示: 输入文字颜色</span>
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">文字颜色</div>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+								<span class="tips">提示: 输入文字颜色</span>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">边框颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.borderColor">
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">边框颜色</div>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.borderColor">
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">背景颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.backColor">
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">背景颜色</div>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.backColor">
 							</div>
 						</div>
 					</div>
 					<!--按钮组-编辑 -s -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'bottonsId'">
 						<div class="edit_slide">
-							<div class="slide_title">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">图标样式</span>
-								<label class="edit_slide_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="0" >正方形</label>
-								<label class="edit_slide_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="50%" >圆形</label>
+							<div class="edit_title">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
+							<div class="edit_content">
+								<span class="edit_content_title">图标样式</span>
+								<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="0" >正方形</label>
+								<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="50%" >圆形</label>
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">按钮数量</span>
-								<label class="edit_slide_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="4" @change="butNumber()">四个按钮</label>
-								<label class="edit_slide_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="5" @change="butNumber()">五个按钮</label>
+							<div class="edit_content">
+								<span class="edit_content_title">按钮数量</span>
+								<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="4" @change="butNumber()">四个按钮</label>
+								<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="5" @change="butNumber()">五个按钮</label>
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">背景颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.iconColor">
+							<div class="edit_content">
+								<span class="edit_content_title">背景颜色</span>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.iconColor">
 							</div>
 							<!--按钮=>图片-->
 							<div v-for="(item,index) in backData[puStateObj['key_num']].data.iconList">
@@ -346,7 +335,7 @@
 										<div class="ve-panel-editor-line">
 											<p class="ve-panel-editor-name">文字颜色</p>
 											<p class="ve-panel-editor-con">
-												<input class="ve-panel-editor-input2" type="color" v-model="item.siezColor">
+												<input class="color" type="color" v-model="item.siezColor">
 											</p>
 										</div>
 									</div>
@@ -358,133 +347,245 @@
 					<!-- 商品组-编辑 -s -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'productListId'">
 						<div class="edit_shop">
-							<div class="slide_title">商品设置<span class="tips">提示: 商品组的图标可通过替换目录文件自定义</span></div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">样式选择</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item">横排显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item2">双排显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item3">三排显示</label>
+							<div class="edit_title">商品设置<span class="tips">提示: 商品组的图标可通过替换目录文件自定义</span></div>
+							<div class="edit_content">
+								<span class="edit_content_title">样式选择</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item">横排显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item2">双排显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item3">三排显示</label>
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">显示标题</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="true">显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="false">不显示</label>
+							<div class="edit_content">
+								<span class="edit_content_title">显示标题</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="true">显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="false">不显示</label>
 							</div>
-							<div class="edit_slide_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
-								<span class="edit_slide_content_title">分组标题</span>
-								<input class="edit_slide_content_textinpt" type="text" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].params.titletext">
+							<div class="edit_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
+								<span class="edit_content_title">分组标题</span>
+								<input class="edit_content_textinpt" type="text" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].params.titletext">
 							</div>
-							<div class="edit_slide_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
-								<span class="edit_slide_content_title">标题颜色</span>
-								<input type="color" v-model="backData[puStateObj['key_num']].params.titleColor">
+							<div class="edit_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
+								<span class="edit_content_title">标题颜色</span>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.titleColor">
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">商品属性</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="">无</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_tj">推荐</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_rx">热销</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xp">新上</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_by">包邮</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xs">限时</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_cx">促销</label>
+							<div class="edit_content">
+								<span class="edit_content_title">商品属性</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="">无</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_tj">推荐</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_rx">热销</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xp">新上</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_by">包邮</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xs">限时</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_cx">促销</label>
 							</div>
-							<div class="edit_slide_content">
-								<span class="edit_slide_content_title">商品价格</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="none">不显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="show">原价+现价</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="price">只显示现价</label>
+							<div class="edit_content">
+								<span class="edit_content_title">商品价格</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="none">不显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="show">原价+现价</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="price">只显示现价</label>
 							</div>
-							<div class="edit_slide_content" v-if="backData[puStateObj['key_num']].params.listStyle!='modle_shop_item'">
-								<span class="edit_slide_content_title">商品名称</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="no">不显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="sw">显示</label>
+							<div class="edit_content" v-if="backData[puStateObj['key_num']].params.listStyle!='modle_shop_item'">
+								<span class="edit_content_title">商品名称</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="no">不显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="sw">显示</label>
 								<span class="tips">提示:隐藏商品名称将默认隐藏购买按钮</span>
 							</div>
-							<div class="edit_slide_content" v-if="backData[puStateObj['key_num']].params.name=='sw'||backData[puStateObj['key_num']].params.listStyle=='modle_shop_item'">
-								<span class="edit_slide_content_title">购买按钮</span>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="">不显示</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_1">样式一</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_2">样式二</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_3">样式三</label>
-								<label class="edit_slide_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_4">样式四</label>
+							<div class="edit_content" v-if="backData[puStateObj['key_num']].params.name=='sw'||backData[puStateObj['key_num']].params.listStyle=='modle_shop_item'">
+								<span class="edit_content_title">购买按钮</span>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="">不显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_1">样式一</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_2">样式二</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_3">样式三</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_4">样式四</label>
 							</div>
 							<!--商品组-上传图片 -->
-							<div class="edit_slide_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['msg']">
-								<div class="edit_slide_img edit_shop_img hover_box" @click="call_off(i)">
+							<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['msg']">
+								<div class="edit_img edit_shop_img hover_box" @click="call_off(i)">
 									<img :src="v.imgUrl" alt="">
 								</div>
-								<div class="edit_slide_link">
-									<div class="edit_slide_shop">商品名称<span>{{v.name}}</span></div>
-									<div class="edit_slide_shop">商品价格<span>￥{{v.price}}<s>￥{{v.oldprice}}</s></span></div>
+								<div class="edit_link">
+									<div class="edit_shop">商品名称<span>{{v.name}}</span></div>
+									<div class="edit_shop">商品价格<span>￥{{v.price}}<s>￥{{v.oldprice}}</s></span></div>
 								</div>
 								<!--删除按钮-->
-								<p class="edit_slide_del" @click="delItem(i)">
+								<div class="edit_del" @click="delItem(i)">
 									<img src="../../img/pc/delete_icon.png" alt="">
-								</p>
+								</div>
 							</div>
-							<p class="edit_slide_sub" @click="">添加一个商品</p>
+							<p class="edit_sub" v-if="">添加一个商品</p>
 						</div>
 					</div>
 					<!-- 商品组--编辑-e -->
 					<!-- 公告编辑 -s -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'noticeId'">
 						<div class="edit_notice">
-							<div class="editor_icon"></div>
-							<div class="editor_title">公告设置<span class="tips">Tips:文字不滚动时超出宽度将隐藏</span></div>
+							<div class="edit_title">公告设置<span class="tips">Tips:文字不滚动时超出宽度将隐藏</span></div>
 
-							<div class="editor_line">
-								<div class="editor_name">公告内容</div>
-								<div class="editor_con">
+							<div class="edit_content">
+								<div class="edit_content_title">公告内容</div>
+								<label class="edit_content_label">
 									<input class="editor_input1" placeholder="这里填写公告内容，可设置是否滚动显示" v-model="backData[puStateObj['key_num']].data.content1">
-								</div>
+								</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">公告链接</div>
-								<div class="editor_con">
+							<div class="edit_content">
+								<div class="edit_content_title">公告链接</div>
+								<label class="edit_content_label">
 									<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData[puStateObj['key_num']].data.noticeUrl">
-								</div>
+								</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">滚动显示</div>
-								<div class="editor_con">
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="1">滚动显示</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="0">不滚动</label>
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">滚动显示</div>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="1">滚动显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="0">不滚动</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">更多按钮</div>
-								<div class="editor_con">
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="1">显示</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="0">隐藏</label>
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">更多按钮</div>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="1">显示</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="0">隐藏</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">更多链接</div>
-								<div class="editor_con">
+							<div class="edit_content">
+								<div class="edit_content_title">更多链接</div>
+								<label class="edit_content_label">
 									<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData[puStateObj['key_num']].data.moreUrl">
-								</div>
+								</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">文字颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">文字颜色</div>
+								<label class="edit_content_label">
+									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+								</label>
 							</div>
 
-							<div class="editor_line">
-								<div class="editor_name">背景颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
-								</div>
+							<div class="edit_content">
+								<div class="edit_content_title">背景颜色</div>
+								<label class="edit_content_label">
+									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
+								</label>
 							</div>
 						</div>
 					</div>
 					<!-- 公告编辑 -e -->
+					<!--在该div=>最下边 遮罩层 -->
+					<div class="slide_mask" v-if="active.edit_slide_mask">
+						<div class="slide_mask_content">
+							<div class="mask_content_title">
+								<span>图片</span>
+								<span @click="call_off()"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
+							</div>
+							<div class="mask_content">
+								<div class="mask_content_tab clearfloat">
+									<span :class="{active:active.edit_slide}" @click="tabs">本地上传</span>
+									<span :class="{active:!active.edit_slide}" @click="tabs">网络图片</span>
+								</div>
+								<div class="mask_content_list2" v-if="active.edit_slide">
+									<div class="mask_content_item">
+										<label>上传文件</label>
+										<input type="text" v-model="upImages.name">
+										<input class="type1" type="file" @change="up_imageFun($event)" accept="image/*">
+										<canvas id="canvas" hidden></canvas>
+									</div>
+								</div>
+								<div class="mask_content_list1" v-if="!active.edit_slide">
+									<div class="mask_content_item">
+										<label>图片地址</label>
+										<input type="text">
+										<!--<button>图片空间</button>-->
+									</div>
+									<!--<div class="mask_content_item">
+										<label>图片说明</label>
+										<input type="text">
+									</div>-->
+								</div>
+							</div>
+							<div class="mask_content_btn">
+								<div class="btn_wrap">
+									<button @click="confirmFun()">确定</button>
+									<button @click="call_off()">取消</button>
+								</div>
+							</div>
+							<div class="upload">
+								<div class="load_text">
+									上传中
+									<div class="load">
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--标题 编辑 -s-->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'titleId'">
+						<div class="edit_tit">
+							<div class="edit_title">标题设置</div>
+							<div class="edit_content">
+								<div class="edit_content_title">主标题内容</div>
+								<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" @keyup="changTitle">
+							</div>
+							<div class="edit_content">
+								<div class="edit_content_title">主标题大小</div>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="12px">12像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="14px">14像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="16px">16像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="18px">18像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="20px">20像素</label>
+								<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.fontSize"></label>
+							</div>
+							<div class="edit_content">
+								<div class="edit_content_title">显示副标题</div>
+								<label class="edit_content_label"><input type="radio" value="1" v-model="backData[puStateObj['key_num']].data.subTitleState">显示</label>
+								<label class="edit_content_label"><input type="radio" value="0" v-model="backData[puStateObj['key_num']].data.subTitleState">不显示</label>
+							</div>
+							<div class="edit_content" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="edit_content_title">副标题内容</div>
+								<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.subTitle1" @keyup="changsubTitle">
+							</div>
+							<div class="edit_content" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="edit_content_title">副标题大小</div>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="12px">12像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="14px">14像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="16px">16像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="18px">18像素</label>
+								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="20px">20像素</label>
+								<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.subfontSize"></label>
+							</div>
+							<div class="edit_content">
+								<div class="edit_content_title">对齐方向</div>
+								<label class="edit_content_label"><input type="radio" value="left" v-model="backData[puStateObj['key_num']].params.alignPosition">居左</label>
+								<label class="edit_content_label"><input type="radio" value="center" v-model="backData[puStateObj['key_num']].params.alignPosition">居中</label>
+								<label class="edit_content_label"><input type="radio" value="right" v-model="backData[puStateObj['key_num']].params.alignPosition">居右</label>
+							</div>
+							<div class="edit_content">
+								<div class="edit_content_title">文字颜色</div>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+							</div>
+							<div class="edit_content">
+								<div class="edit_content_title">背景颜色</div>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
+							</div>
+							<!--轮播图-上传图片 -->
+							<div class="edit_slide_addimg" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+								<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
+								<div class="edit_slide_img hover_box" @click="call_off(i)">
+									<img :src="v.imgUrl" alt="">
+								</div>
+								<div class="edit_slide_link">
+									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
+									<button>系统连接</button>
+								</div>
+								<!--删除按钮-->
+								<div class="edit_slide_del" @click="delItem(i)">
+									<img src="../../img/pc/delete_icon.png" alt="">
+								</div>
+							</div>
+
+						</div>
+					</div>
 					<!--在该div=>最下边 遮罩层 -->
 					<div class="slide_mask" v-if="active.edit_slide_mask">
 						<div class="slide_mask_content">
@@ -526,101 +627,7 @@
 							</div>
 						</div>
 					</div>
-					<!--标题 编辑 -s-->
-					<div class="edit_modle" v-show="puStateObj['id'] == 'titleId'">
-						<div class="edit_title">
-							<div class="editor_icon"></div>
-							<div class="editor_title">标题设置</div>
-
-							<div class="editor_line">
-								<div class="editor_name">主标题内容</div>
-								<div class="editor_con">
-									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" v-on:input="changTitle">
-								</div>
-							</div>
-
-							<div class="editor_line">
-								<div class="editor_name">主标题大小</div>
-								<div class="editor_con">
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize"
-											value="12px">12像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize"
-											value="14px">14像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize"
-											value="16px">16像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize"
-											value="18px">18像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize"
-											value="20px">20像素</label>
-									<label>自定义：<input class="editor_input2" style="line-height:20px"
-											v-model="backData[puStateObj['key_num']].params.fontSize"></label>
-								</div>
-							</div>
-
-							<div class="editor_line">
-								<div class="editor_name">显示副标题</div>
-								<div class="editor_con">
-									<label><input type="radio" value="1"
-											v-model="backData[puStateObj['key_num']].data.subTitleState">显示</label>
-									<label><input type="radio" value="0"
-											v-model="backData[puStateObj['key_num']].data.subTitleState">不显示</label>
-								</div>
-							</div>
-
-							<div class="editor_line" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
-								<div class="editor_name">副标题内容</div>
-								<div class="editor_con">
-									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.subTitle1" v-on:input="changsubTitle">
-								</div>
-							</div>
-
-							<div class="editor_line" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
-								<div class="editor_name">副标题大小</div>
-								<div class="editor_con">
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize"
-											value="12px">12像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize"
-											value="14px">14像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize"
-											value="16px">16像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize"
-											value="18px">18像素</label>
-									<label><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize"
-											value="20px">20像素</label>
-									<label>自定义：<input class="editor_input2" style="line-height:20px"
-											v-model="backData[puStateObj['key_num']].params.subfontSize"></label>
-								</div>
-							</div>
-
-							<div class="editor_line">
-								<div class="editor_name">对齐方向</div>
-								<div class="editor_con">
-									<label><input type="radio" value="left"
-											v-model="backData[puStateObj['key_num']].params.alignPosition">居左</label>
-									<label><input type="radio" value="center"
-											v-model="backData[puStateObj['key_num']].params.alignPosition">居中</label>
-									<label><input type="radio" value="right"
-											v-model="backData[puStateObj['key_num']].params.alignPosition">居右</label>
-								</div>
-							</div>
-
-							<div class="editor_line">
-								<div class="editor_name">文字颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
-								</div>
-							</div>
-
-							<div class="editor_line">
-								<div class="editor_name">背景颜色</div>
-								<div class="editor_con">
-									<input class="editor_input2" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<!--标题 编辑 -e-->
+					
 
 				</div>
 			</div>
@@ -931,11 +938,11 @@
 							/*0=>样式一，1=>样式二*/
 							reStyle: 'style1',
 							/*文字颜色*/
-							textColor: '',
+							textColor: '#999999',
 							/*边框颜色*/
-							borderColor: '',
+							borderColor: '#cccccc',
 							/*背景颜色*/
-							backColor: '',
+							backColor: '#f5f5f5',
 						},
 						data: {
 							/*提示文字*/
@@ -992,6 +999,7 @@
 									siezColor: '#333333',
 									newLoc: '',
 								},
+
 							],
 						}
 					},
@@ -1003,8 +1011,8 @@
 						key_num: null,
 						params: {
 							/*列表样式 显示一个'modle_shop_item' 显示俩个 'modle_shop_item2' 显示三个 'modle_shop_item3'*/
-							listStyle: '',
-							/*是否显示商品标题，true或false*/
+							listStyle: 'modle_shop_item2',
+							/*是否显示商品标题*/
 							title: 'false',
 							/*标题内容*/
 							titletext: '',
@@ -1019,12 +1027,12 @@
 							/*名字显示 sw==>显示 on==>隐藏 */
 							name: 'sw',
 							/*购买按钮样式*/
-							btnStyle: 'buy_2'
+							btnStyle: 'buy_3'
 						},
 						data: {
 							/*商品组的数据*/
 							msg: [
-//							{
+//								{
 //									/*商品名字*/
 //									name: '捷和幸福一号（含装修）',
 //									/*商品价格*/
@@ -1046,7 +1054,7 @@
 //									oldprice: '666666.00',
 //									imgUrl: '../../img/0004.png',
 //								}
-
+//
 							],
 						}
 					},
@@ -1263,7 +1271,7 @@
 						console.log('对应的模板：', this.puStateObj);
 
 					},
-					/*（上传图片）遮罩层-tab切换*/
+					/*遮罩层-tab切换*/
 					tabs() {
 						this.active.edit_slide = !this.active.edit_slide;
 					},
@@ -1437,8 +1445,7 @@
 							/*按钮组*/
 							_item['locationS'] = _item['newLoc'];
 						}
-					},
-					
+					},					
 					/*标题--输入的时候 把当前的主标题换成更换后的主标题*/
 					changTitle() {
 						if(this.backData[this.puStateObj.key_num].data.title1 !== '') {

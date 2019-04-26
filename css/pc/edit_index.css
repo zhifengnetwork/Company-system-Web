@@ -1,7 +1,6 @@
 /*最外边框*/
 
 .wrapper {
-	position: relative;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -83,7 +82,7 @@
     width: 100%;
 	height: 60px;
     background: rgba(0,0,0,0.7);
-    z-index: 9999;
+    z-index: 99;
 }
 .bottom_content{
     width: 980px;
@@ -368,18 +367,18 @@
 .drag_box {
 	cursor: move;
 }
-
 /*商品组=>添加一个弹框 -s*/
 .modal_wrap {
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 102;
 	width: 100%;
 	height: 100%;
-	letter-spacing: 1px;
 	background-color: rgba(0,0,0,.2);
 }
+
 .modal-dialog {
 	position: absolute;
 	top: 80px;
@@ -551,6 +550,7 @@
 }
 
 /*商品组=>添加一个弹框 -e*/
+
 
 /*Tab切换*/
 
@@ -782,40 +782,42 @@ iframe {
 
 
 /*** 全部 编辑样式 -s***/
-/*轮播图编辑 -s */
-.slide_title{
-height: 30px;
+/*编辑 -s */
+.edit_title{
+	height: 30px;
 	font-size: 18px;
 	line-height: 30px;
 	border-bottom: 1px dashed #000000;
 }
 
-.edit_slide_content {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+.edit_content {
+	font-size: 14px;
 	width: 100%;
 	height: 40px;
 	line-height: 40px;
 }
 
-.edit_slide_content>input {
+.color{
 	border: 0;
 	padding: 3px 10px;
 	border-radius: 4px;
 }
 
-.edit_slide_content_title {
+.edit_content_title {
 	display: inline-block;
-	width: 15%;
+	width: 16%;
 	text-align: left;
 	letter-spacing: 1px;
 }
-
-.edit_slide_content_label {
-	margin-right: 15px;
+.edit_tit .edit_content_label{
+	margin-right: 5px;
+	font-size: 12px;
 }
-.edit_slide_content_textinpt{
+.edit_content_label {
+	margin-right: 15px;
+	font-size: 12px;
+}
+.edit_content_textinpt{
 	width: 60%;
 	height: 20px;
 	line-height: 30px;
@@ -829,12 +831,12 @@ height: 30px;
 	-moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
 	-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
 }
-.edit_slide_content_label input {
+.edit_content_label input {
 	margin-right: 5px;
 	vertical-align: middle;
 }
 
-.edit_slide_content_button {
+.edit_content_button {
 	width: 20%;
 	height: 30px;
 	line-height: 30px;
@@ -844,15 +846,15 @@ height: 30px;
 	letter-spacing: 2px;
 	background-color: #418bca;
 }
-.edit_slide_content_button:hover {
+.edit_content_button:hover {
 	cursor: pointer;
 }
 
-.edit_slide_content_padding {
+.edit_content_padding {
 	padding-top: 10px;
 }
-.edit_slide_sub {
-    margin-top: 10px;
+.edit_sub {
+    margin: 10px 0 80px 0;
     height: 38px;
     line-height: 38px;
     color: #999;
@@ -862,13 +864,10 @@ height: 30px;
     background: #f8f8f8;
     border: 1px solid #e5e5e5;
 }
-
-
-
-.edit_slide_addimg {
+.edit_addimg {
 	position: relative;
 	width: 100%;
-	height: 100px;
+	/* height: 100px; */
 	margin-top: 10px;
 	padding: 10px;
 	background: #f9f9f9;
@@ -878,21 +877,24 @@ height: 30px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-
-.edit_slide_img {
+.edit_addimg .edit_shop_img{
+	width: 120px;
+	height: 120px;
+}
+.edit_img {
 	position: relative;
 	float: left;
 	width: 138px;
 	height: 78px;
 }
 
-.edit_slide_img>img {
+.edit_img>img {
 	display: block;
 	width: 100%;
 	height: 100%;
 }
 
-.edit_slide_img::after {
+.edit_img::after {
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
@@ -907,26 +909,26 @@ height: 30px;
 	color: #ffffff;
 }
 
-.edit_slide_link {
+.edit_link {
 	float: left;
 }
 /*添加按钮 style*/
-.edit_slide_link .edit_slide_shop{
+.edit_link .edit_shop{
 	height: 30px;
 	line-height: 30px;
 	color:#999;
 	font-size: 14px;
 	margin-left: 20px;
 }
-.edit_slide_link .edit_slide_shop>span{
+.edit_link .edit_shop>span{
 	margin-left: 10px;
 }
 
-.edit_slide_link>label {
+.edit_link>label {
 	margin-left: 10px;
 }
 
-.edit_slide_link input {
+.edit_link input {
 	height: 30px;
 	width: 220px;
 	padding-left: 8px;
@@ -942,7 +944,7 @@ height: 30px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
 }
 
-.edit_slide_link>button {
+.edit_link>button {
 	outline: none;
 	color: #f5f5f5;
 	border: 0;
@@ -955,7 +957,7 @@ height: 30px;
 	-webkit-box-sizing: border-box;
 }
 
-.edit_slide_del{
+.edit_del{
 	position: absolute;
 	top: 3px;
 	right: 3px;
@@ -969,70 +971,13 @@ height: 30px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-.edit_slide_del img{
+.edit_del img{
 	display: block;
 	width: 100%;
 }
 
 /* 轮播编辑  -e */
-
 /* 搜索模板修改 -s*/
-.edit_modle{
-	min-height: 55px;
-	background: #fff;
-	border-radius: 5px;
-	margin: 0 auto;
-	padding: 0px 10px 10px 10px;
-	box-sizing: border-box;
-	margin-bottom: 10px;
-	position: relative;
-}
-.edit_modle .editor_icon{
-	height: 37px;
-	width: 20px;
-	background: url(../../img/pc/ico_1.png) no-repeat;
-	background-size: 100%;
-	position: absolute;
-	top: 0;
-	left: -20px;
-}
-.editor_title {
-	height: 40px;
-	line-height: 40px;
-	font-size: 16px;
-	color: #999;
-	border-bottom: 1px dashed #ccc;
-	padding-left: 5px;
-}
-.editor_line {
-	min-height: 40px;
-	overflow: hidden;
-}
-
-.editor_name {
-	height: 40px;
-	width: 90px;
-	font-size: 12px;
-	text-align: center;
-	line-height: 40px;
-	color: #999;
-	float: left;
-}
-.editor_con{
-	min-height: 40px;
-	float: left;
-	line-height: 40px;
-	color: #999;
-	font-size:14px;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	content: "...";
-}
-.editor_con label{
-	cursor:pointer; 
-	margin-right: 10px;
-	font-size: 12px;
-}
 .editor_input1 {
 	height: 30px;
 	width: 328px;
@@ -1048,12 +993,12 @@ height: 30px;
 	box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
 }
 .editor_input2{
-    height: 30px;
+    height: 24px;
     width: 70px;
     padding-left: 8px;
     border: 1px solid #ddd;
     border-radius: 3px;
-    margin-top: 4px;
+    /* margin-top: 4px; */
     line-height: 30px;
     color: #aaa;
     outline: none;
@@ -1097,18 +1042,6 @@ height: 30px;
     -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
     -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.1) inset;
-}
-
-.ve-panel-editor-input2 {
-	margin-top: 4px;
-	width: 70px;
-    height: 30px;
-    outline: none;
-    border: 1px solid #dddddd;
-    border-radius: 3px;
-    line-height: 30px;
-    color: #aaaaaa;
-    
 }
 
 .ve-panel-editor-input3 {
@@ -1204,7 +1137,64 @@ height: 30px;
     float: left;
 }
 /*按钮编辑 -s*/
-
+/* 上传动画-s */
+.upload{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	line-height: 220px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	z-index: 102;
+	background: rgba(255, 255, 255, .8);
+}
+.load_text{
+	display: inline-block;
+	color: #333;
+	height: 20px;
+}
+.load{
+	display: inline-block;
+	position: relative;
+	height: 20px;
+	font-size: 0;
+}
+.load span{
+	position: absolute;
+	bottom: -4px;
+	display: inline-block;
+	width: 5px;
+	height: 20px;
+	line-height: 20px;
+	background: #333;
+	animation: load 1s linear infinite;
+}
+.load span:nth-child(1){
+	left: 0;
+	animation-delay:-0.9s;
+}
+.load span:nth-child(2){
+	left: 12px;
+	animation-delay:-0.8s;
+}
+.load span:nth-child(3){
+	left: 24px;
+	animation-delay:-0.7s;
+}
+@keyframes load{
+	0%, 40%, 100% {
+		transform: scaleY(0.4);
+		/* -webkit-transform: scaleY(0.4); */
+	  }  
+	  20% {
+		transform: scaleY(1.0);
+		/* -webkit-transform: scaleY(1.0); */
+	}
+}
+/* 上传动画-e */
 /*图片上传-遮罩层 -s*/
 .slide_mask {
 	position: absolute;
@@ -1549,6 +1539,7 @@ height: 30px;
 	background: url(../../img/pc/ico_buy_4.png) no-repeat;
 	background-size: contain;
 }
+/* 商品组-按钮样式-e */
 /*初始化-商品box*/
 .modle_shop_init {
 	width: 100%;
@@ -1558,7 +1549,6 @@ height: 30px;
 	line-height: 120px;
 	color: #999;
 }
-/* 商品组-按钮样式-e */
 /* 商品组-e */
 
 /* 公告 -s */
@@ -1634,3 +1624,4 @@ height: 30px;
 }
 /* 公告 -e */
 /*全部 编辑样式 -e */
+
