@@ -112,13 +112,13 @@
 												<!-- 显示一个 -->
 												<div class="modle_shop_item" v-if="v.params.listStyle=='modle_shop_item'" v-for="item in v.data.msg">
 													<div class="modle_shop_img">
-														<img :src="item.imgUrl" alt="">
+														<img :src="item.img" alt="">
 														<div class="modle_shop_attr" :class="v.params.attr"></div>
 													</div>
 													<div class="modle_shop_info">
-														<p class="modle_shop_name">{{item.name}}</p>
+														<p class="modle_shop_name">{{item.goods_name}}</p>
 														<p class="modle_shop_price" :class="v.params.price">
-															￥{{item.price}}<s>￥{{item.oldprice}}</s>
+															￥{{item.price}}<s>￥{{item.original_price}}</s>
 														</p>
 														<div class="modle_shop_buybtn" :class="v.params.btnStyle"></div>
 													</div>
@@ -126,21 +126,21 @@
 												<!-- 显示多个 -->
 												<div :class="v.params.listStyle" v-if="v.params.listStyle!='modle_shop_item'" v-for="item in v.data.msg">
 													<div class="modle_shop_img">
-														<img :src="item.imgUrl" alt="">
+														<img :src="item.img" alt="">
 														<div class="modle_shop_attr" :class="v.params.attr"></div>
 														<p class="modle_shop_price" :class="v.params.price">
-															￥{{item.price}}<s>￥{{item.oldprice}}</s>
+															￥{{item.price}}<s>￥{{item.original_price}}</s>
 														</p>
 													</div>
 													<div class="modle_shop_info" :class="v.params.name">
 														<div class="modle_shop_name" :style="{width:v.params.btnStyle==''?'100%':''}">
-															{{item.name}}
+															{{item.goods_name}}
 														</div>
 														<div class="modle_shop_buybtn" :class="v.params.btnStyle"></div>
 													</div>
 												</div>
 												<!--初始化(无商品)-->
-												<p class="modle_shop_init" v-if="v['data']['msg']">一个商品都没有...</p>
+												<p class="modle_shop_init" v-show="v['data']['msg'].length == 0 ?true:false">一个商品都没有...</p>
 											</div>
 											<!--删除按钮 wrap-->
 											<div class="cursor_wrap">
@@ -437,7 +437,7 @@
 									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_3">样式三</label>
 									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_4">样式四</label>
 								</div>
-								<!--商品组-上传图片 -->
+								<!--商品组-对应商品 -->
 								<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['msg']">
 									<div class="edit_img edit_shop_img hover_box" @click="call_off(i)">
 										<img :src="v.imgUrl" alt="">
@@ -687,7 +687,7 @@
 
 							<div class="modal-body">
 								<div class="input-group">
-									<input type="text" class="form-control" placeholder="请输入商品名称进行查询筛选">
+									<input type="text" class="form-control" v-model="search_data['key_word']" placeholder="请输入商品名称进行查询筛选">
 									<p class="btn" @click="comDataRe()">搜索</p>
 								</div>
 
@@ -738,26 +738,9 @@
 				</div>
 			</div>
 		</div>
-		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
 		<!--public的js-->
 		<!--<script src="../../js/pc/edit_index.js"></script>-->
 
-		<script>
-			$(document).ready(function() {
-
-				// tba切换
-				$(".tabs>li>a").click(function(e) {
-					e.preventDefault();
-					var $tar = $(e.target);
-					var index = $tar.attr('data-toggle')
-					if($tar.is("[data-toggle]")) {
-						$tar.parent().addClass('active').siblings().removeClass('active')
-						$('.wrapper').children('.content').eq(index).show().siblings('.content').hide()
-					}
-				})
-
-			})
-		</script>
 		<script src="../../js/pc/public/vue.js"></script>
 		<script src="../../js/pc/public/axios.js"></script>
 		<script>
@@ -862,7 +845,7 @@
 					pageState: false,
 					/*限制用户axios的连续请求*/
 					axios_state: true,
-					/*添加商品=>搜索商品-数据结构*/
+					/*添加商品=>搜索(axios)=>商品-数据结构*/
 					comm_data: [
 //						{
 //							desc: "82年阔落82年阔落",
@@ -884,6 +867,10 @@
 //							stock: 5255,
 //						},
 					],
+					/*搜索-商品的data*/
+					search_data: {
+						key_word: '',
+					},
 					/* 页面渲染data || 传个后台-data ，对象形式*/
 					backData: [
 						/**初始化=>生产对应组件=>删除第一条数据array[0]。
@@ -1070,16 +1057,25 @@
 						data: {
 							/*商品组的数据*/
 							msg: [
-								//								{
-								//									/*商品名字*/
-								//									name: '捷和幸福一号（含装修）',
-								//									/*商品价格*/
-								//									price: '500000.00',
-								//									/*原价格*/
-								//									oldprice: '666666.00',
-								//									/*图片路径*/
-								//									imgUrl: '../../img/0004.png',
-								//								},
+//								{
+//									desc: "82年阔落82年阔落",
+//									/*商品id*/
+//									goods_id: 3,
+//									/*商品名称*/
+//									goods_name: "82年阔落",
+//									/*商品封面*/
+//									img: "../../img/0004.png",
+//									/*限时卖开始时间*/
+//									limited_end: 0,
+//									/*限时卖结束时间*/
+//									limited_start: 0,
+//									/*商品原价*/
+//									original_price: "5.00",
+//									/*商品现价*/
+//									price: "4.00",
+//									/*商品库存*/
+//									stock: 5255,
+//								},
 							],
 						}
 					},
@@ -1514,6 +1510,8 @@
 					/*删除-项(轮播，商品等)*/
 					delItem(_ind) {
 						console.log(_ind);
+						/*确认-取消提示alert！*/
+						var tispAlert = null;
 						/*轮播图*/
 						if(this.puStateObj['id'] == 'rotationId') {
 							/*对应页面渲染-数据*/
@@ -1523,26 +1521,42 @@
 								return false;
 							}
 							/*确认弹框*/
-							var tispAlert = confirm('此操作，不可逆转，您确认删除？');
+							tispAlert = confirm('此操作，不可逆转，您确认删除？');
 							if(tispAlert) {
 								/*数组删除*/
-								this.backData[this.puStateObj['key_num']]['data']['images'].splice([_ind], 1);
+								roImgData.splice([_ind], 1);
 							} 
 						}
 						/*单图*/
 						if(this.puStateObj['id'] == 'signageId') {
 							/*对应页面渲染-数据*/
-							var roImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
-							if(roImgData.length <= 1){
+							var siImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
+							if(siImgData.length <= 1){
 								alert('图片最少需要一张');
 								return false;
 							}
 							/*确认弹框*/
-							var tispAlert = confirm('此操作，不可逆转，您确认删除？');
+							tispAlert = confirm('此操作，不可逆转，您确认删除？');
 							if(tispAlert) {
 								/*数组删除*/
-								this.backData[this.puStateObj['key_num']]['data']['images'].splice([_ind], 1);
+								siImgData.splice([_ind], 1);
 							} 
+						}
+						/*商品组*/
+						if(this.puStateObj['id'] == 'productListId') {
+							/*对应页面渲染-数据*/
+							var prImgData = this.backData[this.puStateObj['key_num']]['data']['msg'];
+							
+							/*确认弹框*/
+							tispAlert = confirm('此操作，不可逆转，您确认删除？');
+							if(tispAlert) {
+								/*数组删除*/
+								prImgData.splice([_ind], 1);
+							} 
+							if(prImgData.length == 0){
+								console.log('商品-数据已清空');
+								return false;
+							}
 						}
 
 					},
@@ -1624,7 +1638,10 @@
 							return false;
 						}
 						that.axios_state = false;
-						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/gooodsList', {})
+						console.log('关键字:',that.search_data['key_word']);
+						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/gooodsList', {
+							keyword: that.search_data['key_word'],
+						})
 							.then(function(response) {
 								console.log(response['data']['data']);
 								if(response['data']['code'] == 1) {
@@ -1648,7 +1665,12 @@
 								that.axios_state = true;
 							});
 					},
-					/*对应-添加数据*/
+					/*添加商品*/
+					selection_goods(_item){
+						console.log('添加-对应商品:',_item);
+						this.backData[this.puStateObj['key_num']]['data']['msg'].push(clones(_item));
+					},
+					/*对应-添加数据(如:轮播图，单图。。)*/
 					add_data(_id, _item) {
 						console.log('id:', _id);
 						console.log('对象:', _item);
@@ -1693,6 +1715,7 @@
 							this.scroll_bottom('html_box_new');
 						}
 					},
+					
 					/*保存-模板*/
 					depositFun() {
 						var that = this;

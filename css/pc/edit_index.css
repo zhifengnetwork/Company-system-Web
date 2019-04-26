@@ -484,8 +484,9 @@
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-
+/*页数*/
 .paging {
+	display: none;
 	padding-left: 285px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1508,6 +1509,7 @@
 .edit_modle .tips {
     font-size: 12px;
     margin-left: 10px;
+    letter-spacing: 1px;
 }
 /* (公告)移动层 */
 .notice_move {
