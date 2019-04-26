@@ -1,6 +1,6 @@
 /*最外边框*/
-
 .wrapper {
+	position: relative;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -10,55 +10,6 @@
 	height: 100vh;
 	border: 1px solid #d6d6d8;
 	/*overflow-y: scroll;*/
-}
-
-
-/*public*/
-
-/*清除浮动代码 '父元素'*/
-
-.clearfloat:after {
-	display: block;
-	clear: both;
-	content: " ";
-	visibility: hidden;
-	height: 0;
-}
-
-.clearfloat {
-	zoom: 1;
-}
-
-/*鼠标悬浮*/
-.hover_box:hover {
-	cursor: pointer;
-}
-/*边框盒子*/
-.border_line {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
-}
-.border_box {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	border: 1px dashed #333333;
-}
-
-
-/* 公共边框 */
-
-.mod_select {
-	border: 2px dashed #6c96c9;
-}
-.tips {
-	margin-left: 10px;
-	color: red;
-	font-size: 14px;
 }
 
 /*内容*/
@@ -179,6 +130,7 @@
 }
 
 .fun_box_content {
+	display: none;
 	padding-left: 7px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -188,6 +140,7 @@
 }
 
 .fun_box_content_term {
+	
 	float: left;
 	margin: 6px 0 6px 13px;
 	width: 82px;
@@ -254,6 +207,8 @@
 /*隐藏滚动条*/
 
 .html_box_new {
+	/*防止页面未渲染完成--vue的{{变量名}}*/
+	display: none;
 	/*加多17px的滚动条*/
 	width: 359px;
 	height: 100%;
@@ -300,12 +255,13 @@
 /*右 box*/
 
 .right_box {
+	display: none;
 	float: left;
 	margin: 90px 0 0 20px;
 	/*width: 480px;*/
 	width: 610px;
 	height: auto;
-	padding: 10px;
+	padding: 10px 10px 60px 10px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -356,7 +312,7 @@
 	color: #ffffff;
 	text-align: center;
 	font-size: 12px;
-	line-height: 24px;
+	/*line-height: 24px;*/
 	letter-spacing: 2px;
 }
 
@@ -367,6 +323,7 @@
 .drag_box {
 	cursor: move;
 }
+
 /*商品组=>添加一个弹框 -s*/
 .modal_wrap {
 	display: none;
@@ -427,13 +384,9 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: auto;
 	border-bottom: 1px solid #e5e5e5;
-}
-.row {
-	padding: 0 20px 0 0;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 }
 .input-group {
 	position: relative;
@@ -498,7 +451,8 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	max-height: 35px;
+	width: 100%;
+	height: 35px;
 	font-size: 12px;
 	-white-space: normal;
 	display: -webkit-box;
@@ -550,53 +504,6 @@
 }
 
 /*商品组=>添加一个弹框 -e*/
-
-
-/*Tab切换*/
-
-iframe {
-	width: 100%;
-	height: 100%;
-	border: 0;
-}
-
-.tab {
-	width: 100%;
-	position: relative;
-}
-
-.tabs a {
-	text-decoration: none;
-	color: #000000;
-	width: 100px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	display: inline-block;
-}
-
-.tabs {
-	z-index: 100;
-}
-
-.tabs>li {
-	float: left;
-	width: 25%;
-	border-bottom: 1px solid #000000;
-	text-align: center;
-}
-
-.tabs .active>a {
-	color: #ffffff;
-}
-
-.tabs .active {
-	letter-spacing: 1px;
-	background-color: #418bca;
-}
-
-
-
 
 /* 轮播图 -s */
 
@@ -759,27 +666,53 @@ iframe {
 .title{
 	height: auto;
 	text-align: left;
-	color: rgb(0, 0, 0);
 	padding: 10px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	overflow: hidden;
 }
 .title h2{
 	font-size: 18px;
-    padding: 0px;
-    margin: 0px;
-    font-size: 18px;
+    padding: 0;
+    margin: 0;
     font-weight: 100;
 }
 .title h4{
-	font-size: 14px;
-	padding: 0px;
-    margin: 0px;
+	margin: 0;
+	padding: 0;
+	padding-top: 3px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
     font-size: 14px;
     font-weight: 100;
-    padding-top: 3px;
+   
 }
 /* 标题 -e */
-
+/* 单图-s */
+.signage{
+	width: 100%;
+	height: auto;
+}
+.signage_img{
+	width: 100%;
+	height: auto;
+}
+.signage_img img{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+/* 单图-e */
+/* 辅助线 -s */
+.subline{
+	padding: 10px 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+/* 辅助线 -e */
 
 /*** 全部 编辑样式 -s***/
 /*编辑 -s */
@@ -854,7 +787,7 @@ iframe {
 	padding-top: 10px;
 }
 .edit_sub {
-    margin: 10px 0 80px 0;
+    margin-top: 10px;
     height: 38px;
     line-height: 38px;
     color: #999;
@@ -945,12 +878,14 @@ iframe {
 }
 
 .edit_link>button {
-	outline: none;
-	color: #f5f5f5;
-	border: 0;
+	vertical-align: bottom;
+	width:70px;
+	height: 32px;
+	color: #aaaaaa;
+	background: #ffffff;
+	border: 1px solid #ddd;
 	border-radius: 3px;
-	background: #418bca;
-	padding: 5px 10px;
+	outline: none;
 	cursor: pointer;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1197,8 +1132,8 @@ iframe {
 /* 上传动画-e */
 /*图片上传-遮罩层 -s*/
 .slide_mask {
+	display: none;
 	position: absolute;
-	display: block;
 	width: 100%;
 	height: 100%;
 	left: 0px;
@@ -1552,12 +1487,6 @@ iframe {
 /* 商品组-e */
 
 /* 公告 -s */
-/* 隐藏 */
-.hide{
-	display: none;
-}
-
-
 .edit_modle .tips {
     font-size: 12px;
     margin-left: 10px;
@@ -1623,5 +1552,80 @@ iframe {
 	margin-left: 10px;
 }
 /* 公告 -e */
-/*全部 编辑样式 -e */
+/* 辅助空白label 辅助线label -s*/
+.edit_blank .edit_content_label,.edit_subline .edit_content_label{
+	margin-right: 10px;
+	font-size: 12px;
+}
+.edit_blank .edit_content_label .text,.edit_subline .edit_content_label .text{
+    margin-left: 4px;
+    padding-left: 8px;
+    width: 50px;
+	height: 22px;
+    line-height: 20px;
+    color: #aaa;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+/* 辅助空白label 辅助线label -e*/
+/*** 全部 编辑样式 -e***/
+
+/*public -s*/
+
+/*清除浮动代码 '父元素'*/
+
+.clearfloat:after {
+	display: block;
+	clear: both;
+	content: " ";
+	visibility: hidden;
+	height: 0;
+}
+
+.clearfloat {
+	zoom: 1;
+}
+
+/*鼠标悬浮*/
+.hover_box:hover {
+	cursor: pointer;
+}
+/*边框盒子*/
+.border_line {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+}
+.border_box {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border: 1px dashed #333333;
+}
+
+
+/* 公共边框 */
+
+.mod_select {
+	border: 2px dashed #6c96c9;
+}
+/*提示*/
+.tips {
+	margin-left: 10px;
+	color: red;
+	font-size: 14px;
+}
+/* 隐藏 */
+.hide_box {
+	display: none;
+}
+/* 隐藏 */
+.show_box {
+	display: block;
+}
+/*public -e*/
 

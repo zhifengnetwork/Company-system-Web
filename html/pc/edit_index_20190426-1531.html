@@ -16,6 +16,22 @@
 
 	<body>
 		<div class="wrapper" id="edit_app_wrap">
+			<div class="tab">
+				<ul class="tabs clearfloat">
+					<li class="active">
+						<a href="" data-toggle="0">首页编辑</a>
+					</li>
+					<li>
+						<a href="" data-toggle="1">分类</a>
+					</li>
+					<li>
+						<a href="" data-toggle="2">购物车</a>
+					</li>
+					<li>
+						<a href="" data-toggle="3">个人中心</a>
+					</li>
+				</ul>
+			</div>
 			<!--首页编辑-->
 			<div class="content clearfloat">
 				<!--left box-->
@@ -95,20 +111,7 @@
 										<!--选中-虚框-->
 										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 									</div>
-									<!--单图模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'signageId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
-										<div class="signage">
-											<div class="signage_img" v-for="item in v['data']['images']">
-												<img :src="item['imgUrl']" alt="" >
-											</div>
-										</div>
-										<!--删除按钮 wrap-->
-										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
-										</div>
-										<!--选中-虚框-->
-										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
-									</div>
+
 									<!--商品组-->
 									<div class="modle_box" v-if="v.id == 'productListId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 										<div class="modle_shop clearfloat">
@@ -174,30 +177,6 @@
 											<div class="more" :class="{hide_box:v.params.moreState == 0}">
 												<a v-bind:href="v.data.moreUrl">更多</a>
 											</div>
-										</div>
-										<!--删除按钮 wrap-->
-										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
-										</div>
-										<!--选中-虚框-->
-										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
-									</div>
-									<!--辅助空白模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'blankId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
-										<div class="blank" :style="{height:v.params.height,background:v.params.background}">
-
-										</div>
-										<!--删除按钮 wrap-->
-										<div class="cursor_wrap">
-											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
-										</div>
-										<!--选中-虚框-->
-										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
-									</div>
-									<!--辅助线模块 box，拖拽的div-->
-									<div class="modle_box" v-if="v.id == 'sublineId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
-										<div class="subline">
-											<div :style="{'border-bottom-width':v.params.boderHeight,'border-bottom-style':v.params.borderStyle,'border-bottom-color':v.params.borderBackground,}"></div>
 										</div>
 										<!--删除按钮 wrap-->
 										<div class="cursor_wrap">
@@ -366,31 +345,6 @@
 						</div>
 					</div>
 					<!--按钮组-编辑 -e -->
-					<!-- 单图-编辑 -s -->
-					<div class="edit_modle" v-show="puStateObj['id'] == 'signageId'">
-						<div class="edit_signage">
-							<div class="edit_title">单图设置<span class="tips">提示:图片最低高度为40像素~</span></div>
-							
-							<!--单图-上传图片 -->
-							<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
-								<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
-								<div class="edit_img hover_box" @click="call_off(i)">
-									<img :src="v.imgUrl" alt="">
-								</div>
-								<div class="edit_link">
-									<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label><button>系统连接</button>
-								</div>
-								<!--删除按钮-->
-								<div class="edit_del" @click="delItem(i)">
-									<img src="../../img/pc/delete_icon.png" alt="">
-								</div>
-							</div>
-							<p class="edit_sub" v-if="">添加一个单图</p>
-
-						</div>
-					</div>
-					<!-- 单图-编辑 -e -->
-					
 					<!-- 商品组-编辑 -s -->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'productListId'">
 						<div class="edit_shop">
@@ -516,52 +470,6 @@
 						</div>
 					</div>
 					<!-- 公告编辑 -e -->
-					<!-- 辅助空白-编辑 -s -->
-					<div class="edit_modle" v-show="puStateObj['id'] == 'blankId'">
-						<div class="edit_blank">
-							<div class="edit_title">辅助空白设置<span class="tips"></span></div>
-							<div class="edit_content">
-								<span class="edit_content_title">选择高度</span>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="10px">10像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="20px">20像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="50px">50像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="100px">100像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="150px">150像素</label>
-								<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData[puStateObj['key_num']].params.height" value="backData[puStateObj['key_num']].params.height"></label>
-							</div>
-							<div class="edit_content">
-								<span class="edit_content_title">背景颜色</span>
-								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.background" value="backData[puStateObj['key_num']].params.background">
-							</div>
-						</div>
-					</div>
-					<!-- 辅助空白-编辑 -e -->
-					<!-- 辅助线-编辑 -s -->
-					<div class="edit_modle" v-show="puStateObj['id'] == 'sublineId'">
-						<div class="edit_subline">
-							<div class="edit_title">辅助线设置<span class="tips"></span></div>
-							<div class="edit_content">
-								<span class="edit_content_title">选择样式</span>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="solid">实线</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="dashed">虚线</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="dotted">圆点</label>
-							</div>
-							<div class="edit_content">
-								<span class="edit_content_title">选择高度</span>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="1px">1像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="2px">2像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="5px">5像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="10px">10像素</label>
-								<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="20px">20像素</label>
-								<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData[puStateObj['key_num']].params.boderHeight" value="backData[puStateObj['key_num']].params.boderHeight"></label>
-							</div>
-							<div class="edit_content">
-								<span class="edit_content_title">背景颜色</span>
-								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.borderBackground" value="backData[puStateObj['key_num']].params.borderBackground">
-							</div>
-						</div>
-					</div>
-					<!-- 辅助线-编辑 -e -->
 					<!--标题 编辑 -s-->
 					<div class="edit_modle" v-show="puStateObj['id'] == 'titleId'">
 						<div class="edit_tit">
@@ -632,6 +540,65 @@
 
 				</div>
 			</div>
+			<!-- 分类 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<iframe src="../phone/classify/classify.html"></iframe>
+						</div>
+					</div>
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
+			<!-- 购物车 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<!--隐藏滚动条-->
+							<!--<div class="html_box_new"">-->
+							<iframe class="html_box_new" src="../phone/shopping_cart/shopping_cart.html" frameborder="0"></iframe>
+							<!--</div>-->
+						</div>
+					</div>
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
+			<!-- 个人中心 -->
+			<div class="content clearfloat" style="display:none">
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box" style="overflow: hidden;">
+							<!--隐藏滚动条-->
+							<iframe class="html_box_new" src="../phone/my/user.html"></iframe>
+						</div>
+					</div>
+
+					<p class="phone_bottom"></p>
+				</div>
+			</div>
 
 			<!--图片上传=>遮罩层 -->
 			<div class="slide_mask" :class="active.edit_slide_mask == true ? 'show_box':'hide_box'">
@@ -693,24 +660,26 @@
 						</div>
 						
 						<div class="modal-body">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="请输入商品名称进行查询筛选">
-								<p class="btn" @click="comDataRe()">搜索</p>
-							</div>
-							
-							<div class="module-menus clearfloat">
-								<!--循环-->
-								<div class="ng-scope" v-for="(v,i) in comm_data" @click="selection_goods(v)">
-									<div class="img">
-										<img :src="v.img" />
-									</div>
-									<div>
-										<span class="primary">￥{{v.original_price}}</span>
-										<del class="fracture">￥{{v.price}}</del>
-									</div>
-									<p>{{v.goods_name}}</p>
+							<div class="row">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="请输入商品名称进行查询筛选">
+									<div class="btn" @click="comDataRe()">搜索</div>
 								</div>
 								
+								<div class="module-menus clearfloat">
+									<!--循环-->
+									<div class="ng-scope">
+										<div class="img">
+											<img src="../../img/pc/00001.jpg" />
+										</div>
+										<div>
+											<span class="primary" style="">￥186</span>
+											<del class="fracture">￥100</del>
+										</div>
+										<p>夏款连衣裙温柔仙女波点韩版休闲冷淡风小清新短袖T裙子	</p>
+									</div>
+									
+								</div>
 							</div>
 							
 						</div>
@@ -823,8 +792,8 @@
 							id: 'blankId'
 						},
 						{
-							name: "辅助线",
-							id: 'sublineId'
+							name: "广告",
+							id: 'bannerId'
 						},
 						{
 							name: '标题',
@@ -866,30 +835,6 @@
 					commState: false,
 					/*页面渲染=>防止页面未渲染完成--vue的{{变量名}}，使用v-cloak不能解决问题*/
 					pageState: false,
-					/*限制用户axios的连续请求*/
-					axios_state: true,
-					/*添加商品=>搜索商品-数据结构*/
-					comm_data:[
-//						{
-//							desc: "82年阔落82年阔落",
-//							/*商品id*/
-//							goods_id: 3,
-//							/*商品名称*/
-//							goods_name: "82年阔落",
-//							/*商品封面*/
-//							img: "goods/20190408155469462313687.png",
-//							/*限时卖开始时间*/
-//							limited_end: 0,
-//							/*限时卖结束时间*/
-//							limited_start: 0,
-//							/*商品原价*/
-//							original_price: "5.00",
-//							/*商品现价*/
-//							price: "4.00",
-//							/*商品库存*/
-//							stock: 5255,
-//						},
-					],
 					/* 页面渲染data || 传个后台-data ，对象形式*/
 					backData: [
 						/**初始化=>生产对应组件=>删除第一条数据array[0]。
@@ -1021,33 +966,6 @@
 							],
 						}
 					},
-					/*单图，数据初始化*/
-					sinObj: {
-						// 组件id
-						id: "signageId",
-						// 组件名
-						temp: "signage",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							
-						},
-						data: {
-							/*单图的图片路径*/
-							images: [
-								{
-									/*图片名字*/
-									name: '',
-									/*图片路径*/
-									imgUrl: '../../img/0006.png',
-									/*跳转路径*/
-									url: '',
-								},
-								
-							],
-						}
-					},
 					/*商品组*/
 					prObj: {
 						/*id*/
@@ -1119,46 +1037,6 @@
 							moreUrl: ''
 						}
 					},
-					/*辅助空白，数据初始化*/
-					blaObj: {
-						// 组件id
-						id: "blankId",
-						// 组件名
-						temp: "blank",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							// 空白高度  默认20px
-							height:"20px",
-							//背景色 默认为白色
-							background:"#ffffff"
-						},
-						data: {
-							
-						}
-					},
-					/*辅助线，数据初始化*/
-					subObj: {
-						// 组件id
-						id: "sublineId",
-						// 组件名
-						temp: "subline",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							// 辅助线样式 dotted=>圆点 solid=>实线 dashed=>虚线
-							borderStyle:"dashed",
-							// 辅助线高度
-							boderHeight:"2px",
-							// 辅助线颜色
-							borderBackground:"#000000"
-						},
-						data: {
-							
-						}
-					},
 					/*标题，数据初始化*/
 					titObj: {
 						// 组件id
@@ -1193,7 +1071,6 @@
 					},
 
 				},
-				/*方法*/
 				methods: {
 					/*<< 拖拽*/
 					handleDragStart(e, item) {
@@ -1256,13 +1133,11 @@
 						console.log('删除后-对应的data:', this.backData);
 					},
 					/*<< 提取--public 方法*/
-					/*添加--滚动条到底部,同时选中边框=>最新对象*/
+					/*添加--滚动条到底部*/
 					scroll_bottom(){
-						var that =this;
-						that.$nextTick(() => {
+						this.$nextTick(() => {
 					    	var div = document.getElementsByClassName('html_box_new')[0]
 					    	div.scrollTop = div.scrollHeight;
-					    	that.puStateObj['key_num'] = that.backData.length-1;
 					    })
 					},
 					/*删除-backData[0]的初始数据(用来双向绑定)*/
@@ -1310,14 +1185,6 @@
 							this.scroll_bottom();
 							return false;
 						}
-						/*单图*/
-						if(_id === "signageId") {
-							that.sinObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.sinObj));
-							this.once_del();
-							this.scroll_bottom();
-							return false;
-						}
 						/*商品组*/
 						if(_id === "productListId") {
 							that.prObj['key_num'] = that.backData.length;
@@ -1330,22 +1197,6 @@
 						if(_id === "noticeId") {
 							that.noticeObj['key_num'] = that.backData.length;
 							that.backData.push(clones(that.noticeObj));
-							this.once_del();
-							this.scroll_bottom();
-							return false;
-						}
-						/*辅助空白*/
-						if(_id === "blankId") {
-							that.blaObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.blaObj));
-							this.once_del();
-							this.scroll_bottom();
-							return false;
-						}
-						/*辅助线*/
-						if(_id === "sublineId") {
-							that.subObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.subObj));
 							this.once_del();
 							this.scroll_bottom();
 							return false;
@@ -1403,11 +1254,6 @@
 						}
 						console.log('base64=>', that.upImages['baseUrl']);
 						console.log('对应上传的index', that.upImgInd);
-						/*限制用户axios的连续请求*/
-						if(that.axios_state == false){
-							return false;
-						}
-						that.axios_state = false;
 						/*ajax*/
 						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/shop_img', {
 								img: that.upImages['baseUrl'],
@@ -1426,8 +1272,6 @@
 									/*隐藏-遮罩层*/
 									that.active.edit_slide_mask = !that.active.edit_slide_mask;
 									console.log('轮播图', that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
-									/*防止客户连续请求*/
-									that.axios_state = true;
 									return false;
 								}
 								/*按钮组*/
@@ -1436,7 +1280,6 @@
 									/*隐藏-遮罩层*/
 									that.active.edit_slide_mask = !that.active.edit_slide_mask;
 									console.log('按钮组', that.backData[thisInd]['data']['iconList'][that.upImgInd]['url']);
-									that.axios_state = true;
 									return false;
 								}
 
@@ -1444,7 +1287,6 @@
 							.catch(function(error) {
 								alert(error);
 								console.log(error);
-								that.axios_state = true;
 							});
 					},
 					/*图片上传*/
@@ -1582,34 +1424,13 @@
 					},
 					/*商品ajax=>渲染*/
 					comDataRe(){
-						var that = this;
-						/*限制用户axios的连续请求*/
-						if(that.axios_state == false){
-							return false;
-						}
-						that.axios_state = false;
 						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/gooodsList', {})
 							.then(function(response) {
-								console.log(response['data']['data']);
-								if(response['data']['code'] == 1){
-									/*成功之后=>清除-本地数据,在更新*/
-									that.comm_data = [];
-									/*循环赋值*/
-									for(var g=0;g<response['data']['data']['data'].length;g++){
-										/*(深克隆)赋值给页面渲染的data*/
-										that.comm_data.push(clones(response['data']['data']['data'][g]));
-									}
-									that.axios_state = true;
-									console.log('商品ajax成功:',that.comm_data);
-								}else {
-									/*提示*/
-									alert(response['data']['msg']);
-								}
+								console.log(response['data']);
 							})
 							.catch(function(error) {
 								alert(error);
 								console.log(error);
-								that.axios_state = true;
 							});
 					},
 					/*保存-模板*/
