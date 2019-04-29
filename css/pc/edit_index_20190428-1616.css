@@ -1,30 +1,56 @@
+.wrap {
+	display: grid;
+	/**
+		* 为了使其成为二维的网格容器，我们需要定义列和行。让我们创建3列和2行。
+		* 我们将使用grid-template-row和grid-template-column属性。
+		* **/
+	/*列*/
+	grid-template-columns: 100px 100px 100px 100px;
+	/*行*/
+	grid-template-rows: 100px 100px 100px 100px;
+	/*grid-template-columns: 100px 100px 100px 100px;
+	grid-template-rows: 100px 100px 100px 100px;*/
+	/* margin: 30px auto 0; */
+	/*width: 600px;
+	height: auto;*/
+}
+.item{
+	border: 1px dashed  #ccc;
+	text-align: center;
+	line-height: 100px;
+	cursor: pointer;
+}
 /*最外边框*/
 .wrapper {
 	position: relative;
-	margin: 0 auto;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	width: 1357px;
-	height: 937px;
-	background-color: #f5f5f5;
+	margin: 0 auto;
+	/*width: 100%;*/
+	width: 1338px;
+	height: 100vh;
+	border: 1px solid #d6d6d8;
+	/*overflow-y: scroll;*/
 }
+
 /*内容*/
+
 .content {
-	padding: 0 20px 0 10px;
+	padding-left: 10px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	width: 100%;
-	/*max-height: 100%;*/
-	height: 937px;
+	height: auto;
+	background: #f5f5f5;
 }
 
 
-/*底部wrap -s*/
+/*底部wrap*/
 
 .bottom_wrap {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
     width: 100%;
 	height: 60px;
@@ -34,7 +60,7 @@
 .bottom_content{
     width: 980px;
 	height: 60px;
-    margin: 0 auto;
+    margin: auto;
 }
 .bottom_content_info input{
 	display: block;
@@ -76,7 +102,6 @@
 }
 .bottom_wrap_deposit {
 	float: left;
-	position: relative;
     margin: 10px 0px;
     width: 100px;
 	height: 40px;
@@ -87,75 +112,22 @@
     border-radius: 3px;
     background: #6c9;
     cursor: pointer;
-    letter-spacing: 1px;
-}
-/*保存中*/
-.axios_in {
-	display: none;
-}
-.axios_in:after {
-	content: " ";
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	z-index: 1;
-	margin: auto 0;
-	animation: spot_axios 2s ease-in infinite;
-	/* Firefox */
-	-moz-animation: spot_axios 2s ease-in infinite;
-	/* Safari 和 Chrome */
-	-webkit-animation: spot_axios 2s ease-in infinite;
-	-ms-animation: spot_axios 2s ease-in infinite;
-}
-/*保存中... => 动画*/
-@keyframes spot_axios {
- 0% {
- 	content: " ";
- }
- 25% {
- 	content: ".";
- }
- 50%{
- 	content: "..";
- }
- 75%{
- 	content: "...";
- }
- 
- 100% {
- 	content: "....";
- }
 }
 
-@-webkit-keyframes spot_axios {
-  from {-webkit-transform: scale(0.4);}
-  to {-webkit-transform: scale(1);top: 40px;}
-}
 
-@-moz-keyframes spot_axios { /* Firefox */
-  from {-moz-transform: scale(0.4);}
-  to {-moz-transform: scale(1);top: 40px;}
-}
+/*左 box*/
 
-@-ms-keyframes spot_axios { /* Opera */
-  from {-ms-transform: scale(0.4);}
-  to {-ms-transform: scale(1);top: 40px;}
-}
-/*底部wrap -e*/
-
-/*左 wrap*/
-
-.left_wrap {
+.left_box {
 	float: left;
 	padding-top: 60px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	width: 300px;
-	max-height: 100%;
+	height: auto;
 }
 
-.left_wrap_fun_box {
+.left_box_fun_box {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -172,8 +144,6 @@
 	width: 100%;
 	height: 55px;
 	line-height: 55px;
-	font-size: 14px;
-	letter-spacing: 1px;
 	background: -moz-linear-gradient(top, #ffffff 0%, #dddce1 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dddce1));
 	background: -webkit-linear-gradient(top, #ffffff 0%, #dddce1 100%);
@@ -218,21 +188,13 @@
 	background-color: #3378b3;
 }
 
-/*中间 wrap*/
-.middle_wrap {
-	float: left;
-	position: relative;
-	padding-left: 15px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	width: 387px;
-	min-height: 100%;
-}
-/*模拟手机 box*/
+
+/*中间 box*/
 
 .middle_box {
 	position: relative;
+	float: left;
+	margin-left: 15px;
 	padding-top: 16px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -312,36 +274,32 @@
 }
 
 
-/*右 wrap（隐藏滚动条）*/
-.right_wrap {
+/*右 box*/
+
+.right_box {
 	display: none;
 	float: left;
-	padding: 80px 10px 0 20px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	width: 590px;
-	max-height: 100%;
-	overflow: hidden;
-}
-/*右 wrap=> box（显示滚动条）*/
-.right_box {
-	padding: 0 32px 60px 10px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+	margin: 90px 0 0 20px;
+	/*width: 480px;*/
 	width: 610px;
-	/*width: 610px;*/
-	height: 100%;
-	/*max-height: 100%;*/
-	height: 937px;
-	/*937px-80px(padding-top:80px;)-离底部保存栏17px*/
-	height: 840px;
+	height: auto;
+	padding: 10px 10px 60px 10px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	color: #171717;
-	border-radius: 6px;
-	background: #fff;
-	overflow-y: scroll;
+	background: #ffffff;
 }
+
+
+/*包裹 传给后台style*/
+
+#wrap_new {
+	/*position: relative;*/
+	width: 100%;
+	height: auto;
+}
+
 
 /*拖拽的div*/
 .modle_box {
@@ -362,6 +320,7 @@
 	height: 100%;
 	background-color: rgba(0, 0, 0, .3);
 }
+
 
 /* 删除按钮*/
 
@@ -475,13 +434,8 @@
 	color: #666;
 	border: 1px solid #a9a9a9;
 	border-left: 0;
-	letter-spacing: 1px;
 	cursor: pointer;
-}
-/*loading 图标*/
-.btn .btn_icon {
-	width: 14px;
-	height: 14px;
+	
 }
 
 .module-menus {
@@ -536,9 +490,8 @@
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-/*页数*/
+
 .paging {
-	display: none;
 	padding-left: 285px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -657,11 +610,9 @@
 }
 /* 轮播图 -e */
 /* 搜索 -s */
-.search {
-	padding: 10px;
+.search{
+	padding: 20px;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 }
 
 .search form{
@@ -680,6 +631,7 @@
 	float: left;
 	border: 0;
 	padding: 0;
+	cursor: move;
 }
 .search .searchText{
 	width: 85%;
@@ -691,6 +643,7 @@
 	outline: none;
 	color: #999;
 	float: left;
+	cursor: move;
 }
 /* 搜索样式二 */
 .search .style2 .searchBtn{
@@ -774,91 +727,6 @@
 	height: 100%;
 }
 /* 单图-e */
-/* 公告 -s */
-.edit_modle .tips {
-    font-size: 12px;
-    margin-left: 10px;
-    letter-spacing: 1px;
-}
-/* (公告)移动层 */
-.notice_move {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background: rgba(0,0,0,0);
-    z-index: 99;
-}
-
-.notice {
-	position: relative;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	align-items:center;
-	-webkit-align-items:center;
-	box-align:center;
-	-moz-box-align:center;
-	-webkit-box-align:center;
-    height: 30px;
-    background: #fff;
-    font-size: 14px;
-    color: #525252;
-	padding: 10px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-    overflow: hidden;
-    white-space: nowrap;
-}
-.notice .notice_icon {
-	margin-right: 4px;
-	position: relative;
-	width: 28px;
-	height: 26px;
-	
-}
-/*public.css=>绝对定位*/
-.notice .notice_icon img{
-	width: 80%;
-}
-
-.notice .scroll_notice{
-	flex: 1;
-	box-flex: 1;
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	flex: 1;
-	-webkit-flex: 1;
-	height: 28px;
-	line-height: 28px;
-	overflow: hidden; 
-	white-space: nowrap; 
-	text-overflow: ellipsis; 
-}
-.notice a{
-	color: #666;
-}
-.notice .scroll_notice .notice_content{
-	width: 100%;
-}
-.notice .scroll_notice marquee{
-	height: 100%;
-	line-height: 28px;
-}
-
-.notice .more{
-	width: 50px;
-	height: 24px;
-	line-height: 24px;
-	border-left: 2px solid #dddddd;
-	text-align: right;
-	margin-left: 10px;
-}
-/* 公告 -e */
 /* 辅助线 -s */
 .subline{
 	padding: 10px 0;
@@ -867,7 +735,15 @@
 	-webkit-box-sizing: border-box;
 }
 /* 辅助线 -e */
-
+/* 魔方-s */
+.cube{
+	height: 160px;
+	color: #999;
+    font-size: 16px;
+	text-align: center;
+	line-height: 160px;
+}
+/* 魔方-e */
 /*** 全部 编辑样式 -s***/
 /*编辑 -s */
 .edit_title{
@@ -889,12 +765,10 @@
 	padding: 3px 10px;
 	border-radius: 4px;
 }
-.edit_slide .edit_content_title{
-	width:17%;
-} 
+
 .edit_content_title {
 	display: inline-block;
-	width: 14%;
+	width: 16%;
 	text-align: left;
 	letter-spacing: 1px;
 }
@@ -907,8 +781,6 @@
 	font-size: 12px;
 }
 .edit_content_textinpt{
-	
-	
 	width: 60%;
 	height: 20px;
 	line-height: 30px;
@@ -952,9 +824,8 @@
     text-align: center;
     border-radius: 3px;
     cursor: pointer;
-    letter-spacing: 1px;
-    border: 1px solid #e5e5e5;
     background: #f8f8f8;
+    border: 1px solid #e5e5e5;
 }
 .edit_addimg {
 	position: relative;
@@ -979,7 +850,20 @@
 	width: 138px;
 	height: 78px;
 }
-
+.edit_tab{
+	float: right;
+	margin:15px 160px 0 0;
+	border-color: #ccc;
+	border-style: dashed;
+}
+.edit_tab td{
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+	border-style: dashed;
+	cursor: pointer;
+}
 .edit_img>img {
 	display: block;
 	width: 100%;
@@ -1233,7 +1117,6 @@
 /*按钮编辑 -s*/
 /* 上传动画-s */
 .upload{
-	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1318,16 +1201,8 @@
 }
 
 .mask_content_title {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-justify-content: space-between;
 	justify-content: space-between;
-	-moz-box-pack: space-between;
-	-webkit-box-pack: space-between;
-	box-pack: space-between;
 	padding-left: 10px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1383,12 +1258,12 @@
 	border: 1px solid #A0A0A0;
 }
 
-.mask_content_tab .active {
+/*.mask_content_tab .active {
 	background-color: #ffffff;
 	border-bottom: 1px solid #ffffff;
 	color: #000000;
 	cursor: default;
-}
+}*/
 
 .mask_content_item {
 	margin-bottom: 10px;
@@ -1670,9 +1545,75 @@
 }
 /* 商品组-e */
 
+/* 公告 -s */
+.edit_modle .tips {
+    font-size: 12px;
+    margin-left: 10px;
+}
+/* (公告)移动层 */
+.notice_move {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,0);
+    z-index: 99;
+    cursor: move;
+}
+
+.notice{
+    height: 30px;
+    background: #fff;
+    font-size: 14px;
+    color: #525252;
+	padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+.notice .notice_icon{
+	width: 28px;
+	height: 26px;
+	margin-right: 10px;
+}
+.notice .notice_icon img{
+	width: 100%;
+}
+
+.notice .scroll_notice{
+	flex: 1;
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis; 
+}
+.notice a{
+	color: #666;
+}
+.notice .scroll_notice .notice_content{
+	width: 100%;
+}
+.notice .scroll_notice marquee{
+	height: 100%;
+	line-height: 28px;
+}
+
+.notice .more{
+	width: 50px;
+	height: 24px;
+	line-height: 24px;
+	border-left: 2px solid #dddddd;
+	text-align: right;
+	margin-left: 10px;
+}
+/* 公告 -e */
 /* 辅助空白label 辅助线label -s*/
 .edit_blank .edit_content_label,.edit_subline .edit_content_label{
-	margin-right: 5px;
+	margin-right: 10px;
 	font-size: 12px;
 }
 .edit_blank .edit_content_label .text,.edit_subline .edit_content_label .text{
@@ -1690,6 +1631,21 @@
 /*** 全部 编辑样式 -e***/
 
 /*public -s*/
+
+/*清除浮动代码 '父元素'*/
+
+.clearfloat:after {
+	display: block;
+	clear: both;
+	content: " ";
+	visibility: hidden;
+	height: 0;
+}
+
+.clearfloat {
+	zoom: 1;
+}
+
 /*鼠标悬浮*/
 .hover_box:hover {
 	cursor: pointer;
@@ -1731,4 +1687,88 @@
 	display: block;
 }
 /*public -e*/
-
+/* 魔方图片-s */
+.edit_cube_mask{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	background: rgba(0, 0, 0, .5);
+}
+.cube_mask_content{
+	position: absolute;
+	top: 150px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 600px;
+	border-radius: 5px;
+	background: #ffffff;
+	box-shadow: 0 5px 15px rgba(0,0,0,.5);
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+.cube_mask_title{
+	min-height: 16.43px;
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.cube_mask_title span{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	cursor: pointer;
+}
+.cube_mask_title span img{
+	width: 10px;
+	height: 10px;
+}
+.cube_mask_title h3{
+	font-weight: normal;
+	font-size: 24px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.cube_table_wrap{
+	padding: 15px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.cube_table{
+	width: 400px;
+	margin: 40px auto;
+}
+.cube_table ul{
+	display: block;
+	height: 60px;
+	margin-bottom: 10px;
+	margin-left: 40px;
+}
+.cube_table li{
+	float: left;
+    width: 60px;
+    height: 60px;
+	margin: 1px;
+	cursor: pointer;
+    background: #f8f8f8;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border: 1px solid #e9e9e9;
+}
+.cube_table .active{
+	background: #ddeafb;
+    border-color: #c3d9ff;
+}
+/* 魔方图片-e */
+.active {
+	background-color: red;
+	/*border-bottom: 1px solid #ffffff;
+	color: #000000;*/
+	cursor: default;
+}

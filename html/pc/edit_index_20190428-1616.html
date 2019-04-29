@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>客户_手动创建页面_给固定模板</title>
+		<link rel="stylesheet" href="../../css/pc/public/public.css" />
+		<link rel="stylesheet" href="../../css/pc/edit_index_20190428-1616.css" />
+	</head>
+
+	<body>
+		<div class="wrapper" id="edit_app_wrap">
+			<!--首页编辑-->
+			<div class="content clearfloat">
+				<!--left box-->
+				<div class="left_box">
+					<!--功能插件-->
+					<div class="left_box_fun_box clearfloat">
+						<p class="fun_box_top">功能插件</p>
+						<div class="fun_box_content clearfloat" :class="pageState == true ? 'show_box':'hide_box'">
+							<!--项-->
+							<p class="fun_box_content_term" v-for="(v,i) in componentTerm" @click="comTremFun(v.id)">{{v.name}}</p>
+						</div>
+					</div>
+				</div>
+				<!--中间 box-->
+				<div class="middle_box">
+					<!--绝对定位=>设置图片，模拟手机-->
+					<p class="phone_top"></p>
+					<p class="phone_left"></p>
+					<p class="phone_right"></p>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<div class="html_wrpa">
+						<!--水平居中-->
+						<div class="html_box">
+							<!--隐藏滚动条-->
+							<div class="html_box_new" :class="pageState == true ? 'show_box':'hide_box'">
+								<!--拖拽-包着拖拽的div-->
+								<div class="drag_box" v-for="(v,i) in backData" draggable="true">
+									<!--魔方图片模块 box，拖拽的div-->
+									<div class="modle_box" v-if="v.id == 'cubeId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+										<div class="cube" :style="{background:v.params.background}">
+											未设置魔方图片
+										</div>
+										<!--删除按钮 wrap-->
+										<div class="cursor_wrap">
+											<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
+										</div>
+										<!--选中-虚框-->
+										<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+									</div>
+
+								</div>
+							</div>
+							<!--隐藏滚动条-->
+
+						</div>
+					</div>
+					<!--模拟手机的 wrap，背景图两边（img）-->
+					<p class="phone_bottom"></p>
+				</div>
+				<!--编辑模板 box-->
+				<div class="right_box" :class="pageState == true ? 'show_box':'hide_box'">
+					<!-- 魔方图片设置-编辑 -s -->
+					<div class="edit_modle" v-show="puStateObj['id'] == 'cubeId'">
+						<div class="edit_cube">
+							<div class="edit_title">魔方图片设置<span class="tips"></span></div>
+							<div class="edit_content">
+								<span class="edit_content_title">背景颜色</span>
+								<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.background" value="backData[puStateObj['key_num']].params.borderBackground">
+							</div>
+							<div class="edit_content">
+								<span class="edit_content_title">布局</span>
+								<table cellpadding="0" cellspacing="0" border="1" class="edit_tab">
+									<!-- <tr v-for="item in active.cube_data">
+											<td v-for="value in active.cube_data" v-if="item.x>active.cube_move.xNum||value.y>active.cube_move.yNum" rowspan="1" colspan="1" :data-x="item.x" :data-y="value.y" @click='cube($event)'>+</td>
+										</tr> -->
+									<!--<tr v-for="item in backData[puStateObj['key_num']].data.cube_data">
+										<td v-for="value in backData[puStateObj['key_num']].data.cube_data" 
+											v-if="cubObj.data.cube_start.x==''||(item.x==cubObj.data.cube_start.x&&value.y==cubObj.data.cube_start.y)||(item.x>=cubObj.data.cube_start.x&&value.y>=cubObj.data.cube_start.y)&&(item.x>cubObj.data.cube_move.xNum||value.y>cubObj.data.cube_move.yNum)" 
+											rowspan="1" colspan="1" :data-x="item.x" :data-y="value.y" @click='cube($event)'>
+											+</td>
+									</tr>-->
+									<!--0000-->
+									<tr>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_one']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+									</tr>
+									<tr>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_two']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+									</tr>
+									<tr>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_three']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+									</tr>
+									<tr>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_four']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+									</tr>
+									<!--0000-->
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- 魔方图片设置-编辑 -e -->
+
+				</div>
+			</div>
+
+			<!--图片魔方=>遮罩层 -->
+			<div class="edit_cube_mask" :class="active.edit_cube == true ? 'show_box':'hide_box'">
+				<div class="cube_mask_content">
+					<div class="cube_mask_title">
+						<h3>选择布局</h3>
+						<span @click="cube"><img src="../../img/pc/delete_icon.png" alt=""></span>
+					</div>
+					<div class="cube_table_wrap">
+						<!--<div class="cube_table">-->
+							<!-- <ul v-for="item in active.cube_str.row">
+								<li @mouseenter="enter($event)" @click="save" :class="{'active':active.cube_move.xNum>=item.x&&active.cube_move.yNum>=value.y}" :data-x="item.x" :data-y="value.y" v-for="value in active.cube_str.col"></li>
+							</ul> -->
+							<!--<ul v-for="item in cubObj.data.cube_str.row">
+								<li @mouseenter="enter($event)" @click="save" :class="{'active':cubObj.data.cube_move.xNum>=item.x&&cubObj.data.cube_move.yNum>=value.y}" :data-x="item.x" :data-y="value.y" v-for="value in cubObj.data.cube_str.col"></li>
+							</ul>-->
+							<!--0000-->
+							<table cellpadding="0" cellspacing="0" border="1" class="edit_tab">
+								<!--this.cube_start['x'],this.cube_start['y']-->
+								<tr>
+									<!--v-if="x、y都要大于起始的x、y"-->
+									<td v-for="item in backData[puStateObj['key_num']]['data']['tr_one']" v-if="cube_start['x'] <= item['x'] && cube_start['y'] <= item['y']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" :class="{'active':cube_move['xNum'] >= item['x'] && cube_move['yNum'] >= item['y']}" @mouseenter="enter($event)" @click="obtain_xy()"></td>
+								</tr>
+								<tr>
+									<td v-for="item in backData[puStateObj['key_num']]['data']['tr_two']" v-if="cube_start['x'] <= item['x'] && cube_start['y'] <= item['y']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" :class="{'active':cube_move['xNum'] >= item['x'] && cube_move['yNum'] >= item['y']}" @mouseenter='enter($event)' @click="obtain_xy()"></td>
+								</tr>
+								<tr>
+									<td v-for="item in backData[puStateObj['key_num']]['data']['tr_three']" v-if="cube_start['x'] <= item['x'] && cube_start['y'] <= item['y']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" :class="{'active':cube_move['xNum'] >= item['x'] && cube_move['yNum'] >= item['y']}"  @mouseenter='enter($event)' @click="obtain_xy()"></td>
+								</tr>
+								<tr>
+									<td v-for="item in backData[puStateObj['key_num']]['data']['tr_four']" v-if="cube_start['x'] <= item['x'] && cube_start['y'] <= item['y']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" :class="{'active':cube_move['xNum'] >= item['x'] && cube_move['yNum'] >= item['y']}" @mouseenter='enter($event)' @click="obtain_xy()"></td>
+								</tr>
+							</table>
+							<!--0000-->
+						<!--</div>-->
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		
+		<script src="../../js/pc/public/jquery-1.8.3.js"></script>
+		<!--public的js-->
+		<!--<script src="../../js/pc/edit_index.js"></script>-->
+
+		<script src="../../js/pc/public/vue.js"></script>
+		<script src="../../js/pc/public/axios.js"></script>
+		<script>
+			// 深克隆，把引用数据类型的，分解成基础类型（克隆）
+			// 第一个参数是数据，第二参数是数组或对象(想转换的类型)
+			function clones(_type, _memory) {
+				var newMemory = null;
+				// 判断传过来的数据类型
+				if(_type instanceof Array) {
+					newMemory = _memory || [];
+				} else {
+					newMemory = _memory || {};
+				}
+				for(var x in _type) {
+					//引用数据类型的 typeof为 object
+					if(typeof _type[x] == "object") {
+						newMemory[x] = (_type[x].constructor == Array) ? [] : {};
+						clones(_type[x], newMemory[x]); //递归
+					} else {
+						// 数据赋值
+						newMemory[x] = _type[x];
+					}
+				}
+				return newMemory;
+			}
+
+			var newVue = new Vue({
+				el: "#edit_app_wrap",
+				data: {
+					/*组件-选项*/
+					componentTerm: [{
+						name: '魔方图片',
+						id: 'cubeId'
+					}],
+
+					/*拖拽需要的元素*/
+					dragging: null,
+					/*遮罩层(显隐),Tab切换 */
+					active: {
+						/*上传图片*/
+						edit_slide_mask: false,
+						/*上传图片(Tab切换)*/
+						edit_slide: true,
+						/*图片魔方*/
+						edit_cube: false,
+					},
+					/**
+					 * 公共-对应显示-模板编辑;
+					 * id:判断模块；
+					 * key_num:判断-模块在页面的排序
+					 * **/
+					puStateObj: {
+						id: null,
+						/*初始化*/
+						key_num: 0,
+					},
+					/*页面渲染=>防止页面未渲染完成--vue的{{变量名}}，使用v-cloak不能解决问题*/
+					pageState: false,
+					/* 页面渲染data || 传个后台-data ，对象形式*/
+					backData: [
+						/**初始化=>生产对应组件=>删除第一条数据array[0]。
+						 * 如果，编辑页面=>先删除-下面的数据。
+						 * **/
+						{
+							params: {},
+							data: {}
+						},
+					],
+					/*鼠标悬浮-起始位置*/
+					cube_start: {
+						x: '',
+						y: ''
+					},
+					/*魔方选择布局-渲染data*/
+					cube_str: {
+						row: [],
+						col: []
+					},
+					/*魔方鼠标悬浮位置*/
+					cube_move: {
+						xNum: '',
+						yNum: ''
+					},
+					/*魔方鼠标点击保存*/
+					cube_save: true,
+					/*魔方图片*/
+					cubObj: {
+						//组件id
+						id: "cubeId",
+						// 组件名
+						temp: "cube",
+						//页面渲染-组件位置，从0开始
+						key_num: null,
+						params: {
+							/*魔方背景色*/
+							background: "#ffffff",
+
+						},
+						data: {
+							
+							/*table渲染数据 */
+							/*魔方布局-渲染数据*/
+//							cube_data: {
+								tr_one:[
+									/*第一行*/
+									{
+										x: '0',
+										y: '0',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '1',
+										y: '0',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '2',
+										y: '0',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '3',
+										y: '0',
+										row: 1,
+										col: 1
+									},
+								],
+								tr_two:[
+									/*第二行*/
+									{
+										x: '0',
+										y: '1',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '1',
+										y: '1',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '2',
+										y: '1',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '3',
+										y: '1',
+										row: 1,
+										col: 1
+									},
+								],
+								tr_three:[
+									/*第三行*/
+									{
+										x: '0',
+										y: '2',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '1',
+										y: '2',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '2',
+										y: '2',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '3',
+										y: '2',
+										row: 1,
+										col: 1
+									},
+								],
+								tr_four: [
+									/*第四行*/
+									{
+										x: '0',
+										y: '3',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '1',
+										y: '3',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '2',
+										y: '3',
+										row: 1,
+										col: 1
+									},
+									{
+										x: '3',
+										y: '3',
+										row: 1,
+										col: 1
+									},
+								],
+//							},
+						}
+					}
+				},
+				/*方法*/
+				methods: {
+					/*(页面渲染)删除对应=>data*/
+					delDataFun(_index) {
+						console.log("删除index:", _index);
+						console.log("后台data:", this.backData.length);
+						if(this.backData.length == 1) {
+							/*根据对应index=> 删除*/
+							this.backData.splice(_index, 1, {
+								params: {},
+								data: {}
+							});
+							console.log('给个空的key值，好对应数据渲染', this.backData);
+							/*初始化*/
+							this.puStateObj = {
+								id: null,
+								/*初始化*/
+								key_num: 0,
+							}
+							console.log('删除-对应模板!', this.puStateObj);
+							return false;
+						}
+						this.backData.splice(_index, 1);
+						/*初始化=>防止=>编辑-对应页面(报错)*/
+						this.puStateObj = {
+							id: null,
+							/*初始化*/
+							key_num: 0,
+						}
+						/*对应删除后=>对data渲染数据=>排序*/
+						for(var l = _index; l < this.backData.length; l++) {
+							this.backData[l]['key_num'] = l;
+						}
+						console.log('删除后-对应的data:', this.backData);
+					},
+					/*<< 提取--public 方法*/
+					/*添加--滚动条到底部,同时选中边框=>最新对象*/
+					scroll_bottom() {
+						var that = this;
+						that.$nextTick(() => {
+							var div = document.getElementsByClassName('html_box_new')[0]
+							div.scrollTop = div.scrollHeight;
+							that.puStateObj['key_num'] = that.backData.length - 1;
+						})
+					},
+					/*删除-backData[0]的初始数据(用来双向绑定)*/
+					once_del() {
+						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						 * 该函数-'最后'执行的语句;
+						 * **/
+						if(this.backData[0]['id'] == undefined) {
+							this.backData.shift();
+							this.backData[0]['key_num'] = 0;
+							console.log('清除掉-无用的值（数据双向绑定！）！');
+						}
+					},
+					/* 提取--public 方法 >>*/
+					/*组件选项-按钮*/
+					comTremFun(_id) {
+						var that = this;
+						/*魔方图片*/
+						if(_id === "cubeId") {
+							that.cubObj['key_num'] = that.backData.length;
+							that.backData.push(clones(that.cubObj));
+							this.once_del();
+							this.scroll_bottom();
+							console.log('组件魔方:',that.backData);
+							return false;
+						}
+
+					},
+					/*编辑对应的模板*/
+					editMode(_id, _key) {
+						console.log('点击对应模板:', _id, _key);
+						this.puStateObj = {
+							id: _id,
+							key_num: _key
+						}
+						console.log('对应的模板：', this.puStateObj);
+
+					},
+					/*删除-项(轮播，商品等)*/
+					delItem(_ind) {
+						/*轮播图*/
+						if(this.puStateObj['id'] == 'rotationId') {
+							console.log(_ind);
+							/*对应页面渲染-数据*/
+							var roImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
+							if(roImgData.length > 1) {
+								/*数组删除*/
+								this.backData[this.puStateObj['key_num']]['data']['images'].splice([_ind], 1);
+
+							} else {
+								alert('轮播图片最少需要一项');
+							}
+						}
+
+					},
+
+					// 魔方布局显示隐藏
+					/*(魔方布局)点击'+'对应,*/
+					cube(e) {
+						/*遮罩层(显隐)*/
+						this.active.edit_cube = !this.active.edit_cube;
+//						var this_data = this.backData[this.puStateObj['key_num']]['data'];
+						/*起始位置*/
+						this.cube_start['x'] = e.target.dataset.x;
+						this.cube_start['y'] = e.target.dataset.y;
+						/*不是-点击'关闭按钮'-遮罩层*/
+						if(this.cube_start['x'] != undefined && this.cube_start['y'] != undefined){
+							console.log('起始位置',this.cube_start['x'],this.cube_start['y']);
+						}
+						
+					},
+					/*选择-布局box-鼠标(悬浮)*/
+					enter(e) {
+						/*鼠标-点击(悬浮)获取x、y=>改变style*/
+						this.cube_move.xNum = e.target.dataset.x;
+						this.cube_move.yNum = e.target.dataset.y;
+						console.log('鼠标-(悬浮x/悬浮y)获取x、y: ',this.cube_move.xNum,this.cube_move.xNum);
+						
+//						if(this.cube_save) {
+//							/*鼠标-点击(悬浮)获取x、y=>改变style*/
+//							this.cube_move.xNum = e.target.dataset.x;
+//							this.cube_move.yNum = e.target.dataset.y;
+//							console.log('鼠标-点击(悬浮)获取x、y: ',this.cube_move.xNum,this.cube_move.xNum);
+//						} else {
+//							/*鼠标点击保存*/
+//							this.cube_save = !this.cube_save;
+//							/*关闭选择布局-遮罩层*/
+//							this.active.edit_cube = !this.active.edit_cube;
+//						}
+
+					},
+					/*选择-布局box-鼠标(点击)*/
+					obtain_xy() {
+						/*选择-页面布局-遮罩层*/
+						this.active.edit_cube = !this.active.edit_cube;	
+						console.log('鼠标-点击x/点击y-获取x、y: ',this.cube_move.xNum,this.cube_move.yNum);
+						/*渲染pc数据--对应的数据*/
+						var this_table = this.backData[this.puStateObj['key_num']]['data'];
+						/*鼠标悬浮-起始位置*/
+//						this.cube_start={
+//							x: '',
+//							y: ''
+//						},
+
+						/*页面布局渲染pc*/
+//						this.cube_start['x'];
+//						this.cube_start['y'];
+						for(var r=0;r<4;r++){
+							/*找到起始位置的数据*/
+							if(this.cube_start['x'] == this_table['tr_one'][r]['x'] && this.cube_start['y'] == this_table['tr_one'][r]['y ']){
+								/*改变table的行、列*/
+								this_table['tr_one'][r]['row'] = this.cube_move.xNum + 1;
+								this_table['tr_one'][r]['col'] = this.cube_move.yNum + 1;
+								console.log(66666);
+							}
+							if(this_table['tr_one'][r]['x'] <= this.cube_move.xNum && this_table['tr_one'][r]['y'] <= this.cube_move.yNum && this_table['tr_one'][r]['x'] != this.cube_start['x'] && this_table['tr_one'][r]['y'] !=this.cube_start['y']){
+								/*除了起始位置*，小于等于=>删除*/
+								this_table['tr_one'][r]['x'].splice(r,1);
+								console.log(8888);
+							}
+							
+						}
+						
+					},
+					
+
+					/*保存-模板*/
+					depositFun() {
+						var that = this;
+						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						 * 最上面。
+						 * **/
+						if(that.backData[0]['id'] == undefined) {
+							alert('请手动生产页面！');
+							return false;
+						}
+						console.log('保存模板！！', that.backData);
+					}
+
+				},
+				/*挂载结束*/
+				mounted: function() {
+					/*防止页面未渲染完成--vue的{{变量名}}*/
+					this.pageState = true
+				},
+
+			});
+		</script>
+	</body>
+
+</html>

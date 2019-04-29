@@ -9,22 +9,23 @@
 	</head>
 
 	<body>
-		<div class="wrapper_wrap">
-			<div class="wrapper" id="edit_app_wrap">
-				<!--首页编辑-->
-				<div class="content clearfloat">
-					<!--left box-->
-					<div class="left_box">
-						<!--功能插件-->
-						<div class="left_box_fun_box clearfloat">
-							<p class="fun_box_top">功能插件</p>
-							<div class="fun_box_content clearfloat" :class="pageState == true ? 'show_box':'hide_box'">
-								<!--项-->
-								<p class="fun_box_content_term" v-for="(v,i) in componentTerm" @click="comTremFun(v.id)">{{v.name}}</p>
-							</div>
+		<div class="wrapper" id="edit_app_wrap">
+			<!--首页编辑-->
+			<div class="content clearfloat">
+				<!--left wrap-->
+				<div class="left_wrap">
+					<!--功能插件-->
+					<div class="left_wrap_fun_box clearfloat">
+						<p class="fun_box_top">功能插件</p>
+						<div class="fun_box_content clearfloat" :class="pageState['hide_var'] == true ? 'show_box':'hide_box'">
+							<!--项-->
+							<p class="fun_box_content_term" v-for="(v,i) in componentTerm" @click="comTremFun(v.id)">{{v.name}}</p>
 						</div>
 					</div>
-					<!--中间 box-->
+				</div>
+				<!--中间 wrap-->
+				<div class="middle_wrap">
+					<!--模拟手机 box-->
 					<div class="middle_box">
 						<!--绝对定位=>设置图片，模拟手机-->
 						<p class="phone_top"></p>
@@ -35,9 +36,9 @@
 							<!--水平居中-->
 							<div class="html_box">
 								<!--隐藏滚动条-->
-								<div class="html_box_new" :class="pageState == true ? 'show_box':'hide_box'">
+								<div class="html_box_new" :class="pageState['hide_var'] == true ? 'show_box':'hide_box'">
 									<!--拖拽-包着拖拽的div-->
-									<div class="drag_box" v-for="(v,i) in backData" draggable="true" @dragstart="handleDragStart($event, v)" @dragover.prevent="handleDragOver($event, v)" @dragenter="handleDragEnter($event, v)" @dragend="handleDragEnd($event, v)">
+									<div class="drag_box" v-for="(v,i) in backData['data']" draggable="true" @dragstart="handleDragStart($event, v)" @dragover.prevent="handleDragOver($event, v)" @dragenter="handleDragEnter($event, v)" @dragend="handleDragEnd($event, v)">
 										<!--轮播图 box，拖拽的div-->
 										<div class="modle_box" v-if="v.id == 'rotationId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 											<div class="slide">
@@ -75,9 +76,9 @@
 										<div class="modle_box" v-if="v.id == 'bottonsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 											<div class="modle_bottons" :style="{backgroundColor:v.params.iconColor}">
 												<!--四个按钮=>20%，五个按钮=>25%-->
-												<div class="modle_mod_nav" v-for="item in v.data.iconList" :style="{width: v.params.iconNum == 4 ? '25%':'20%'}">
+												<div class="modle_mod_nav" v-for="item in v.data.iconList" :style="{width: v.params.iconNum == '4' ? '25%':'20%'}">
 													<!--四个按钮=>margin: 0 16px; 五个按钮=>margin: 0 12px;-->
-													<p class="modle_mod_img" :style="{margin: v.params.iconNum == 4 ? '0 16px':'0 12px'}">
+													<p class="modle_mod_img" :style="{margin: v.params.iconNum == '4' ? '0 16px':'0 12px'}">
 														<img :src="item.url" :style="{borderRadius:v.params.iconStyle}">
 													</p>
 													<p class="modle_mod_text" :style="{color:item.siezColor}">{{item.text}}</p>
@@ -192,7 +193,7 @@
 										<!--辅助线模块 box，拖拽的div-->
 										<div class="modle_box" v-if="v.id == 'sublineId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 											<div class="subline">
-												<div :style="{'border-bottom-width':v.params.boderHeight,'border-bottom-style':v.params.borderStyle,'border-bottom-color':v.params.borderBackground,}"></div>
+												<div :style="{'border-bottom-width':v.params.boderHeight,'border-bottom-style':v.params.borderStyle,'border-bottom-color':v.params.borderBackground}"></div>
 											</div>
 											<!--删除按钮 wrap-->
 											<div class="cursor_wrap">
@@ -224,35 +225,38 @@
 						<!--模拟手机的 wrap，背景图两边（img）-->
 						<p class="phone_bottom"></p>
 					</div>
-					<!--编辑模板 box-->
-					<div class="right_box" :class="pageState == true ? 'show_box':'hide_box'">
+				</div>
+				<!--编辑模板 wrap-->
+				<div class="right_wrap" :class="pageState['hide_edit_box'] == true ? 'show_box':'hide_box'">
+					<!--box-->
+					<div class="right_box">
 						<!-- 轮播图--编辑 -->
 						<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
 							<div class="edit_slide">
 								<div class="edit_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~</span></div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮形状</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="square">正方形</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="square">正方形</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮位置</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="left">按钮居左</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="center">按钮居中</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.butPosition" value="right">按钮居右</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butPosition" value="left">按钮居左</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butPosition" value="center">按钮居中</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butPosition" value="right">按钮居右</label>
 
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮背景颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.butColor" value="backData[puStateObj['key_num']].params.butColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.butColor" value="backData['data'][puStateObj['key_num']].params.butColor">
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮点击颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.clickColor" value="backData[puStateObj['key_num']].params.clickColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.clickColor" value="backData['data'][puStateObj['key_num']].params.clickColor">
 								</div>
 								<!--轮播图-上传图片 -->
-								<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+								<div class="edit_addimg clearfloat" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['images']">
 									<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
 									<div class="edit_img hover_box" @click="call_off(i)">
 										<img :src="v.imgUrl" alt="">
@@ -266,7 +270,7 @@
 										<img src="../../img/pc/delete_icon.png" alt="">
 									</div>
 								</div>
-								<p class="edit_sub" @click.stop="add_data(puStateObj['id'],backData[puStateObj['key_num']]['data']['images'])">添加一个轮播</p>
+								<p class="edit_sub" @click.stop="add_data(puStateObj['id'],backData['data'][puStateObj['key_num']]['data']['images'])">添加一个轮播</p>
 							</div>
 						</div>
 						<!-- 搜索编辑 -->
@@ -278,30 +282,30 @@
 								<div class="edit_content">
 									<div class="edit_content_title">提示文字</div>
 									<label class="edit_content_label">
-									<input class="editor_input1" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.tipeText">
-								</label>
+										<input class="editor_input1" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData['data'][puStateObj['key_num']].data.tipeText">
+									</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">选择样式</div>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle" value="style1"> 样式一</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.reStyle" value="style2"> 样式二</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.reStyle" value="style1"> 样式一</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.reStyle" value="style2"> 样式二</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">文字颜色</div>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.textColor">
 									<span class="tips">提示: 输入文字颜色</span>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">边框颜色</div>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.borderColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.borderColor">
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">背景颜色</div>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.backColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.backColor">
 								</div>
 							</div>
 						</div>
@@ -311,20 +315,20 @@
 								<div class="edit_title">按钮组设置<span class="tips">Tips:图片必须是正方形或者正圆形</span></div>
 								<div class="edit_content">
 									<span class="edit_content_title">图标样式</span>
-									<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="0" >正方形</label>
-									<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData[puStateObj['key_num']].params.iconStyle" value="50%" >圆形</label>
+									<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData['data'][puStateObj['key_num']].params.iconStyle" value="0" >正方形</label>
+									<label class="edit_content_label"><input type="radio" name="button_style" v-model="backData['data'][puStateObj['key_num']].params.iconStyle" value="50%" >圆形</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮数量</span>
-									<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="4" @change="butNumber()">四个按钮</label>
-									<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData[puStateObj['key_num']].params.iconNum" value="5" @change="butNumber()">五个按钮</label>
+									<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData['data'][puStateObj['key_num']].params.iconNum" value="4" @change="butNumber()">四个按钮</label>
+									<label class="edit_content_label"><input type="radio" name="button_num" v-model="backData['data'][puStateObj['key_num']].params.iconNum" value="5" @change="butNumber()">五个按钮</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">背景颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.iconColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.iconColor">
 								</div>
 								<!--按钮=>图片-->
-								<div v-for="(item,index) in backData[puStateObj['key_num']].data.iconList">
+								<div v-for="(item,index) in backData['data'][puStateObj['key_num']].data.iconList">
 									<div class="ve-panel-editor-line2">
 										<div class="ve-panel-editor-goodimg">
 											<img class="ve-panel-editor-goodimg_img" :src="item.url">
@@ -365,7 +369,7 @@
 								<div class="edit_title">单图设置<span class="tips">提示:图片最低高度为40像素~</span></div>
 
 								<!--单图-上传图片 -->
-								<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+								<div class="edit_addimg clearfloat" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['images']">
 									<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
 									<div class="edit_img hover_box" @click="call_off(i)">
 										<img :src="v.imgUrl" alt="">
@@ -378,7 +382,7 @@
 										<img src="../../img/pc/delete_icon.png" alt="">
 									</div>
 								</div>
-								<p class="edit_sub" @click.stop="add_data(puStateObj['id'],backData[puStateObj['key_num']]['data']['images'])">添加一个单图</p>
+								<p class="edit_sub" @click.stop="add_data(puStateObj['id'],backData['data'][puStateObj['key_num']]['data']['images'])">添加一个单图</p>
 
 							</div>
 						</div>
@@ -390,61 +394,61 @@
 								<div class="edit_title">商品设置<span class="tips">提示: 商品组的图标可通过替换目录文件自定义</span></div>
 								<div class="edit_content">
 									<span class="edit_content_title">样式选择</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item">横排显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item2">双排显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.listStyle" value="modle_shop_item3">三排显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.listStyle" value="modle_shop_item">横排显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.listStyle" value="modle_shop_item2">双排显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.listStyle" value="modle_shop_item3">三排显示</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">显示标题</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="true">显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.title" value="false">不显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.title" value="true">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.title" value="false">不显示</label>
 								</div>
-								<div class="edit_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
+								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.title=='true'">
 									<span class="edit_content_title">分组标题</span>
-									<input class="edit_content_textinpt" type="text" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].params.titletext">
+									<input class="edit_content_textinpt" type="text" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData['data'][puStateObj['key_num']].params.titletext">
 								</div>
-								<div class="edit_content" v-if="backData[puStateObj['key_num']].params.title=='true'">
+								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.title=='true'">
 									<span class="edit_content_title">标题颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.titleColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.titleColor">
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">商品属性</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="">无</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_tj">推荐</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_rx">热销</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xp">新上</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_by">包邮</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_xs">限时</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.attr" value="sale_cx">促销</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="">无</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_tj">推荐</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_rx">热销</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_xp">新上</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_by">包邮</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_xs">限时</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.attr" value="sale_cx">促销</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">商品价格</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="none">不显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="show">原价+现价</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.price" value="price">只显示现价</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.price" value="none">不显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.price" value="show">原价+现价</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.price" value="price">只显示现价</label>
 								</div>
-								<div class="edit_content" v-if="backData[puStateObj['key_num']].params.listStyle!='modle_shop_item'">
+								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.listStyle!='modle_shop_item'">
 									<span class="edit_content_title">商品名称</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="no">不显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.name" value="sw">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.name" value="no">不显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.name" value="sw">显示</label>
 									<span class="tips">提示:隐藏商品名称将默认隐藏购买按钮</span>
 								</div>
-								<div class="edit_content" v-if="backData[puStateObj['key_num']].params.name=='sw'||backData[puStateObj['key_num']].params.listStyle=='modle_shop_item'">
+								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.name=='sw'||backData['data'][puStateObj['key_num']].params.listStyle=='modle_shop_item'">
 									<span class="edit_content_title">购买按钮</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="">不显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_1">样式一</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_2">样式二</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_3">样式三</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.btnStyle" value="buy_4">样式四</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="">不显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="buy_1">样式一</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="buy_2">样式二</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="buy_3">样式三</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="buy_4">样式四</label>
 								</div>
 								<!--商品组-对应商品 -->
-								<div class="edit_addimg clearfloat" v-for="(v,i) in backData[puStateObj['key_num']]['data']['msg']">
-									<div class="edit_img edit_shop_img hover_box" @click="call_off(i)">
+								<div class="edit_addimg clearfloat" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['msg']">
+									<div class="edit_img edit_shop_img hover_box" @click="two_way_button(i)">
 										<img :src="v.imgUrl" alt="">
 									</div>
 									<div class="edit_link">
-										<div class="edit_shop">商品名称<span>{{v.name}}</span></div>
-										<div class="edit_shop">商品价格<span>￥{{v.price}}<s>￥{{v.oldprice}}</s></span></div>
+										<div class="edit_shop">商品名称<span>{{v.goods_name}}</span></div>
+										<div class="edit_shop">商品价格<span>￥{{v.price}}<s>￥{{v.original_price}}</s></span></div>
 									</div>
 									<!--删除按钮-->
 									<div class="edit_del" @click="delItem(i)">
@@ -463,48 +467,48 @@
 								<div class="edit_content">
 									<div class="edit_content_title">公告内容</div>
 									<label class="edit_content_label">
-									<input class="editor_input1" placeholder="这里填写公告内容，可设置是否滚动显示" v-model="backData[puStateObj['key_num']].data.content1" v-on:input="bindText(backData[puStateObj['key_num']].data)">
-								</label>
+										<input class="editor_input1" placeholder="这里填写公告内容，可设置是否滚动显示" v-model="backData['data'][puStateObj['key_num']].data.content1" v-on:input="bindText(backData['data'][puStateObj['key_num']].data)">
+									</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">公告链接</div>
 									<label class="edit_content_label">
-									<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData[puStateObj['key_num']].data.noticeUrl">
-								</label>
+										<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData['data'][puStateObj['key_num']].data.noticeUrl">
+									</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">滚动显示</div>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="1">滚动显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.rollState" value="0">不滚动</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.rollState" value="1">滚动显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.rollState" value="0">不滚动</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">更多按钮</div>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="1">显示</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.moreState" value="0">隐藏</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.moreState" value="1">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.moreState" value="0">隐藏</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">更多链接</div>
 									<label class="edit_content_label">
-									<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData[puStateObj['key_num']].data.moreUrl">
-								</label>
+										<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData['data'][puStateObj['key_num']].data.moreUrl">
+									</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">文字颜色</div>
 									<label class="edit_content_label">
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
-								</label>
+										<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.textColor">
+									</label>
 								</div>
 
 								<div class="edit_content">
 									<div class="edit_content_title">背景颜色</div>
 									<label class="edit_content_label">
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
-								</label>
+										<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.bgColor">
+									</label>
 								</div>
 							</div>
 						</div>
@@ -515,16 +519,16 @@
 								<div class="edit_title">辅助空白设置<span class="tips"></span></div>
 								<div class="edit_content">
 									<span class="edit_content_title">选择高度</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="10px">10像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="20px">20像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="50px">50像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="100px">100像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.height" value="150px">150像素</label>
-									<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData[puStateObj['key_num']].params.height" value="backData[puStateObj['key_num']].params.height"></label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.height" value="10px">10像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.height" value="20px">20像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.height" value="50px">50像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.height" value="100px">100像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.height" value="150px">150像素</label>
+									<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData['data'][puStateObj['key_num']].params.height" value="backData['data'][puStateObj['key_num']].params.height"></label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">背景颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.background" value="backData[puStateObj['key_num']].params.background">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.background" value="backData['data'][puStateObj['key_num']].params.background">
 								</div>
 							</div>
 						</div>
@@ -535,22 +539,22 @@
 								<div class="edit_title">辅助线设置<span class="tips"></span></div>
 								<div class="edit_content">
 									<span class="edit_content_title">选择样式</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="solid">实线</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="dashed">虚线</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.borderStyle" value="dotted">圆点</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.borderStyle" value="solid">实线</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.borderStyle" value="dashed">虚线</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.borderStyle" value="dotted">圆点</label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">选择高度</span>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="1px">1像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="2px">2像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="5px">5像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="10px">10像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.boderHeight" value="20px">20像素</label>
-									<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData[puStateObj['key_num']].params.boderHeight" value="backData[puStateObj['key_num']].params.boderHeight"></label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="1px">1像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="2px">2像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="5px">5像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="10px">10像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="20px">20像素</label>
+									<label class="edit_content_label">自定义:<input class="text" type="text" v-model="backData['data'][puStateObj['key_num']].params.boderHeight" value="backData['data'][puStateObj['key_num']].params.boderHeight"></label>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">背景颜色</span>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.borderBackground" value="backData[puStateObj['key_num']].params.borderBackground">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.borderBackground" value="backData['data'][puStateObj['key_num']].params.borderBackground">
 								</div>
 							</div>
 						</div>
@@ -561,51 +565,51 @@
 								<div class="edit_title">标题设置</div>
 								<div class="edit_content">
 									<div class="edit_content_title">主标题内容</div>
-									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.title1" v-on:input="changTitle(backData[puStateObj['key_num']].data)">
+									<input class="editor_input1" placeholder="标题模块的主标题，超出屏幕宽度将自动隐藏" v-model="backData['data'][puStateObj['key_num']].data.title1" v-on:input="changTitle(backData['data'][puStateObj['key_num']].data)">
 								</div>
 								<div class="edit_content">
 									<div class="edit_content_title">主标题大小</div>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="12px">12像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="14px">14像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="16px">16像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="18px">18像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.fontSize" value="20px">20像素</label>
-									<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.fontSize"></label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.fontSize" value="12px">12像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.fontSize" value="14px">14像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.fontSize" value="16px">16像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.fontSize" value="18px">18像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.fontSize" value="20px">20像素</label>
+									<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData['data'][puStateObj['key_num']].params.fontSize"></label>
 								</div>
 								<div class="edit_content">
 									<div class="edit_content_title">显示副标题</div>
-									<label class="edit_content_label"><input type="radio" value="1" v-model="backData[puStateObj['key_num']].data.subTitleState">显示</label>
-									<label class="edit_content_label"><input type="radio" value="0" v-model="backData[puStateObj['key_num']].data.subTitleState">不显示</label>
+									<label class="edit_content_label"><input type="radio" value="1" v-model="backData['data'][puStateObj['key_num']].data.subTitleState">显示</label>
+									<label class="edit_content_label"><input type="radio" value="0" v-model="backData['data'][puStateObj['key_num']].data.subTitleState">不显示</label>
 								</div>
-								<div class="edit_content" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="edit_content" v-show="backData['data'][puStateObj['key_num']].data.subTitleState == 1">
 									<div class="edit_content_title">副标题内容</div>
-									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData[puStateObj['key_num']].data.subTitle1" v-on:input="changsubTitle(backData[puStateObj['key_num']].data)">
+									<input class="editor_input1" placeholder="标题模块的副标题，超出屏幕宽度将自动隐藏" v-model="backData['data'][puStateObj['key_num']].data.subTitle1" v-on:input="changsubTitle(backData['data'][puStateObj['key_num']].data)">
 								</div>
-								<div class="edit_content" v-show="backData[puStateObj['key_num']].data.subTitleState == 1">
+								<div class="edit_content" v-show="backData['data'][puStateObj['key_num']].data.subTitleState == 1">
 									<div class="edit_content_title">副标题大小</div>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="12px">12像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="14px">14像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="16px">16像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="18px">18像素</label>
-									<label class="edit_content_label"><input type="radio" v-model="backData[puStateObj['key_num']].params.subfontSize" value="20px">20像素</label>
-									<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData[puStateObj['key_num']].params.subfontSize"></label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.subfontSize" value="12px">12像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.subfontSize" value="14px">14像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.subfontSize" value="16px">16像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.subfontSize" value="18px">18像素</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.subfontSize" value="20px">20像素</label>
+									<label class="edit_content_label">自定义：<input class="editor_input2" style="line-height:20px" v-model="backData['data'][puStateObj['key_num']].params.subfontSize"></label>
 								</div>
 								<div class="edit_content">
 									<div class="edit_content_title">对齐方向</div>
-									<label class="edit_content_label"><input type="radio" value="left" v-model="backData[puStateObj['key_num']].params.alignPosition">居左</label>
-									<label class="edit_content_label"><input type="radio" value="center" v-model="backData[puStateObj['key_num']].params.alignPosition">居中</label>
-									<label class="edit_content_label"><input type="radio" value="right" v-model="backData[puStateObj['key_num']].params.alignPosition">居右</label>
+									<label class="edit_content_label"><input type="radio" value="left" v-model="backData['data'][puStateObj['key_num']].params.alignPosition">居左</label>
+									<label class="edit_content_label"><input type="radio" value="center" v-model="backData['data'][puStateObj['key_num']].params.alignPosition">居中</label>
+									<label class="edit_content_label"><input type="radio" value="right" v-model="backData['data'][puStateObj['key_num']].params.alignPosition">居右</label>
 								</div>
 								<div class="edit_content">
 									<div class="edit_content_title">文字颜色</div>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.textColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.textColor">
 								</div>
 								<div class="edit_content">
 									<div class="edit_content_title">背景颜色</div>
-									<input class="color" type="color" v-model="backData[puStateObj['key_num']].params.bgColor">
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.bgColor">
 								</div>
 								<!--轮播图-上传图片 -->
-								<div class="edit_slide_addimg" v-for="(v,i) in backData[puStateObj['key_num']]['data']['images']">
+								<div class="edit_slide_addimg" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['images']">
 									<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
 									<div class="edit_slide_img hover_box" @click="call_off(i)">
 										<img :src="v.imgUrl" alt="">
@@ -622,122 +626,129 @@
 
 							</div>
 						</div>
-
 					</div>
-				</div>
 
-				<!--图片上传=>遮罩层 -->
-				<div class="slide_mask" :class="active.edit_slide_mask == true ? 'show_box':'hide_box'">
-					<div class="slide_mask_content">
-						<div class="mask_content_title">
-							<span>图片</span>
-							<span @click="call_off()"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
+				</div>
+			</div>
+
+			<!--图片上传=>遮罩层 -->
+			<div class="slide_mask" :class="active.edit_slide_mask == true ? 'show_box':'hide_box'">
+				<div class="slide_mask_content">
+					<div class="mask_content_title">
+						<span>图片</span>
+						<span @click="call_off()"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
+					</div>
+					<div class="mask_content">
+						<div class="mask_content_tab clearfloat">
+							<span :class="{active:active.edit_slide}" @click="tabs">本地上传</span>
+							<span :class="{active:!active.edit_slide}" @click="tabs">网络图片</span>
 						</div>
-						<div class="mask_content">
-							<div class="mask_content_tab clearfloat">
-								<span :class="{active:active.edit_slide}" @click="tabs">本地上传</span>
-								<span :class="{active:!active.edit_slide}" @click="tabs">网络图片</span>
+						<div class="mask_content_list2" v-if="active.edit_slide">
+							<div class="mask_content_item">
+								<label>上传文件</label>
+								<input type="text" v-model="upImages.name">
+								<input class="type1" type="file" @change="up_imageFun($event)" accept="image/*">
+								<canvas id="canvas" hidden></canvas>
 							</div>
-							<div class="mask_content_list2" v-if="active.edit_slide">
-								<div class="mask_content_item">
-									<label>上传文件</label>
-									<input type="text" v-model="upImages.name">
-									<input class="type1" type="file" @change="up_imageFun($event)" accept="image/*">
-									<canvas id="canvas" hidden></canvas>
-								</div>
+						</div>
+						<div class="mask_content_list1" v-if="!active.edit_slide">
+							<div class="mask_content_item">
+								<label>图片地址</label>
+								<input type="text">
+								<!--<button>图片空间</button>-->
 							</div>
-							<div class="mask_content_list1" v-if="!active.edit_slide">
-								<div class="mask_content_item">
-									<label>图片地址</label>
-									<input type="text">
-									<!--<button>图片空间</button>-->
-								</div>
-								<!--<div class="mask_content_item">
+							<!--<div class="mask_content_item">
 								<label>图片说明</label>
 								<input type="text">
 							</div>-->
-							</div>
-						</div>
-						<div class="mask_content_btn">
-							<div class="btn_wrap">
-								<button @click="confirmFun()">确定</button>
-								<button @click="call_off()">取消</button>
-							</div>
-						</div>
-						<div class="upload">
-							<div class="load_text">
-								上传中
-								<div class="load">
-									<span></span>
-									<span></span>
-									<span></span>
-								</div>
-							</div>
 						</div>
 					</div>
-				</div>
-				<!--商品组-添加一个商品-弹框 -s -->
-				<div class="modal_wrap" :class="commState == true ? 'show_box':'hide_box'">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h2>选择商品</h2>
-								<span @click.stop="two_way_button()"><!--关闭icon--></span>
-							</div>
-
-							<div class="modal-body">
-								<div class="input-group">
-									<input type="text" class="form-control" v-model="search_data['key_word']" placeholder="请输入商品名称进行查询筛选">
-									<p class="btn" @click="comDataRe()">搜索</p>
-								</div>
-
-								<div class="module-menus clearfloat">
-									<!--循环-->
-									<div class="ng-scope" v-for="(v,i) in comm_data" @click="selection_goods(v)">
-										<div class="img">
-											<img :src="v.img" />
-										</div>
-										<div>
-											<span class="primary">￥{{v.original_price}}</span>
-											<del class="fracture">￥{{v.price}}</del>
-										</div>
-										<p>{{v.goods_name}}</p>
-									</div>
-
-								</div>
-
-							</div>
-
-							<div class="modal-footer">
-								<div class="paging">
-									<p class="btns">上一页</p>
-									<p>1</p>
-									<p>2</p>
-									<p>3</p>
-									<p>4</p>
-									<p>5</p>
-									<p>6</p>
-									<p class="btns">下一页</p>
-								</div>
-								<div class="shut" @click.stop="two_way_button()">关闭</div>
-							</div>
+					<div class="mask_content_btn">
+						<div class="btn_wrap">
+							<button @click="confirmFun()">确定</button>
+							<button @click="call_off()">取消</button>
 						</div>
 					</div>
-				</div>
-				<!--商品组-添加一个商品-弹框 -e -->
-				<!--底部 wrap-->
-				<div class="bottom_wrap">
-					<div class="bottom_content">
-						<div class="bottom_content_info">
-							<input name="pagename" type="text" placeholder="页面名称：快来给你的页面起一个响亮的名字" value="">
-						</div>
-						<div class="bottom_wrap_preview">保存并预览</div>
-						<div class="bottom_wrap_deposit hover_box" @click="depositFun()">保存</p>
+					<div class="upload" :class="axios_state == false ? 'show_box':'hide_box'">
+						<div class="load_text">
+							上传中
+							<div class="load">
+								<!--动画-->
+								<span></span><span></span><span></span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!--商品组-添加一个商品-弹框 -s -->
+			<div class="modal_wrap" :class="commState == true ? 'show_box':'hide_box'">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2>选择商品</h2>
+							<span @click.stop="two_way_button()"><!--关闭icon--></span>
+						</div>
+
+						<div class="modal-body">
+							<div class="input-group">
+								<input type="text" class="form-control" v-model="search_data['key_word']" placeholder="请输入商品名称进行查询筛选">
+								<p class="btn" @click="comDataRe()">
+									<span :class="axios_state == true ? 'show_box':'hide_box'">搜索</span>
+									<!--axios时的loading-->
+									<img class="vertical_centering btn_icon"  :class="axios_state == false ? 'show_box':'hide_box'"  src="../../img/pc/search_loading.png" alt="" />
+								</p>
+							</div>
+
+							<div class="module-menus clearfloat">
+								<!--循环-->
+								<div class="ng-scope" v-for="(v,i) in comm_data" @click="selection_goods(v)">
+									<div class="img">
+										<img :src="v.img" />
+									</div>
+									<div>
+										<span class="primary">￥{{v.original_price}}</span>
+										<del class="fracture">￥{{v.price}}</del>
+									</div>
+									<p>{{v.goods_name}}</p>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+							<div class="paging">
+								<p class="btns">上一页</p>
+								<p>1</p>
+								<p>2</p>
+								<p>3</p>
+								<p>4</p>
+								<p>5</p>
+								<p>6</p>
+								<p class="btns">下一页</p>
+							</div>
+							<div class="shut" @click.stop="two_way_button()">关闭</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--商品组-添加一个商品-弹框 -e -->
+			<!--底部 wrap-->
+			<div class="bottom_wrap">
+				<div class="bottom_content">
+					<p class="bottom_content_info">
+						<input name="pagename" type="text" placeholder="页面名称：快来给你的页面起一个响亮的名字" v-model="backData['page_name']">
+					</p>
+					<p class="bottom_wrap_preview">保存并预览</p>
+					<p class="bottom_wrap_deposit hover_box" @click.stop="depositFun()">
+						<span :class="axios_state == true ? 'show_box':'hide_box'">保存</span>
+						<span class="axios_in" :class="axios_state == false ? 'show_box':'hide_box'">保存中</span>
+					</p>
+					</div>
+				</div>
+			</div>
 		</div>
+
 		<!--public的js-->
 		<!--<script src="../../js/pc/edit_index.js"></script>-->
 
@@ -769,417 +780,433 @@
 
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
-				data: {
-					/*组件-选项*/
-					componentTerm: [{
-							name: "轮播",
-							id: 'rotationId'
-						},
-						{
-							name: "搜索框",
-							id: 'searchId'
-						},
-						{
-							name: "按钮组",
-							id: 'bottonsId'
-						},
-						{
-							name: "单图",
-							id: 'signageId'
-						},
-						{
-							name: "商品组",
-							id: 'productListId'
-						},
-						{
-							name: "公告",
-							id: 'noticeId'
-						},
-						{
-							name: "辅助空白",
-							id: 'blankId'
-						},
-						{
-							name: "辅助线",
-							id: 'sublineId'
-						},
-						{
-							name: '标题',
-							id: 'titleId'
-						}
-					],
+				data() {
+					return {
 
-					/*拖拽需要的元素*/
-					dragging: null,
-					/*上传图片-遮罩层(显隐),Tab切换 */
-					active: {
-						edit_slide_mask: false,
-						/*Tab切换*/
-						edit_slide: true,
-					},
-					/**
-					 * 公共-对应显示-模板编辑;
-					 * id:判断模块；
-					 * key_num:判断-模块在页面的排序
-					 * **/
-					puStateObj: {
-						id: null,
-						/*初始化*/
-						key_num: 0,
-					},
-					/*点击=>对应上传图片=>index*/
-					upImgInd: null,
-					/*本地-上传图片(单图)-初始化*/
-					upImages: {
-						name: '',
-						baseUrl: '',
-					},
-					/*网络图片链接--初始化*/
-					networkUrl: {
-						name: '',
-						baseUrl: '',
-					},
-					/*添加商品--弹窗-状态*/
-					commState: false,
-					/*页面渲染=>防止页面未渲染完成--vue的{{变量名}}，使用v-cloak不能解决问题*/
-					pageState: false,
-					/*限制用户axios的连续请求*/
-					axios_state: true,
-					/*添加商品=>搜索(axios)=>商品-数据结构*/
-					comm_data: [
-//						{
-//							desc: "82年阔落82年阔落",
-//							/*商品id*/
-//							goods_id: 3,
-//							/*商品名称*/
-//							goods_name: "82年阔落",
-//							/*商品封面*/
-//							img: "goods/20190408155469462313687.png",
-//							/*限时卖开始时间*/
-//							limited_end: 0,
-//							/*限时卖结束时间*/
-//							limited_start: 0,
-//							/*商品原价*/
-//							original_price: "5.00",
-//							/*商品现价*/
-//							price: "4.00",
-//							/*商品库存*/
-//							stock: 5255,
-//						},
-					],
-					/*搜索-商品的data*/
-					search_data: {
-						key_word: '',
-					},
-					/* 页面渲染data || 传个后台-data ，对象形式*/
-					backData: [
-						/**初始化=>生产对应组件=>删除第一条数据array[0]。
-						 * 如果，编辑页面=>先删除-下面的数据。
+						/*组件-选项*/
+						componentTerm: [{
+								name: "轮播",
+								id: 'rotationId'
+							},
+							{
+								name: "搜索框",
+								id: 'searchId'
+							},
+							{
+								name: "按钮组",
+								id: 'bottonsId'
+							},
+							{
+								name: "单图",
+								id: 'signageId'
+							},
+							{
+								name: "商品组",
+								id: 'productListId'
+							},
+							{
+								name: "公告",
+								id: 'noticeId'
+							},
+							{
+								name: "辅助空白",
+								id: 'blankId'
+							},
+							{
+								name: "辅助线",
+								id: 'sublineId'
+							},
+							{
+								name: '标题',
+								id: 'titleId'
+							}
+						],
+
+						/*拖拽需要的元素*/
+						dragging: null,
+						/*上传图片-遮罩层(显隐),Tab切换 */
+						active: {
+							edit_slide_mask: false,
+							/*Tab切换*/
+							edit_slide: true,
+						},
+						/**
+						 * 公共-对应显示-模板编辑;
+						 * id:判断模块；
+						 * key_num:判断-模块在页面的排序
 						 * **/
-						{
-							params: {},
-							data: {}
+						puStateObj: {
+							id: null,
+							/*初始化*/
+							key_num: 0,
 						},
-					],
-					/*轮播图，数据初始化*/
-					roObj: {
-						/**组件id*/
-						id: "rotationId",
-						/**组件名*/
-						temp: "rotation",
-						/*页面渲染-组件位置，从0开始*/
-						key_num: null,
-						/**组件style*/
-						params: {
-							/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
-							butStyle: 'rectangle',
-							/*'left'=>左，'center'=>中间，'right'=>右*/
-							butPosition: 'center',
-							/*按钮背景颜色，必须是16进制的色值，不能简写*/
-							butColor: '#000000',
-							/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
-							clickColor: '#f5f5f5',
+						/*点击=>对应上传图片=>index*/
+						upImgInd: null,
+						/*对应-商品图片-更换*/
+						changeImg_ind: null,
+						/*本地-上传图片(单图)-初始化*/
+						upImages: {
+							name: '',
+							baseUrl: '',
 						},
-						data: {
-							/*轮播的图片路径,默认:三张*/
-							images: [{
-									/*图片名字*/
-									name: '',
-									/*图片路径*/
-									imgUrl: '../../img/0005.png',
-									/*跳转路径*/
-									url: '',
-								},
-								{
-									name: '',
-									imgUrl: '../../img/0005.png',
-									url: '',
-								},
-								{
-									name: '',
-									imgUrl: '../../img/0005.png',
-									url: '',
-								}
+						/*网络图片链接--初始化*/
+						networkUrl: {
+							name: '',
+							baseUrl: '',
+						},
+						/*添加商品--弹窗-状态*/
+						commState: false,
+						/*页面渲染=>防止页面未渲染完成--vue的{{变量名}}，使用v-cloak不能解决问题*/
+						pageState: {
+							/*加载页面=>隐藏变量{{变量}}*/
+							hide_var: false,
+							/*(初始页面:false)出现=>编辑模板box*/
+							hide_edit_box: false,
+						},
 
+						/*限制用户axios的连续请求*/
+						axios_state: true,
+						/*添加商品=>搜索(axios)=>商品-数据结构*/
+						comm_data: [
+	//						{
+	//							desc: "82年阔落82年阔落",
+	//							/*商品id*/
+	//							goods_id: 3,
+	//							/*商品名称*/
+	//							goods_name: "82年阔落",
+	//							/*商品封面*/
+	//							img: "goods/20190408155469462313687.png",
+	//							/*限时卖开始时间*/
+	//							limited_end: 0,
+	//							/*限时卖结束时间*/
+	//							limited_start: 0,
+	//							/*商品原价*/
+	//							original_price: "5.00",
+	//							/*商品现价*/
+	//							price: "4.00",
+	//							/*商品库存*/
+	//							stock: 5255,
+	//						},
+						],
+						/*搜索-商品的data*/
+						search_data: {
+							key_word: '',
+						},
+						/* 页面渲染data || 传个后台-data ，对象形式*/
+						backData: {
+							/*新增-页面名字*/
+							page_name: '',
+							data: [
+								/**初始化=>生产对应组件=>删除第一条数据array[0]。
+								 * 如果，编辑页面=>先删除-下面的数据。
+								 * **/
+								{
+									params: {},
+									data: {}
+								},
 							],
+							
 						},
-					},
-					/*搜索框，数据初始化*/
-					seObj: {
-						/**组件id*/
-						id: "searchId",
-						/**组件名*/
-						temp: "search",
-						/*页面渲染-组件位置，从0开始*/
-						key_num: null,
-						/**组件style*/
-						params: {
-							/*0=>样式一，1=>样式二*/
-							reStyle: 'style1',
-							/*文字颜色*/
-							textColor: '#999999',
-							/*边框颜色*/
-							borderColor: '#cccccc',
-							/*背景颜色*/
-							backColor: '#f5f5f5',
-						},
-						data: {
-							/*提示文字*/
-							tipeText: '搜索：输入关键字在店内搜索',
-						}
-					},
-					/*按钮组，数据初始化*/
-					btnObj: {
-						id: "bottonsId",
-						temp: 'bottons',
-						key_num: null,
-						params: {
-							/*图标样式*/
-							iconStyle: 0,
-							iconNum: 4,
-							/*背景颜色*/
-							iconColor: '#ffffff',
-						},
-						data: {
-							/*默认:4个按钮*/
-							iconList: [{
-									id: '1',
-									text: '按钮文字',
-									texts: '',
-									locationS: '',
-									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '#333333',
-									newLoc: '',
-								},
-								{
-									id: '2',
-									text: '按钮文字',
-									texts: '',
-									locationS: '',
-									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '#333333',
-									newLoc: '',
-								},
-								{
-									id: '3',
-									text: '按钮文字',
-									texts: '',
-									locationS: '',
-									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '#333333',
-									newLoc: '',
-								},
-								{
-									id: '4',
-									text: '按钮文字',
-									texts: '',
-									locationS: '',
-									url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
-									siezColor: '#333333',
-									newLoc: '',
-								},
+						/*轮播图，数据初始化*/
+						roObj: {
+							/**组件id*/
+							id: "rotationId",
+							/**组件名*/
+							temp: "rotation",
+							/*页面渲染-组件位置，从0开始*/
+							key_num: null,
+							/**组件style*/
+							params: {
+								/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+								butStyle: 'rectangle',
+								/*'left'=>左，'center'=>中间，'right'=>右*/
+								butPosition: 'center',
+								/*按钮背景颜色，必须是16进制的色值，不能简写*/
+								butColor: '#000000',
+								/*按钮点击时的颜色，必须是16进制的色值，不能简写*/
+								clickColor: '#f5f5f5',
+							},
+							data: {
+								/*轮播的图片路径,默认:三张*/
+								images: [{
+										/*图片名字*/
+										name: '',
+										/*图片路径*/
+										imgUrl: '../../img/0005.png',
+										/*跳转路径*/
+										url: '',
+									},
+									{
+										name: '',
+										imgUrl: '../../img/0005.png',
+										url: '',
+									},
+									{
+										name: '',
+										imgUrl: '../../img/0005.png',
+										url: '',
+									}
 
-							],
-						}
-					},
-					/*单图，数据初始化*/
-					sinObj: {
-						// 组件id
-						id: "signageId",
-						// 组件名
-						temp: "signage",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
+								],
+							},
+						},
+						/*搜索框，数据初始化*/
+						seObj: {
+							/**组件id*/
+							id: "searchId",
+							/**组件名*/
+							temp: "search",
+							/*页面渲染-组件位置，从0开始*/
+							key_num: null,
+							/**组件style*/
+							params: {
+								/*0=>样式一，1=>样式二*/
+								reStyle: 'style1',
+								/*文字颜色*/
+								textColor: '#999999',
+								/*边框颜色*/
+								borderColor: '#cccccc',
+								/*背景颜色*/
+								backColor: '#f5f5f5',
+							},
+							data: {
+								/*提示文字*/
+								tipeText: '搜索：输入关键字在店内搜索',
+							}
+						},
+						/*按钮组，数据初始化*/
+						btnObj: {
+							id: "bottonsId",
+							temp: 'bottons',
+							key_num: null,
+							params: {
+								/*图标样式，"0" || "50%"*/
+								iconStyle: "0",
+								iconNum: "4",
+								/*背景颜色*/
+								iconColor: '#ffffff',
+							},
+							data: {
+								/*默认:4个按钮*/
+								iconList: [{
+										id: '1',
+										text: '按钮文字',
+										texts: '',
+										locationS: '',
+										url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+										siezColor: '#333333',
+										newLoc: '',
+									},
+									{
+										id: '2',
+										text: '按钮文字',
+										texts: '',
+										locationS: '',
+										url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+										siezColor: '#333333',
+										newLoc: '',
+									},
+									{
+										id: '3',
+										text: '按钮文字',
+										texts: '',
+										locationS: '',
+										url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+										siezColor: '#333333',
+										newLoc: '',
+									},
+									{
+										id: '4',
+										text: '按钮文字',
+										texts: '',
+										locationS: '',
+										url: '../../img/pc/phone/d058ccbf6c81800aedd20eb5b43533fa828b4752.jpg',
+										siezColor: '#333333',
+										newLoc: '',
+									},
 
+								],
+							}
 						},
-						data: {
-							/*单图的图片路径*/
-							images: [{
-									/*图片名字*/
-									name: '',
-									/*图片路径*/
-									imgUrl: '../../img/0006.png',
-									/*跳转路径*/
-									url: '',
-								},
+						/*单图，数据初始化*/
+						sinObj: {
+							// 组件id
+							id: "signageId",
+							// 组件名
+							temp: "signage",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
 
-							],
-						}
-					},
-					/*商品组*/
-					prObj: {
-						/*id*/
-						id: "productListId",
-						temp: 'productList',
-						key_num: null,
-						params: {
-							/*列表样式 显示一个'modle_shop_item' 显示俩个 'modle_shop_item2' 显示三个 'modle_shop_item3'*/
-							listStyle: 'modle_shop_item2',
-							/*是否显示商品标题*/
-							title: 'false',
-							/*标题内容*/
-							titletext: '',
-							/*默认标题内容*/
-							default: '请填写商品组标题',
-							/*标题颜色*/
-							titleColor: '#000000',
-							/*商品属性*/
-							attr: 'sale_rx',
-							/*价格显示 show==>显示 price==>显示原价 none==>隐藏*/
-							price: 'price',
-							/*名字显示 sw==>显示 on==>隐藏 */
-							name: 'sw',
-							/*购买按钮样式*/
-							btnStyle: 'buy_3'
-						},
-						data: {
-							/*商品组的数据*/
-							msg: [
-//								{
-//									desc: "82年阔落82年阔落",
-//									/*商品id*/
-//									goods_id: 3,
-//									/*商品名称*/
-//									goods_name: "82年阔落",
-//									/*商品封面*/
-//									img: "../../img/0004.png",
-//									/*限时卖开始时间*/
-//									limited_end: 0,
-//									/*限时卖结束时间*/
-//									limited_start: 0,
-//									/*商品原价*/
-//									original_price: "5.00",
-//									/*商品现价*/
-//									price: "4.00",
-//									/*商品库存*/
-//									stock: 5255,
-//								},
-							],
-						}
-					},
-					/*公告，数据初始化*/
-					noticeObj: {
-						// 组件id
-						id: "noticeId",
-						// 组件名
-						temp: "notice",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							// 滚动状态
-							rollState: '1',
-							// 更多状态
-							moreState: '1',
-							// 文字颜色
-							textColor: '#000000',
-							// 背景颜色
-							bgColor: '#ffffff',
-						},
-						data: {
-							// 公告内容
-							content: '这里填写公告内容，可设置是否滚动显示',
-							content1: '',
-							// 公告链接
-							noticeUrl: '',
-							// 更多链接
-							moreUrl: ''
-						}
-					},
-					/*辅助空白，数据初始化*/
-					blaObj: {
-						// 组件id
-						id: "blankId",
-						// 组件名
-						temp: "blank",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							// 空白高度  默认20px
-							height: "20px",
-							//背景色 默认为白色
-							background: "#ffffff"
-						},
-						data: {
+							},
+							data: {
+								/*单图的图片路径*/
+								images: [{
+										/*图片名字*/
+										name: '',
+										/*图片路径*/
+										imgUrl: '../../img/0006.png',
+										/*跳转路径*/
+										url: '',
+									},
 
-						}
-					},
-					/*辅助线，数据初始化*/
-					subObj: {
-						// 组件id
-						id: "sublineId",
-						// 组件名
-						temp: "subline",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							// 辅助线样式 dotted=>圆点 solid=>实线 dashed=>虚线
-							borderStyle: "dashed",
-							// 辅助线高度
-							boderHeight: "2px",
-							// 辅助线颜色
-							borderBackground: "#000000"
+								],
+							}
 						},
-						data: {
+						/*商品组*/
+						prObj: {
+							/*id*/
+							id: "productListId",
+							temp: 'productList',
+							key_num: null,
+							params: {
+								/*列表样式 显示一个'modle_shop_item' 显示俩个 'modle_shop_item2' 显示三个 'modle_shop_item3'*/
+								listStyle: 'modle_shop_item2',
+								/*是否显示商品标题*/
+								title: 'false',
+								/*标题内容*/
+								titletext: '',
+								/*默认标题内容*/
+								default: '请填写商品组标题',
+								/*标题颜色*/
+								titleColor: '#000000',
+								/*商品属性*/
+								attr: 'sale_rx',
+								/*价格显示 show==>显示 price==>显示原价 none==>隐藏*/
+								price: 'price',
+								/*名字显示 sw==>显示 on==>隐藏 */
+								name: 'sw',
+								/*购买按钮样式*/
+								btnStyle: 'buy_3'
+							},
+							data: {
+								/*商品组的数据*/
+								msg: [
+		//								{
+		//									desc: "82年阔落82年阔落",
+		//									/*商品id*/
+		//									goods_id: 3,
+		//									/*商品名称*/
+		//									goods_name: "82年阔落",
+		//									/*商品封面*/
+		//									img: "../../img/0004.png",
+		//									/*限时卖开始时间*/
+		//									limited_end: 0,
+		//									/*限时卖结束时间*/
+		//									limited_start: 0,
+		//									/*商品原价*/
+		//									original_price: "5.00",
+		//									/*商品现价*/
+		//									price: "4.00",
+		//									/*商品库存*/
+		//									stock: 5255,
+		//								},
+								],
+							}
+						},
+						/*公告，数据初始化*/
+						noticeObj: {
+							// 组件id
+							id: "noticeId",
+							// 组件名
+							temp: "notice",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								// 滚动状态
+								rollState: '1',
+								// 更多状态
+								moreState: '1',
+								// 文字颜色
+								textColor: '#000000',
+								// 背景颜色
+								bgColor: '#ffffff',
+							},
+							data: {
+								// 公告内容
+								content: '这里填写公告内容，可设置是否滚动显示',
+								content1: '',
+								// 公告链接
+								noticeUrl: '',
+								// 更多链接
+								moreUrl: ''
+							}
+						},
+						/*辅助空白，数据初始化*/
+						blaObj: {
+							// 组件id
+							id: "blankId",
+							// 组件名
+							temp: "blank",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								// 空白高度  默认20px
+								height: "20px",
+								//背景色 默认为白色
+								background: "#ffffff"
+							},
+							data: {
 
-						}
-					},
-					/*标题，数据初始化*/
-					titObj: {
-						// 组件id
-						id: "titleId",
-						// 组件名
-						temp: "title",
-						// 页面渲染-组件位置，从0开始
-						key_num: null,
-						// 组件style
-						params: {
-							//主标题大小
-							fontSize: '18px',
-							// 文字颜色
-							subfontSize: '14px',
-							// 对齐方向
-							alignPosition: 'left',
-							// 文字颜色
-							textColor: '#000000',
-							// 背景颜色
-							bgColor: '#ffffff',
+							}
 						},
-						data: {
-							// 主标题
-							title: '主标题',
-							title1: '',
-							// 副标题
-							subTitle: '副标题',
-							subTitle1: '',
-							// 是否显示副标题
-							subTitleState: '1'
-						}
-					},
+						/*辅助线，数据初始化*/
+						subObj: {
+							// 组件id
+							id: "sublineId",
+							// 组件名
+							temp: "subline",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								// 辅助线样式 dotted=>圆点 solid=>实线 dashed=>虚线
+								borderStyle: "dashed",
+								// 辅助线高度
+								boderHeight: "2px",
+								// 辅助线颜色
+								borderBackground: "#000000"
+							},
+							data: {
+
+							}
+						},
+						/*标题，数据初始化*/
+						titObj: {
+							// 组件id
+							id: "titleId",
+							// 组件名
+							temp: "title",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								//主标题大小
+								fontSize: '18px',
+								// 文字颜色
+								subfontSize: '14px',
+								// 对齐方向
+								alignPosition: 'left',
+								// 文字颜色
+								textColor: '#000000',
+								// 背景颜色
+								bgColor: '#ffffff',
+							},
+							data: {
+								// 主标题
+								title: '主标题',
+								title1: '',
+								// 副标题
+								subTitle: '副标题',
+								subTitle1: '',
+								// 是否显示副标题
+								subTitleState: '1'
+							}
+						},
+					}
 
 				},
 				/*方法*/
@@ -1201,27 +1228,31 @@
 							return
 						}
 						/*pc数据渲染的data*/
-						const newItems = [...this.backData]
+						const newItems = [...this.backData['data']]
 						const src = newItems.indexOf(this.dragging)
 						const dst = newItems.indexOf(item)
 
 						newItems.splice(dst, 0, ...newItems.splice(src, 1));
 						/*重置--pc数据渲染的data*/
-						this.backData = newItems;
-						console.log('传-后台=>"拖拽" ', this.backData);
+						this.backData['data'] = newItems;
+						/*重置=>key_num的数值*/
+						for(var t=0;t<newItems.length;t++){
+							this.backData['data'][t]['key_num'] = t;
+						}
+						console.log('传-后台=>"拖拽" ', this.backData['data']);
 					},
 					/* 拖拽 >>*/
 					/*(页面渲染)删除对应=>data*/
 					delDataFun(_index) {
 						console.log("删除index:", _index);
-						console.log("后台data:", this.backData.length);
-						if(this.backData.length == 1) {
+						console.log("后台data:", this.backData['data'].length);
+						if(this.backData['data'].length == 1) {
 							/*根据对应index=> 删除*/
-							this.backData.splice(_index, 1, {
+							this.backData['data'].splice(_index, 1, {
 								params: {},
 								data: {}
 							});
-							console.log('给个空的key值，好对应数据渲染', this.backData);
+							console.log('给个空的key值，好对应数据渲染', this.backData['data']);
 							/*初始化*/
 							this.puStateObj = {
 								id: null,
@@ -1231,7 +1262,7 @@
 							console.log('删除-对应模板!', this.puStateObj);
 							return false;
 						}
-						this.backData.splice(_index, 1);
+						this.backData['data'].splice(_index, 1);
 						/*初始化=>防止=>编辑-对应页面(报错)*/
 						this.puStateObj = {
 							id: null,
@@ -1239,45 +1270,49 @@
 							key_num: 0,
 						}
 						/*对应删除后=>对data渲染数据=>排序*/
-						for(var l = _index; l < this.backData.length; l++) {
-							this.backData[l]['key_num'] = l;
+						for(var l = _index; l < this.backData['data'].length; l++) {
+							this.backData['data'][l]['key_num'] = l;
 						}
-						console.log('删除后-对应的data:', this.backData);
+						console.log('删除后-对应的data:', this.backData['data']);
 					},
 					/*<< 提取--public 方法*/
 					/**
+					 * 参数1:滚动的class名(必选);参数2:对应组件ID(非选);
 					 * 1、组件添加--滚动条到底部,同时选中边框=>最新对象
 					 * 2、大的div=>滚动到底部
 					 * **/
-					scroll_bottom(_ele) {
+					scroll_bottom(_ele, _idName) {
 						var that = this;
 						console.log('那个滚动条位置:', _ele);
 						that.$nextTick(() => {
+							
 							if(_ele == 'html_box_new') {
-								let phoneH = document.getElementsByClassName('html_box_new')[0]
+								/*（渲染）滚动条-到达底部*/
+								let phoneH = document.getElementsByClassName('html_box_new')[0];
 								phoneH.scrollTop = phoneH.scrollHeight;
-								/*选中边框=>最新对象*/
-								that.puStateObj['key_num'] = that.backData.length - 1;
+								/*选中边框=>虚线框=>最新对象和编辑模板*/
+								var idN = _idName || null;
+								that.puStateObj['id'] = idN;
+								that.puStateObj['key_num'] = that.backData['data'].length - 1;
 								return false;
 							}
-							if(_ele == 'wrapper') {
-								/*滚动条-到达底部*/
-								                        
-								let box_h = document.getElementsByClassName('wrapper')[0];                       
+							if(_ele == 'right_box') {
+								/*（编辑）滚动条-到达底部*/
+								let box_h = document.getElementsByClassName('right_box')[0];                       
 								box_h.scrollTop = box_h.scrollHeight;
 								return false;
 							}
 
 						})
 					},
-					/*删除-backData[0]的初始数据(用来双向绑定)*/
+					/*删除-backData['data'][0]的初始数据(用来双向绑定)*/
 					once_del() {
-						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						/**(一次性)--删除-backData['data'][0]的初始数据(用来双向绑定)
 						 * 该函数-'最后'执行的语句;
 						 * **/
-						if(this.backData[0]['id'] == undefined) {
-							this.backData.shift();
-							this.backData[0]['key_num'] = 0;
+						if(this.backData['data'][0]['id'] == undefined) {
+							this.backData['data'].shift();
+							this.backData['data'][0]['key_num'] = 0;
 							console.log('清除掉-无用的值（数据双向绑定！）！');
 						}
 					},
@@ -1285,82 +1320,86 @@
 					/*组件选项-按钮*/
 					comTremFun(_id) {
 						var that = this;
+						/*(初始页面时，编辑模板box:v-show='false')*/
+						if(!that.pageState['hide_edit_box']) {
+							that.pageState['hide_edit_box'] = true;
+						}
 						/*轮播图*/
 						if(_id === 'rotationId') {
 							/*赋值对应的模块=>页面位置key_num*/
-							that.roObj['key_num'] = that.backData.length;
+							that.roObj['key_num'] = that.backData['data'].length;
 							/*深克隆=>页面渲染-data*/
-							that.backData.push(clones(that.roObj));
-							console.log('传给后台数据', that.backData);
-							/*删除-backData[0]的初始数据*/
+							that.backData['data'].push(clones(that.roObj));
+							console.log('传给后台数据', that.backData['data']);
+							/*删除-backData['data'][0]的初始数据*/
 							this.once_del();
-							/*滚动条到底部*/
-							this.scroll_bottom('html_box_new');
+							/*滚动条(class="html_box_new")到底部，_id对应出现=>编辑模板*/
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 
 						}
 						/*搜索框*/
 						if(_id === "searchId") {
-							that.seObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.seObj));
+							that.seObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.seObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*按钮组*/
 						if(_id === "bottonsId") {
-							that.btnObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.btnObj));
+							that.btnObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.btnObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*单图*/
 						if(_id === "signageId") {
-							that.sinObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.sinObj));
+							that.sinObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.sinObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*商品组*/
 						if(_id === "productListId") {
-							that.prObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.prObj));
+							that.prObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.prObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*公告*/
 						if(_id === "noticeId") {
-							that.noticeObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.noticeObj));
+							that.noticeObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.noticeObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*辅助空白*/
 						if(_id === "blankId") {
-							that.blaObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.blaObj));
+							that.blaObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.blaObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*辅助线*/
 						if(_id === "sublineId") {
-							that.subObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.subObj));
+							that.subObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.subObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 						/*标题*/
 						if(_id === "titleId") {
-							that.titObj['key_num'] = that.backData.length;
-							that.backData.push(clones(that.titObj));
+							that.titObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.titObj));
 							this.once_del();
-							this.scroll_bottom('html_box_new');
+							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
 
@@ -1391,10 +1430,10 @@
 							}
 							/*网络图片链接--初始化*/
 							networkUrl = {
-									name: '',
-									baseUrl: '',
-								},
-								this.upImgInd = _index;
+								name: '',
+								baseUrl: '',
+							}
+							this.upImgInd = _index;
 							console.log('遮罩层:', _index);
 						}
 
@@ -1406,10 +1445,11 @@
 							alert('无数据上传，请选择需要上传的数据!');
 							return false;
 						}
-						console.log('base64=>', that.upImages['baseUrl']);
-						console.log('对应上传的index', that.upImgInd);
+						/*console.log('base64=>', that.upImages['baseUrl']);
+						console.log('对应上传的index', that.upImgInd);*/
 						/*限制用户axios的连续请求*/
 						if(that.axios_state == false) {
+							console.log('未请求完，无法再次发送请求！');
 							return false;
 						}
 						that.axios_state = false;
@@ -1418,41 +1458,48 @@
 								img: that.upImages['baseUrl'],
 							})
 							.then(function(response) {
-								console.log(response['data']['data']);
-								/*当前id*/
-								var thisID = that.puStateObj['id'];
-								/*当前index*/
-								var thisInd = that.puStateObj['key_num'];
-								/*对应上传的图片index=>this.upImgInd*/
-								console.log('当前:', thisID, thisInd);
-								/*轮播图*/
-								if(thisID == 'rotationId') {
-									that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data']['data'];
-									/*隐藏-遮罩层*/
-									that.active.edit_slide_mask = !that.active.edit_slide_mask;
-									console.log('轮播图', that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
-									/*防止客户连续请求*/
+								console.log('图片上传:',response['data']);
+								if(response['data']['code'] == 1){
+									/*当前id*/
+									var thisID = that.puStateObj['id'];
+									/*当前index*/
+									var thisInd = that.puStateObj['key_num'];
+									/*对应上传的图片index=>this.upImgInd*/
+									console.log('当前:', thisID, thisInd);
+									/*轮播图*/
+									if(thisID == 'rotationId') {
+										that.backData['data'][thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data']['data'];
+										/*隐藏-遮罩层*/
+										that.active.edit_slide_mask = !that.active.edit_slide_mask;
+										console.log('轮播图', that.backData['data'][thisInd]['data']['images'][that.upImgInd]['imgUrl']);
+										/*防止客户连续请求*/
+										that.axios_state = true;
+										return false;
+									}
+									/*按钮组*/
+									if(thisID == 'bottonsId') {
+										that.backData['data'][thisInd]['data']['iconList'][that.upImgInd]['url'] = response['data']['data'];
+										/*隐藏-遮罩层*/
+										that.active.edit_slide_mask = !that.active.edit_slide_mask;
+										console.log('按钮组', that.backData['data'][thisInd]['data']['iconList'][that.upImgInd]['url']);
+										that.axios_state = true;
+										return false;
+									}
+									/*单图*/
+									if(thisID == 'signageId') {
+										that.backData['data'][thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data']['data'];
+										/*隐藏-遮罩层*/
+										that.active.edit_slide_mask = !that.active.edit_slide_mask;
+										console.log('单图', that.backData['data'][thisInd]['data']['images'][that.upImgInd]['imgUrl']);
+										that.axios_state = true;
+										return false;
+									}
+								}else {
+									/*保存失败*/
+									alert(response['data']['msg']);
 									that.axios_state = true;
-									return false;
 								}
-								/*按钮组*/
-								if(thisID == 'bottonsId') {
-									that.backData[thisInd]['data']['iconList'][that.upImgInd]['url'] = response['data']['data'];
-									/*隐藏-遮罩层*/
-									that.active.edit_slide_mask = !that.active.edit_slide_mask;
-									console.log('按钮组', that.backData[thisInd]['data']['iconList'][that.upImgInd]['url']);
-									that.axios_state = true;
-									return false;
-								}
-								/*单图*/
-								if(thisID == 'signageId') {
-									that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl'] = response['data']['data'];
-									/*隐藏-遮罩层*/
-									that.active.edit_slide_mask = !that.active.edit_slide_mask;
-									console.log('单图', that.backData[thisInd]['data']['images'][that.upImgInd]['imgUrl']);
-									that.axios_state = true;
-									return false;
-								}
+								
 
 							})
 							.catch(function(error) {
@@ -1515,8 +1562,8 @@
 						/*轮播图*/
 						if(this.puStateObj['id'] == 'rotationId') {
 							/*对应页面渲染-数据*/
-							var roImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
-							if(roImgData.length <= 1){
+							var roImgData = this.backData['data'][this.puStateObj['key_num']]['data']['images'];
+							if(roImgData.length <= 1) {
 								alert('轮播图片最少需要一项');
 								return false;
 							}
@@ -1525,13 +1572,13 @@
 							if(tispAlert) {
 								/*数组删除*/
 								roImgData.splice([_ind], 1);
-							} 
+							}
 						}
 						/*单图*/
 						if(this.puStateObj['id'] == 'signageId') {
 							/*对应页面渲染-数据*/
-							var siImgData = this.backData[this.puStateObj['key_num']]['data']['images'];
-							if(siImgData.length <= 1){
+							var siImgData = this.backData['data'][this.puStateObj['key_num']]['data']['images'];
+							if(siImgData.length <= 1) {
 								alert('图片最少需要一张');
 								return false;
 							}
@@ -1540,31 +1587,27 @@
 							if(tispAlert) {
 								/*数组删除*/
 								siImgData.splice([_ind], 1);
-							} 
+							}
 						}
 						/*商品组*/
 						if(this.puStateObj['id'] == 'productListId') {
 							/*对应页面渲染-数据*/
-							var prImgData = this.backData[this.puStateObj['key_num']]['data']['msg'];
-							
+							var prImgData = this.backData['data'][this.puStateObj['key_num']]['data']['msg'];
+
 							/*确认弹框*/
 							tispAlert = confirm('此操作，不可逆转，您确认删除？');
 							if(tispAlert) {
 								/*数组删除*/
 								prImgData.splice([_ind], 1);
-							} 
-							if(prImgData.length == 0){
-								console.log('商品-数据已清空');
-								return false;
 							}
 						}
 
 					},
 					/*按钮组-按钮数*/
 					butNumber() {
-						console.log(this.backData[this.puStateObj['key_num']]['params']['iconNum']);
-						if(this.backData[this.puStateObj['key_num']]['params']['iconNum'] == 5 && this.backData[this.puStateObj['key_num']]['params']['iconNum'].length != 5) {
-							this.backData[this.puStateObj['key_num']]['data']['iconList'].push({
+						console.log(this.backData['data'][this.puStateObj['key_num']]['params']['iconNum']);
+						if(this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'] == '5' && this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'].length != 5) {
+							this.backData['data'][this.puStateObj['key_num']]['data']['iconList'].push({
 								id: '5',
 								text: '按钮文字',
 								texts: '',
@@ -1574,8 +1617,8 @@
 								newLoc: '',
 							})
 							console.log('五个按钮！');
-						} else if(this.backData[this.puStateObj['key_num']]['params']['iconNum'] == 4 && this.backData[this.puStateObj['key_num']]['params']['iconNum'].length != 4) {
-							this.backData[this.puStateObj['key_num']]['data']['iconList'].splice(4, 1);
+						} else if(this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'] == '4' && this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'].length != 4) {
+							this.backData['data'][this.puStateObj['key_num']]['data']['iconList'].splice(4, 1);
 							console.log('四个按钮！');
 						}
 					},
@@ -1626,24 +1669,44 @@
 						}
 					},
 					/*添加一个商品=>按钮，同时 => "关闭按钮"*/
-					two_way_button() {
-						console.log('添加或关闭，商品遮罩层');
+					two_way_button(_ind) {
+						console.log('添加或关闭，商品遮罩层。', '对应的下标:', _ind);
+						/*（商品组）_ind存在，更换对应的商品*/
+						if(_ind != undefined) {
+							this.changeImg_ind = _ind;
+						}
 						this.commState = !this.commState;
+					},
+					/*添加商品弹框--添加商品*/
+					selection_goods(_item) {
+						console.log('"添加"或"更换"-对应商品:', _item);
+						/*（商品组）this.changeImg_ind存在，更换对应的商品*/
+						console.log('更换的data的index: ', this.changeImg_ind);
+						/*this.changeImg_ind不等于 初始值：null; 0=>else{}*/
+						if(this.changeImg_ind != null) {
+							console.log(666666666666666666);
+							/*更换=>对应商品*/
+							this.backData['data'][this.puStateObj['key_num']]['data']['msg'][this.changeImg_ind] = clones(_item);
+							return false;
+						}
+						/*添加(追加)商品*/
+						this.backData['data'][this.puStateObj['key_num']]['data']['msg'].push(clones(_item));
 					},
 					/*商品ajax=>渲染*/
 					comDataRe() {
 						var that = this;
 						/*限制用户axios的连续请求*/
 						if(that.axios_state == false) {
+							console.log('未请求完，无法再次发送请求！');
 							return false;
 						}
 						that.axios_state = false;
-						console.log('关键字:',that.search_data['key_word']);
+						console.log('关键字:', that.search_data['key_word']);
 						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/gooodsList', {
-							keyword: that.search_data['key_word'],
-						})
+								keyword: that.search_data['key_word'],
+							})
 							.then(function(response) {
-								console.log(response['data']['data']);
+								console.log(response['data']);
 								if(response['data']['code'] == 1) {
 									/*成功之后=>清除-本地数据,在更新*/
 									that.comm_data = [];
@@ -1652,12 +1715,12 @@
 										/*(深克隆)赋值给页面渲染的data*/
 										that.comm_data.push(clones(response['data']['data']['data'][g]));
 									}
-									that.axios_state = true;
 									console.log('商品ajax成功:', that.comm_data);
 								} else {
 									/*提示*/
 									alert(response['data']['msg']);
 								}
+								that.axios_state = true;
 							})
 							.catch(function(error) {
 								alert(error);
@@ -1665,23 +1728,17 @@
 								that.axios_state = true;
 							});
 					},
-					/*添加商品*/
-					selection_goods(_item){
-						console.log('添加-对应商品:',_item);
-						this.backData[this.puStateObj['key_num']]['data']['msg'].push(clones(_item));
-					},
-					/*对应-添加数据(如:轮播图，单图。。)*/
+					/*对应-添加数据(如:轮播图，单图等)*/
 					add_data(_id, _item) {
 						console.log('id:', _id);
 						console.log('对象:', _item);
 						/*新-数据*/
 						var this_object = {}
-						console.log(898989, this_object);
-						
+
 						/*轮播图*/
 						if(_id == 'rotationId') {
 							console.log('轮播图！！');
-							if(_item.length > 12){
+							if(_item.length >= 12) {
 								alert('轮播张数，不能超过12张！');
 								return false;
 							}
@@ -1696,10 +1753,11 @@
 							}
 							/*深克隆*/
 							_item.push(clones(this_object));
-							/*class="wrapper"=>滚动条到底部*/
-							this.scroll_bottom('wrapper');
+							/*class="right_box"=>滚动条到底部*/
+							this.scroll_bottom('right_box',_id);
+							return false;
 
-						} 
+						}
 						if(_id == 'signageId') {
 							console.log('单图！！');
 							/*追加的数据*/
@@ -1709,31 +1767,65 @@
 								url: '',
 							}
 							_item.push(clones(this_object));
-							/*class="wrapper"=>滚动条到底部*/
-							this.scroll_bottom('wrapper');
+							/*class="right_box"=>滚动条到底部*/
+							this.scroll_bottom('right_box');
 							/*class="html_box_new"=>滚动条到底部*/
-							this.scroll_bottom('html_box_new');
+//							this.scroll_bottom('html_box_new',_id);
+							return false;
 						}
 					},
-					
+
 					/*保存-模板*/
 					depositFun() {
 						var that = this;
-						/**(一次性)--删除-backData[0]的初始数据(用来双向绑定)
+						/**(一次性)--删除-backData['data'][0]的初始数据(用来双向绑定)
 						 * 最上面。
 						 * **/
-						if(that.backData[0]['id'] == undefined) {
+						if(that.backData['data'][0]['id'] == undefined) {
 							alert('请手动生产页面！');
 							return false;
 						}
-						console.log('保存模板！！', that.backData);
+						if(that.backData['page_name'] == '') {
+							alert('页面名称，不能为空！');
+							return false;
+						}
+						console.log('保存模板！！', that.backData['data']);
+						/*限制用户axios的连续请求*/
+						if(that.axios_state == false) {
+							console.log('未请求完，无法再次发送请求！');
+							return false;
+						}
+						that.axios_state = false;
+						/*ajax*/
+						axios.post('http://zfwl.zhifengwangluo.c3w.cc/admin/shop/editShop', {
+								/*页面名*/
+								page_name: that.backData['page_name'],
+								/*页面数据*/
+								data: that.backData['data'],
+							})
+							.then(function(response) {
+								console.log(response['data']);
+								if(response['data']['code'] == 1){
+									alert(response['data']['msg']);
+								}else {
+									/*保存失败*/
+									alert(response['data']['msg']);
+								}
+								that.axios_state = true;
+							})
+							.catch(function(error) {
+								alert(error);
+								console.log(error);
+								that.axios_state = true;
+							});
+						
 					}
 
 				},
 				/*挂载结束*/
 				mounted: function() {
-					/*防止页面未渲染完成--vue的{{变量名}}*/
-					this.pageState = true
+					/*防止页面未渲染完成--vue的{{变量名}},v-cloak不管用*/
+					this.pageState['hide_var'] = true;
 				},
 
 			});
