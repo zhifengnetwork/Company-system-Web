@@ -83,16 +83,16 @@
 									</tr>-->
 									<!--0000-->
 									<tr>
-										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_one']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_one']" :colspan="item['col']" :rowspan="item['row']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
 									</tr>
 									<tr>
-										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_two']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_two']" :colspan="item['col']" :rowspan="item['row']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
 									</tr>
 									<tr>
-										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_three']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_three']" :colspan="item['col']" :rowspan="item['row']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
 									</tr>
 									<tr>
-										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_four']" :rowspan="item['row']" :colspan="item['col']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
+										<td v-for="item in backData[puStateObj['key_num']]['data']['tr_four']" :colspan="item['col']" :rowspan="item['row']" :data-x="item['x']" :data-y="item['y']" @click='cube($event)'>+</td>
 									</tr>
 									<!--0000-->
 								</table>
@@ -234,6 +234,8 @@
 					},
 					/*魔方鼠标点击保存*/
 					cube_save: true,
+					/*对应删除Y轴的值*/
+					state_y: true,
 					/*魔方图片*/
 					cubObj: {
 						//组件id
@@ -248,7 +250,10 @@
 
 						},
 						data: {
-							
+							/*table的状态*/
+							table_state: {
+								tr_one: true
+							},
 							/*table渲染数据 */
 							/*魔方布局-渲染数据*/
 //							cube_data: {
@@ -498,37 +503,184 @@
 //						}
 
 					},
+					/*对应删除Y轴*/
+//					remove_y(_data){
+//						console.log(789,_data.length);
+//						if(this.state_y){
+//							for(var f=0;f<this.backData[this.puStateObj['key_num']]['data']['tr_one'].length;f++){
+////							for(var f=0;f<_data.length;f++){
+//								/*直到，找不到删除的条件*/
+//								if(_data[f]['x']<=Number(this.cube_move.xNum) && _data[f]['y']<=Number(this.cube_move.yNum)){
+//									_data.splice(f,1);
+//									this.state_y = true;
+//									console.log('找--到！！！');
+//									break;
+//								}
+//								this.state_y = false;
+//							}
+//							this.remove_y();/*递归*/
+//						} else {
+//							console.log('递归完成！');
+//						}
+//					},
 					/*选择-布局box-鼠标(点击)*/
 					obtain_xy() {
+						var that = this;
 						/*选择-页面布局-遮罩层*/
-						this.active.edit_cube = !this.active.edit_cube;	
-						console.log('鼠标-点击x/点击y-获取x、y: ',this.cube_move.xNum,this.cube_move.yNum);
+						that.active.edit_cube = !that.active.edit_cube;	
 						/*渲染pc数据--对应的数据*/
-						var this_table = this.backData[this.puStateObj['key_num']]['data'];
+						var this_table = that.backData[that.puStateObj['key_num']]['data'];
 						/*鼠标悬浮-起始位置*/
 //						this.cube_start={
 //							x: '',
 //							y: ''
 //						},
+						/*图片魔方-页面布局渲-起始位置*/
+						console.log('起始位置：x',that.cube_start['x']);
+						console.log('起始位置：y',that.cube_start['y']);
+//						console.log('鼠标-点击x: ',that.cube_move.xNum);
+//						console.log('鼠标-点击y: ',that.cube_move.yNum);
+						
+						/*布局 => 一行四个*4*/
+						/*第一行*/
+						for(var r=0;r<this_table['tr_one'].length;r++){
+							/*找到-起始位置的数据=>改变行、列,(一行4列，y轴一样)，只改变X轴*/
+							if(this_table['tr_one'][r]['x'] == that.cube_start['x'] && this_table['tr_one'][r]['y'] == that.cube_start['y']){
+								/*改变table的列（X轴-col）、行(y轴-row)，终点位置：this.cube_move*/
+								/*列（x轴）*/
+								if(Number(this_table['tr_one'][r]['x']) < Number(that.cube_move.xNum)){
 
-						/*页面布局渲染pc*/
-//						this.cube_start['x'];
-//						this.cube_start['y'];
-						for(var r=0;r<4;r++){
-							/*找到起始位置的数据*/
-							if(this.cube_start['x'] == this_table['tr_one'][r]['x'] && this.cube_start['y'] == this_table['tr_one'][r]['y ']){
-								/*改变table的行、列*/
-								this_table['tr_one'][r]['row'] = this.cube_move.xNum + 1;
-								this_table['tr_one'][r]['col'] = this.cube_move.yNum + 1;
-								console.log(66666);
+									/*列*/
+									this_table['tr_one'][r]['col'] = Number(that.cube_move.xNum) + 1;
+									console.log(0,Number(that.cube_move.yNum),this_table['tr_one'][r]['y']);
+									console.log('000:',this_table['tr_one'][r])
+									/*数据对应的index下，开始删除！*/
+									this_table['tr_one'].splice(r+1,Number(that.cube_move.xNum));
+									console.log('第一行！X轴');
+								}
+//								
+								
 							}
-							if(this_table['tr_one'][r]['x'] <= this.cube_move.xNum && this_table['tr_one'][r]['y'] <= this.cube_move.yNum && this_table['tr_one'][r]['x'] != this.cube_start['x'] && this_table['tr_one'][r]['y'] !=this.cube_start['y']){
-								/*除了起始位置*，小于等于=>删除*/
-								this_table['tr_one'][r]['x'].splice(r,1);
-								console.log(8888);
+							/*行（y轴）*/
+							if(Number(this_table['tr_one'][r]['y']) < Number(that.cube_move.yNum) ){
+								this_table['tr_one'][r]['row'] = Number(that.cube_move.yNum) + 1;
+								console.log('第一行！Y轴');
+								break;
 							}
-							
 						}
+							
+						console.log(111);
+						/*第二行*/
+						for(var r=0;r<this_table['tr_two'].length;r++){
+							/*找到-起始位置的数据=>改变行、列*/
+							if(this_table['tr_two'][r]['x'] == this.cube_start['x'] && this_table['tr_two'][r]['y'] == this.cube_start['y']){
+								/*改变table的列（X轴-col）、行(y轴-row)，终点位置：this.cube_move*/
+								/*列（x轴）*/
+								if(Number(this_table['tr_two'][r]['x']) < Number(that.cube_move.xNum)){
+									/*列*/
+									this_table['tr_two'][r]['col'] = Number(that.cube_move.xNum) + 1;
+									console.log(1,Number(that.cube_move.yNum),this_table['tr_two'][r]['y']);
+									console.log('1111:',this_table['tr_two'][r])
+									/*X轴-数据对应的index下，开始删除！*/
+									this_table['tr_two'].splice(r+1,Number(that.cube_move.xNum));
+									console.log('第二行！X轴');
+								}
+								
+							}
+							/*行（y轴）*/
+							if(Number(this_table['tr_two'][r]['y']) <= Number(that.cube_move.yNum)){
+								/*改变*/
+								if(Number(this_table['tr_two'][r]['x']) == Number(that.cube_move.xNum)){
+									this_table['tr_two'][r]['row'] = Number(that.cube_move.yNum) + 1;
+								}
+								/*Y轴-数据对应的index下，开始删除！*/
+								console.log(r,Number(that.cube_move.yNum));
+								if(Number(this_table['tr_two'][r]['x']) <= Number(that.cube_move.xNum)){
+									this_table['tr_two'].splice(r,Number(that.cube_move.xNum)+1);
+									break;
+									
+								}
+								
+								
+								console.log('第二行！Y轴');
+								
+							}
+						}
+						console.log(222);
+						/*第三行*/
+						for(var r=0;r<this_table['tr_three'].length;r++){
+							/*找到-起始位置的数据=>改变行、列*/
+							if(this_table['tr_three'][r]['x'] == this.cube_start['x'] && this_table['tr_three'][r]['y'] == this.cube_start['y']){
+								/*改变table的列（X轴-col）、行(y轴-row)，终点位置：this.cube_move*/
+								/*列（x轴）*/
+								if(Number(this_table['tr_three'][r]['x']) < Number(that.cube_move.xNum)){
+									/*列*/
+									this_table['tr_three'][r]['col'] = Number(that.cube_move.xNum) + 1;
+									console.log(2,Number(that.cube_move.yNum),this_table['tr_three'][r]['y']);
+									console.log('2222:',this_table['tr_three'][r])
+									/*X轴-数据对应的index下，开始删除！*/
+									this_table['tr_three'].splice(r+1,Number(that.cube_move.xNum));
+									console.log('第二行！X轴');
+								}
+								
+							}
+							/*行（y轴）*/
+							if(Number(this_table['tr_three'][r]['y']) <= Number(that.cube_move.yNum)){
+								/*改变*/
+								if(Number(this_table['tr_three'][r]['x']) == Number(that.cube_move.xNum)){
+									this_table['tr_three'][r]['row'] = Number(that.cube_move.yNum) + 1;
+								}
+								/*Y轴-数据对应的index下，开始删除！*/
+								console.log(r,Number(that.cube_move.yNum));
+								if(Number(this_table['tr_three'][r]['x']) <= Number(that.cube_move.xNum)){
+									this_table['tr_three'].splice(r,Number(that.cube_move.xNum)+1);
+									break;
+									
+								}
+								
+								
+								console.log('第三行！Y轴');
+								
+							}
+						}
+						/*第四行*/
+						for(var r=0;r<this_table['tr_four'].length;r++){
+							/*找到-起始位置的数据=>改变行、列*/
+							if(this_table['tr_four'][r]['x'] == this.cube_start['x'] && this_table['tr_four'][r]['y'] == this.cube_start['y']){
+								/*改变table的列（X轴-col）、行(y轴-row)，终点位置：this.cube_move*/
+								/*列（x轴）*/
+								if(Number(this_table['tr_four'][r]['x']) < Number(that.cube_move.xNum)){
+									/*列*/
+									this_table['tr_four'][r]['col'] = Number(that.cube_move.xNum) + 1;
+									console.log(2,Number(that.cube_move.yNum),this_table['tr_four'][r]['y']);
+									console.log('2222:',this_table['tr_four'][r])
+									/*X轴-数据对应的index下，开始删除！*/
+									this_table['tr_four'].splice(r+1,Number(that.cube_move.xNum));
+									console.log('第二行！X轴');
+								}
+								
+							}
+							/*行（y轴）*/
+							if(Number(this_table['tr_four'][r]['y']) <= Number(that.cube_move.yNum)){
+								/*改变*/
+								if(Number(this_table['tr_four'][r]['x']) == Number(that.cube_move.xNum)){
+									this_table['tr_four'][r]['row'] = Number(that.cube_move.yNum) + 1;
+								}
+								/*Y轴-数据对应的index下，开始删除！*/
+								console.log(r,Number(that.cube_move.yNum));
+								if(Number(this_table['tr_four'][r]['x']) <= Number(that.cube_move.xNum)){
+									this_table['tr_four'].splice(r,Number(that.cube_move.xNum)+1);
+									break;
+									
+								}
+								
+								
+								console.log('第三行！Y轴');
+								
+							}
+						}
+						
+						
 						
 					},
 					

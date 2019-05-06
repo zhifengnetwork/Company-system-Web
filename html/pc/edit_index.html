@@ -45,7 +45,7 @@
 												<div class="slide_item">
 													<img :src="v.data.images[0].imgUrl" alt="" />
 												</div>
-												<div class="slide_but" :class="v.params.butPosition">
+												<div class="slide_but" :class="[v.params.butPosition,v.params.butState]">
 													<span v-for="(val,index) in v.data.images" :class="v.params.butStyle" :style="{'background':index == 0?v.params.clickColor:v.params.butColor}"></span>
 												</div>
 											</div>
@@ -62,7 +62,7 @@
 											<div class="search" :style="{'background':v.params.backColor}">
 												<form action="#" :style="{'border-color':v.params.borderColor}" :class="v.params.reStyle">
 													<input type="submit" class="searchBtn" value="">
-													<input type="text" class="searchText" placeholder="搜索：输入关键字在店内搜索" :style="{'color':v.params.textColor}" v-model="v.data.tipeText">
+													<input type="text" class="searchText" :placeholder="v.data.tipeText_null" :style="{'color':v.params.textColor}" v-model="v.data.tipeText">
 												</form>
 											</div>
 											<!--删除按钮 wrap-->
@@ -155,7 +155,7 @@
 											<div class="notice_move"></div>
 											<div class="notice" :style="{backgroundColor:v.params.bgColor}">
 												<div class="notice_icon">
-													<img src="../../img/pc/notice-icon.png" />
+													<img class="vertical_centering" :src="v['data']['icon']" />
 												</div>
 
 												<div class="scroll_notice">
@@ -233,11 +233,17 @@
 						<!-- 轮播图--编辑 -->
 						<div class="edit_modle" v-show="puStateObj['id'] == 'rotationId'">
 							<div class="edit_slide">
-								<div class="edit_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~</span></div>
+								<div class="edit_title">轮播设置<span class="tips">提示:轮播图片的大小必须一样哦~（最好图片宽度是750px）</span></div>
+								<div class="edit_content">
+									<span class="edit_content_title">显示按钮</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butState" value="show_box">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butState" value="hide_box">隐藏</label>
+								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮形状</span>
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="rectangle">长方形</label>
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="square">正方形</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="linetype">线形</label>
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.butStyle" value="roundness">圆形</label>
 								</div>
 								<div class="edit_content">
@@ -250,6 +256,7 @@
 								<div class="edit_content">
 									<span class="edit_content_title">按钮背景颜色</span>
 									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.butColor" value="backData['data'][puStateObj['key_num']].params.butColor">
+									<span class="tips">提示: 颜色透明50%</span>
 								</div>
 								<div class="edit_content">
 									<span class="edit_content_title">按钮点击颜色</span>
@@ -259,11 +266,10 @@
 								<div class="edit_addimg clearfloat" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['images']">
 									<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
 									<div class="edit_img hover_box" @click="call_off(i)">
-										<img :src="v.imgUrl" alt="">
+										<img class="image_up" :src="v.imgUrl" alt="">
 									</div>
 									<div class="edit_link">
-										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
-										<button>系统连接</button>
+										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label><button @click.stop="close_system_box()">系统连接</button>
 									</div>
 									<!--删除按钮-->
 									<div class="edit_del" @click="delItem(i)">
@@ -282,7 +288,7 @@
 								<div class="edit_content">
 									<div class="edit_content_title">提示文字</div>
 									<label class="edit_content_label">
-										<input class="editor_input1" placeholder="搜索框默认提示文字，超出屏幕宽度将自动隐藏" v-model="backData['data'][puStateObj['key_num']].data.tipeText">
+										<input class="editor_input1" placeholder="请输入搜索提示，搜索提示可以为空！" v-model="backData['data'][puStateObj['key_num']].data.tipeText">
 									</label>
 								</div>
 
@@ -348,7 +354,7 @@
 												<p class="ve-panel-editor-name">链接地址</p>
 												<div class="ve-panel-editor-con">
 													<input class="ve-panel-editor-input3" v-model="item.newLoc" placeholder="请手动输入链接(请以http://开头)或选择系统链接" v-on:input="systemUrl(item)">
-													<p class="ve-panel-editor-input4">系统连接</p>
+													<p class="ve-panel-editor-input4" @click.stop="close_system_box()">系统连接</p>
 												</div>
 											</div>
 											<div class="ve-panel-editor-line">
@@ -372,10 +378,10 @@
 								<div class="edit_addimg clearfloat" v-for="(v,i) in backData['data'][puStateObj['key_num']]['data']['images']">
 									<!--上传图片(弹出遮罩层)=>@click="call_off(i)"-->
 									<div class="edit_img hover_box" @click="call_off(i)">
-										<img :src="v.imgUrl" alt="">
+										<img class="image_up" :src="v.imgUrl" alt="">
 									</div>
 									<div class="edit_link">
-										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label><button>系统连接</button>
+										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label><button  @click.stop="close_system_box()">系统连接</button>
 									</div>
 									<!--删除按钮-->
 									<div class="edit_del" @click="delItem(i)">
@@ -492,9 +498,9 @@
 
 								<div class="edit_content">
 									<div class="edit_content_title">更多链接</div>
-									<label class="edit_content_label">
+									<label class="edit_content_label edit_content_label_s">
 										<input class="editor_input1" placeholder="请手动输入链接(请以http://开头)" v-model="backData['data'][puStateObj['key_num']].data.moreUrl">
-									</label>
+									</label><button class="button_box"  @click.stop="close_system_box()">系统连接</button>
 								</div>
 
 								<div class="edit_content">
@@ -510,6 +516,17 @@
 										<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.bgColor">
 									</label>
 								</div>
+								<div class="edit_content">
+									<div class="edit_content_title">公告图标</div>
+								</div>
+								<!--公告图标-上传图片 -->
+								<div class="edit_addimg clearfloat">
+									<!--上传图片(弹出遮罩层)=>@click="call_off(0)"=>只有一个公告图标-->
+									<div class="edit_img hover_box" @click="call_off(0)">
+										<img :src="backData['data'][puStateObj['key_num']]['data']['icon']" class="icon_up" alt="">
+									</div>
+								</div>
+								
 							</div>
 						</div>
 						<!-- 公告编辑 -e -->
@@ -615,8 +632,7 @@
 										<img :src="v.imgUrl" alt="">
 									</div>
 									<div class="edit_slide_link">
-										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label>
-										<button>系统连接</button>
+										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" v-model="v.url"></label><button>系统连接</button>
 									</div>
 									<!--删除按钮-->
 									<div class="edit_slide_del" @click="delItem(i)">
@@ -633,7 +649,7 @@
 
 			<!--图片上传=>遮罩层 -->
 			<div class="slide_mask" :class="active.edit_slide_mask == true ? 'show_box':'hide_box'">
-				<div class="slide_mask_content">
+				<div class="slide_mask_content fall_animation">
 					<div class="mask_content_title">
 						<span>图片</span>
 						<span @click="call_off()"><img class="del_icon hover_box" src="../../img/pc/delete_icon.png"/></span>
@@ -680,9 +696,9 @@
 					</div>
 				</div>
 			</div>
-			<!--商品组-添加一个商品-弹框 -s -->
+			<!--商品组-添加一个商品-弹框（同选择商品一个样式！） -s -->
 			<div class="modal_wrap" :class="commState == true ? 'show_box':'hide_box'">
-				<div class="modal-dialog">
+				<div class="modal-dialog fall_animation">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h2>选择商品</h2>
@@ -728,6 +744,29 @@
 								<p class="btns">下一页</p>
 							</div>
 							<div class="shut" @click.stop="two_way_button()">关闭</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--商品组-添加一个商品-弹框 -e -->
+			<!--系统连接 -s（同选择商品一个样式！） -->
+			<div class="modal_wrap" :class="system_url == true ? 'show_box':'hide_box'">
+				<div class="modal-dialog fall_animation">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2>选择连接</h2>
+							<span @click.stop="close_system_box()"><!--关闭icon--></span>
+						</div>
+
+						<div class="modal-body">
+
+							<div class="module-menus clearfloat">
+								
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<div class="shut" @click.stop="close_system_box()">关闭</div>
 						</div>
 					</div>
 				</div>
@@ -844,7 +883,7 @@
 						upImgInd: null,
 						/*对应-商品图片-更换*/
 						changeImg_ind: null,
-						/*本地-上传图片(单图)-初始化*/
+						/*本地-上传图片-初始化*/
 						upImages: {
 							name: '',
 							baseUrl: '',
@@ -856,6 +895,8 @@
 						},
 						/*添加商品--弹窗-状态*/
 						commState: false,
+						/*系统连接*/
+						system_url: false,
 						/*页面渲染=>防止页面未渲染完成--vue的{{变量名}}，使用v-cloak不能解决问题*/
 						pageState: {
 							/*加载页面=>隐藏变量{{变量}}*/
@@ -917,7 +958,9 @@
 							key_num: null,
 							/**组件style*/
 							params: {
-								/*'rectangle' =>长方形，'square' =>正方形，'roundness'=>圆形*/
+								/*class="show_box"=>显示，class="hide_box"=>隐藏*/
+								butState: 'show_box',
+								/*'rectangle' =>长方形，'square'=> 正方形，'linetype' =>线性，'roundness'=>圆形*/
 								butStyle: 'rectangle',
 								/*'left'=>左，'center'=>中间，'right'=>右*/
 								butPosition: 'center',
@@ -1131,7 +1174,9 @@
 								// 公告链接
 								noticeUrl: '',
 								// 更多链接
-								moreUrl: ''
+								moreUrl: '',
+								/*公告图标*/
+								icon: '../../img/pc/notice-icon.png',
 							}
 						},
 						/*辅助空白，数据初始化*/
@@ -1423,7 +1468,7 @@
 						this.active.edit_slide_mask = !this.active.edit_slide_mask;
 						if(_index != undefined) {
 							/*点击'重新选择图片'时=>清除原始数据*/
-							/*本地-单图上传-初始化*/
+							/*本地本片-上传-初始化*/
 							this.upImages = {
 								name: '',
 								baseUrl: '',
@@ -1491,6 +1536,15 @@
 										/*隐藏-遮罩层*/
 										that.active.edit_slide_mask = !that.active.edit_slide_mask;
 										console.log('单图', that.backData['data'][thisInd]['data']['images'][that.upImgInd]['imgUrl']);
+										that.axios_state = true;
+										return false;
+									}
+									/*公告图标*/
+									if(thisID == 'noticeId') {
+										that.backData['data'][thisInd]['data']['icon'] = response['data']['data'];
+										/*隐藏-遮罩层*/
+										that.active.edit_slide_mask = !that.active.edit_slide_mask;
+										console.log('公告图标', that.backData['data'][thisInd]['data']['icon']);
 										that.axios_state = true;
 										return false;
 									}
@@ -1738,8 +1792,8 @@
 						/*轮播图*/
 						if(_id == 'rotationId') {
 							console.log('轮播图！！');
-							if(_item.length >= 12) {
-								alert('轮播张数，不能超过12张！');
+							if(_item.length >= 8) {
+								alert('轮播张数，不能超过8张！');
 								return false;
 							}
 							/*追加的数据*/
@@ -1774,7 +1828,10 @@
 							return false;
 						}
 					},
-
+					/*关闭-系统连接-box*/
+					close_system_box(){
+						this.system_url = !this.system_url;
+					},
 					/*保存-模板*/
 					depositFun() {
 						var that = this;
