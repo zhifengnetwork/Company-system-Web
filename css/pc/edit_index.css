@@ -1730,7 +1730,13 @@
 .mask_content_btn .btn_wrap {
 	float: right;
 }
-
+.search_tips {
+	width: 100%;
+	font-size: 16px;
+	text-align: center;
+	color: #666;
+	letter-spacing: 1px;
+}
 
 /*图片上传-遮罩层 -e*/
 

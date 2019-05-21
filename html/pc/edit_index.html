@@ -731,6 +731,8 @@
 							</div>
 
 						</div>
+						<!--输入关键字-结果为空-提示-->
+						<p class="search_tips" v-show="comm_search_tips">暂无该商品</p>
 
 						<div class="modal-footer">
 							<div class="paging">
@@ -907,6 +909,8 @@
 
 						/*限制用户axios的连续请求*/
 						axios_state: true,
+						/*选择商品-搜索结果空(提示)*/
+						comm_search_tips: false,
 						/*添加商品=>搜索(axios)=>商品-数据结构*/
 						comm_data: [
 	//						{
@@ -1730,6 +1734,9 @@
 							this.changeImg_ind = _ind;
 						}
 						this.commState = !this.commState;
+						/*商品搜索-初始化*/
+						this.comm_search_tips = false;
+						
 					},
 					/*添加商品弹框--添加商品*/
 					selection_goods(_item) {
@@ -1741,6 +1748,9 @@
 							console.log(666666666666666666);
 							/*更换=>对应商品*/
 							this.backData['data'][this.puStateObj['key_num']]['data']['msg'][this.changeImg_ind] = clones(_item);
+							/*关闭按钮=>初始化*/
+							this.changeImg_ind = null;
+							this.commState = !this.commState;
 							return false;
 						}
 						/*添加(追加)商品*/
@@ -1768,6 +1778,13 @@
 									for(var g = 0; g < response['data']['data']['data'].length; g++) {
 										/*(深克隆)赋值给页面渲染的data*/
 										that.comm_data.push(clones(response['data']['data']['data'][g]));
+									}
+									/*暂无该商品*/
+									if(that.comm_data.length == 0){
+										console.log('暂无该商品:',that.comm_data.length);
+										that.comm_search_tips = true;
+									}else {
+										that.comm_search_tips = false;
 									}
 									console.log('商品ajax成功:', that.comm_data);
 								} else {
