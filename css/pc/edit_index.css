@@ -1744,6 +1744,7 @@
 /* 商品组-s */
 
 .modle_shop {
+	overflow: hidden;
 	padding: 5px 10px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1912,19 +1913,14 @@
 
 
 /* 商品价格显示 */
-
-.modle_shop_item .show,
-.modle_shop_item2 .show,
-.modle_shop_item3 .show {
+.show {
 	display: block;
 }
 
 
 /* 商品价格隐藏 */
 
-.modle_shop_item .none,
-.modle_shop_item2 .none,
-.modle_shop_item3 .none {
+.none {
 	display: none;
 }
 
@@ -1935,22 +1931,6 @@
 .modle_shop_item2 .price s,
 .modle_shop_item3 .price s {
 	display: none;
-}
-
-
-/* 显示名字 */
-
-.modle_shop_item2 .no,
-.modle_shop_item3 .no {
-	display: none;
-}
-
-
-/* 隐藏名字 */
-
-.modle_shop_item2 .sw,
-.modle_shop_item3 .sw {
-	display: block;
 }
 
 
@@ -2052,7 +2032,90 @@
 
 /* 商品组-e */
 
+/* 滑动商品组-s */
+.slidingShop{
+	overflow: hidden;
+	padding: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.slidingShop_title{
+	line-height: 20px;
+}
+.slidingShop_list{
+	width: 100%;
+	white-space:nowrap;
+	overflow: hidden;
+}
+.slidingShop_item{
+	position: relative;
+	display: inline-block;
+	margin-left: 3px;
+	width: 106px;
+	height: 100%;
+}
+.slidingShop_item_imgwrap{
+	width: 100%;
+	height: 110px;
+}
+.slidingShop_item_img{
+	width: 100%;
+	height: 100%;
+}
+.slidingShop_item_info{
+	position: relative;
+}
+.slidingShop_item_info .price s{
+	display: none;
+}
+.slidingShop_item_name,.slidingShop_item_price{
+	font-size: 14px;
+	line-height: 24px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.slidingShop_item_price s{
+	color: #ccc;
+}
+.slidingShop_item_buybtn{
+	position: absolute;
+	right: 5px;
+	bottom: -5px;
+	width: 24px;
+	height: 24px;
+}
+.slidingShop_item_price{
+	color: #ff0000;
+}
+/* 滑动商品组-e */
+/* 滑动按钮组-s */
+.slidingBtn_list{
+	width: 100%;
+	white-space:nowrap;
+	overflow: hidden;
+}
+.slidingBtn_tips{
+	width: 100%;
+	height: 100%;
+	line-height: 40px;
+	text-align: center;
+}
+.slidingBtn_item{
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	height: 100%;
+	line-height: 40px;
+	padding: 0 5px;
+	text-align: center;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
 
+/* 滑动按钮组-e */
 /* 辅助空白label 辅助线label -s*/
 
 .edit_blank .edit_content_label,
