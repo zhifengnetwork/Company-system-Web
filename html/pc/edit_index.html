@@ -245,6 +245,27 @@
 											<!--选中-虚框-->
 											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 										</div>
+										<!--滑动按钮组模块 box，拖拽的div-->
+										<div class="modle_box" v-if="v.id == 'slidingBtnId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+											<div class="slidingBtn">
+												<div class="slidingBtn_list" :style="{background:v.params.background}">
+													<div class="slidingBtn_tips" v-if="v.data.btnList.length == 0">
+														请添加按钮
+													</div>
+													<div class="slidingBtn_item" v-for="item in v.data.btnList">
+														<a v-if="item.text==''" :style="{color:item.sizeColor}">{{item.default}}</a>
+														<a v-if="item.text!=''" :style="{color:item.sizeColor}">{{item.text}}</a>
+													</div>
+												</div>
+											</div>
+											<!--删除按钮 wrap-->
+											<div class="cursor_wrap">
+												<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
+											</div>
+											<!--选中-虚框-->
+											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+										</div>
+
 									</div>
 								</div>
 								<!--隐藏滚动条-->
@@ -746,6 +767,50 @@
 							</div>
 						</div>
 						<!-- 滑动商品组-编辑 -e -->
+						<!-- 滑动按钮组-编辑 -s -->
+						<div class="edit_modle" v-show="puStateObj['id'] == 'slidingBtnId'">
+							<div class="edit_subline">
+								<div class="edit_title">滑动按钮组设置<span class="tips"></span></div>
+								<div class="edit_content">
+									<span class="edit_content_title">按钮数量</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnNum" value="3" @change="slidingBtnNum()">三个按钮</label>									
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnNum" value="4" @change="slidingBtnNum()">四个按钮</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnNum" value="5" @change="slidingBtnNum()">五个按钮</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnNum" value="6" @change="slidingBtnNum()">六个按钮</label>
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">背景颜色</span>
+									<input class="color" v-model="backData['data'][puStateObj['key_num']].params.background" type="color" value="">
+								</div>
+								<!-- 滑动按钮组-按钮设置 -->
+								<div v-for="(item,index) in backData['data'][puStateObj['key_num']].data.btnList">
+									<div class="ve-panel-editor-line2">
+										<div class="ve-panel-editor-line2-right" style="width:500px;">
+											<div class="ve-panel-editor-line">
+												<p class="ve-panel-editor-name">按钮文字</p>
+												<p class="ve-panel-editor-con">
+													<input class="ve-panel-editor-input1" style="width: 300px;" v-model="item.text" placeholder="请填写按钮文字">
+												</p>
+											</div>
+											<div class="ve-panel-editor-line">
+												<p class="ve-panel-editor-name">链接地址</p>
+												<div class="ve-panel-editor-con">
+													<input class="ve-panel-editor-input3" style="width: 300px;" v-model="item.locationS" placeholder="请手动输入链接(请以http://开头)或选择系统链接">
+													<p class="ve-panel-editor-input4" @click.stop="close_system_box()">系统连接</p>
+												</div>
+											</div>
+											<div class="ve-panel-editor-line">
+												<p class="ve-panel-editor-name">文字颜色</p>
+												<p class="ve-panel-editor-con">
+													<input class="color" type="color" v-model="item.sizeColor">
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 滑动按钮组-编辑 -e -->
 					</div>
 
 				</div>
@@ -968,6 +1033,10 @@
 							{
 								name: '滑动商品组',
 								id: 'slidingShopId'
+							},
+							{
+								name: '滑动按钮组',
+								id: 'slidingBtnId'
 							}
 						],
 
@@ -1418,7 +1487,28 @@
 		//								},
 								],
 							}
-						}
+						},
+						/*滑动按钮组，数据初始化*/ 
+						sldBtnObj:{
+							// 组件id
+							id: "slidingBtnId",
+							// 组件名
+							temp: "slidingBtn",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								// 按钮数量
+								btnNum: '0',
+								// 背景颜色
+								background: '#FFFFFF',
+							},
+							data: {
+								btnList:[
+
+								]
+							}
+						},
 					}
 
 				},
@@ -1619,6 +1709,14 @@
 						if(_id === "slidingShopId") {
 							that.sldObj['key_num'] = that.backData['data'].length;
 							that.backData['data'].push(clones(that.sldObj));
+							this.once_del();
+							this.scroll_bottom('html_box_new', _id);
+							return false;
+						}
+						/*滑动按钮组*/
+						if(_id === "slidingBtnId") {
+							that.sldBtnObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.sldBtnObj));
 							this.once_del();
 							this.scroll_bottom('html_box_new', _id);
 							return false;
@@ -1862,6 +1960,21 @@
 						} else if(this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'] == '4' && this.backData['data'][this.puStateObj['key_num']]['params']['iconNum'].length != 4) {
 							this.backData['data'][this.puStateObj['key_num']]['data']['iconList'].splice(4, 1);
 							console.log('四个按钮！');
+						}
+					},
+					/*滑动按钮组-按钮数*/
+					slidingBtnNum(){
+						console.log(this.backData['data'][this.puStateObj['key_num']]['params']['btnNum'])
+						let num = this.backData['data'][this.puStateObj['key_num']]['params']['btnNum'];
+						this.backData['data'][this.puStateObj['key_num']]['data']['btnList'] = [];
+						for(let i=0;i<num;i++){
+							this.backData['data'][this.puStateObj['key_num']]['data']['btnList'].push({
+								id: i,
+								default: '按钮文字',
+								text: '',
+								locationS: '',
+								sizeColor: '#333333',
+							})
 						}
 					},
 					/*监听-传入对象-文字*/
