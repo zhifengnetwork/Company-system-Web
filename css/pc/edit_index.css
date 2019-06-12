@@ -2116,6 +2116,13 @@
 }
 
 /* 滑动按钮组-e */
+/* 图片魔方-s */
+.cube{
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+}
+/* 图片魔方-e */
 /* 辅助空白label 辅助线label -s*/
 
 .edit_blank .edit_content_label,

@@ -291,6 +291,18 @@
 											<!--选中-虚框-->
 											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 										</div>
+										<!--魔方模块 box，拖拽的div-->
+										<div class="modle_box" v-if="v.id == 'cubeId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+											<div class="cube">
+												未设置魔方
+											</div>
+											<!--删除按钮 wrap-->
+											<div class="cursor_wrap">
+												<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
+											</div>
+											<!--选中-虚框-->
+											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+										</div>
 									</div>
 								</div>
 								<!--隐藏滚动条-->
@@ -879,6 +891,15 @@
 							</div>
 						</div>
 						<!-- 滑动按钮组-编辑 -e -->
+						<!-- 魔方图片-编辑 -s -->
+						<div class="edit_modle" v-show="puStateObj['id'] == 'cubeId'">
+							<div class="edit_subline">
+								<div class="edit_title">魔方图片设置<span class="tips"></span></div>
+									
+								</div>
+							</div>
+						</div>
+						<!-- 魔方图片-编辑 -e -->
 					</div>
 
 				</div>
@@ -1064,51 +1085,55 @@
 						/*组件-选项*/
 						componentTerm: [{
 								name: "轮播",
-								id: 'rotationId'
+								id: "rotationId"
 							},
 							{
 								name: "搜索框",
-								id: 'searchId'
+								id: "searchId"
 							},
 							{
 								name: "按钮组",
-								id: 'bottonsId'
+								id: "bottonsId"
 							},
 							{
 								name: "单图",
-								id: 'signageId'
+								id: "signageId"
 							},
 							{
 								name: "商品组",
-								id: 'productListId'
+								id: "productListId"
 							},
 							{
 								name: "公告",
-								id: 'noticeId'
+								id: "noticeId"
 							},
 							{
 								name: "辅助空白",
-								id: 'blankId'
+								id: "blankId"
 							},
 							{
 								name: "辅助线",
-								id: 'sublineId'
+								id: "sublineId"
 							},
 							{
-								name: '标题',
-								id: 'titleId'
+								name: "标题",
+								id: "titleId"
 							},
 							{
 								name: "固定搜索栏",
-								id: 'fixedsId'
+								id: "fixedsId"
 							},
 							{
-								name: '滑动商品组',
-								id: 'slidingShopId'
+								name: "滑动商品组",
+								id: "slidingShopId"
 							},
 							{
-								name: '滑动按钮组',
-								id: 'slidingBtnId'
+								name: "滑动按钮组",
+								id: "slidingBtnId"
+							},
+							{
+								name: "魔方图片",
+								id: "cubeId"
 							}
 						],
 
@@ -1609,6 +1634,22 @@
 								]
 							}
 						},
+						/*魔方图片，数据初始化*/ 
+						cubObj:{
+							// 组件id
+							id: "cubeId",
+							// 组件名
+							temp: "cube",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								
+							},
+							data: {
+								
+							}
+						},
 					}
 
 				},
@@ -1825,6 +1866,14 @@
 						if(_id === "slidingBtnId") {
 							that.sldBtnObj['key_num'] = that.backData['data'].length;
 							that.backData['data'].push(clones(that.sldBtnObj));
+							this.once_del();
+							this.scroll_bottom('html_box_new', _id);
+							return false;
+						}
+						/*滑动按钮组*/
+						if(_id === "cubeId") {
+							that.cubObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.cubObj));
 							this.once_del();
 							this.scroll_bottom('html_box_new', _id);
 							return false;
