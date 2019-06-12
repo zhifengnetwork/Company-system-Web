@@ -468,7 +468,7 @@
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.name" value="show">显示</label>
 									<span class="tips">提示:隐藏商品名称将默认隐藏购买按钮</span>
 								</div>
-								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.name=='sw'||backData['data'][puStateObj['key_num']].params.listStyle=='modle_shop_item'">
+								<div class="edit_content" v-if="backData['data'][puStateObj['key_num']].params.name=='show'||backData['data'][puStateObj['key_num']].params.listStyle=='modle_shop_item'">
 									<span class="edit_content_title">购买按钮</span>
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="">不显示</label>
 									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.btnStyle" value="buy_1">样式一</label>
@@ -1230,8 +1230,8 @@
 								attr: 'sale_rx',
 								/*价格显示 show==>显示 price==>显示原价 none==>隐藏*/
 								price: 'price',
-								/*名字显示 sw==>显示 on==>隐藏 */
-								name: 'sw',
+								/*名字显示 show==>显示 none==>隐藏 */
+								name: 'show',
 								/*购买按钮样式*/
 								btnStyle: 'buy_3'
 							},
