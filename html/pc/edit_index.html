@@ -215,7 +215,32 @@
 											<!--选中-虚框-->
 											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 										</div>
-
+										<!--固定搜索栏模板 box，拖拽的div-->
+										<div class="modle_box" v-if="v.id == 'fixedsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
+											<div class="fixeds_wrap" :style="{'background':v.params.backColor}">
+												<!--<div class="fixeds" :style="{'border-color':v.params.borderColor}" :class="v.params.reStyle">
+													<div class="img">
+														<img src="../../img/pc/searchObj/search_ico.png" />
+													</div>
+													<div class="inp" :style="{'border-color':v.params.borderColor}" :class="v.params.reStyle">
+														<input type="submit" class="searchBtn" value="">
+														<input type="text" placeholder="搜索：输入关键字在店内搜索"  :placeholder="v.data.tipeText_null" :style="{'color':v.params.textColor}" v-model="v.data.tipeText"/>
+													</div>
+												</div>-->
+												<div class="res" :style="{'background':v.params.backColor}">
+													<form action="#" :style="{'border-color':v.params.borderColor}" :class="[v.params.resStyle,v.params.reswStyle]">
+														<input type="submit" class="searchBtn" value="">
+														<input type="text" class="searchText" :placeholder="v.data.tipeText_null" :style="{'color':v.params.textColor}" v-model="v.data.tipeText">
+													</form>
+												</div>
+											</div>
+											<!--删除按钮 wrap-->
+											<div class="cursor_wrap">
+												<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
+											</div>
+											<!--选中-虚框-->
+											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
+										</div>
 									</div>
 								</div>
 								<!--隐藏滚动条-->
@@ -530,6 +555,7 @@
 							</div>
 						</div>
 						<!-- 公告编辑 -e -->
+						
 						<!-- 辅助空白-编辑 -s -->
 						<div class="edit_modle" v-show="puStateObj['id'] == 'blankId'">
 							<div class="edit_blank">
@@ -642,6 +668,49 @@
 
 							</div>
 						</div>
+						<!--标题-e-->
+						<!-- 固定导航栏 -fffff -->
+						<div class="edit_modle" v-show="puStateObj['id'] == 'fixedsId'">
+							<div class="edit_subline">
+								<div class="edit_title">辅助线设置<span class="tips"></span></div>
+								<div class="edit_content">
+									<div class="edit_content_title">提示文字</div>
+									<label class="edit_content_label">
+										<input class="editor_input1" placeholder="请输入搜索提示，搜索提示可以为空！" v-model="backData['data'][puStateObj['key_num']].data.tipeText">
+									</label>
+								</div>
+
+								<div class="edit_content">
+									<div class="edit_content_title">选择样式</div>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.resStyle" value="sty1"> 样式一</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.resStyle" value="sty2"> 样式二</label>
+								</div>
+								
+								<div class="edit_content">
+									<div class="edit_content_title">搜索框样式</div>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.reswStyle" value="style01"> 直角</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.reswStyle" value="style02"> 圆角</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.reswStyle" value="style03"> 圆弧</label>
+								</div>
+
+								<div class="edit_content">
+									<div class="edit_content_title">文字颜色</div>
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.textColor">
+									<span class="tips">提示: 输入文字颜色</span>
+								</div>
+
+								<div class="edit_content">
+									<div class="edit_content_title">边框颜色</div>
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.borderColor">
+								</div>
+
+								<div class="edit_content">
+									<div class="edit_content_title">背景颜色</div>
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.backColor">
+								</div>
+							</div>
+						</div>
+						<!-- 固定导航栏 -fffff -->
 					</div>
 
 				</div>
@@ -860,7 +929,11 @@
 							{
 								name: '标题',
 								id: 'titleId'
-							}
+							},
+							{
+								name: "固定搜索栏",
+								id: 'fixedsId'
+							},
 						],
 
 						/*拖拽需要的元素*/
@@ -1183,6 +1256,34 @@
 								icon: '../../img/pc/notice-icon.png',
 							}
 						},
+						/*固定搜索栏，数据初始化*/
+						fixedsObj: {
+							// 组件id
+							id: "fixedsId",
+							// 组件名
+							temp: "fixeds",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								/*0=>样式一，1=>样式二*/
+								resStyle: 'sty1',
+								/*0=>样式一，1=>样式二，2=>样式三*/
+								reswStyle: 'style01',
+								/*文字颜色*/
+								textColor: '#999999',
+								/*边框颜色*/
+								borderColor: '#C0C0C0',
+								/*边框圆角*/
+								borderRadius: '0',
+								/*背景颜色*/
+								backColor: '#f5f5f5',
+							},
+							data: {
+								/*提示文字*/
+								tipeText: '搜索：输入关键字在店内搜索',
+							}
+						},
 						/*辅助空白，数据初始化*/
 						blaObj: {
 							// 组件id
@@ -1427,6 +1528,14 @@
 							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
+						/*固定搜索栏*/
+						if(_id === "fixedsId") {
+							that.fixedsObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.fixedsObj));
+							this.once_del();
+							this.scroll_bottom('html_box_new', _id);
+							return false;
+						}
 						/*辅助空白*/
 						if(_id === "blankId") {
 							that.blaObj['key_num'] = that.backData['data'].length;
@@ -1552,6 +1661,7 @@
 										that.axios_state = true;
 										return false;
 									}
+									
 								}else {
 									/*保存失败*/
 									alert(response['data']['msg']);
