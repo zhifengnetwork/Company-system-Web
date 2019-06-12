@@ -215,18 +215,38 @@
 											<!--选中-虚框-->
 											<p class="border_line" :class="puStateObj['key_num'] == i ? 'border_box' : ''"></p>
 										</div>
+										<!--店招模块 box，拖拽的div-->
+										<div class="modle_box" v-if="v.id == 'shopinviting'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)" >
+											<!-- :style="{textAlign:v.params.alignPosition,color:v.params.textColor,backgroundColor:v.params.bgColor}" -->
+										    <div :class="v.params.style" :style="{'background-image':'url('+v.data.icon+')',}">
+												<div class="shop_boxson">
+													<img src="1.jpg" :class="v.params.show"/>
+													<p :class="v.params.nameshow">神器商城</p>
+												</div>
+												<div :class="v.params.navshow">
+													<div class="shop_boxson_item">
+														<i class="iconfont" :style="{'color':v.params.backColor}">&#xe77e;</i>
+														<p class="icon_title" :style="{'color':v.params.backColor}">首页</p>
+													</div><div class="shop_boxson_item">
+														<i class="iconfont" :style="{'color':v.params.backColor}">&#xe64a;</i>
+														<p class="icon_title" :style="{'color':v.params.backColor}">全部商品</p>
+													</div><div class="shop_boxson_item">
+														<i class="iconfont" :style="{'color':v.params.backColor}">&#xe601;</i>
+														<p class="icon_title" :style="{'color':v.params.backColor}">促销商品</p>
+													</div><div class="shop_boxson_item">
+														<i class="iconfont" :style="{'color':v.params.backColor}">&#xe646;</i>
+														<p class="icon_title" :style="{'color':v.params.backColor}">店铺公告</p>
+													</div>			
+												</div>
+											</div>
+											<!--删除按钮 wrap-->
+											<div class="cursor_wrap">
+												<p class="cursor_box_del" @click.stop="delDataFun(i)">移除</p>
+											</div>
+										</div>		
 										<!--固定搜索栏模板 box，拖拽的div-->
 										<div class="modle_box" v-if="v.id == 'fixedsId'? true:''" :key="v.id" @click="editMode(v.id,v.key_num)">
 											<div class="fixeds_wrap" :style="{'background':v.params.backColor}">
-												<!--<div class="fixeds" :style="{'border-color':v.params.borderColor}" :class="v.params.reStyle">
-													<div class="img">
-														<img src="../../img/pc/searchObj/search_ico.png" />
-													</div>
-													<div class="inp" :style="{'border-color':v.params.borderColor}" :class="v.params.reStyle">
-														<input type="submit" class="searchBtn" value="">
-														<input type="text" placeholder="搜索：输入关键字在店内搜索"  :placeholder="v.data.tipeText_null" :style="{'color':v.params.textColor}" v-model="v.data.tipeText"/>
-													</div>
-												</div>-->
 												<div class="res" :style="{'background':v.params.backColor}">
 													<form action="#" :style="{'border-color':v.params.borderColor}" :class="[v.params.resStyle,v.params.reswStyle]">
 														<input type="submit" class="searchBtn" value="">
@@ -730,7 +750,50 @@
 
 							</div>
 						</div>
-						<!--标题-e-->
+						<!-- 标题-e -->
+						<!-- 店招-编辑 -s -->
+						<div class="edit_modle" v-show="puStateObj['id'] == 'shopinviting'">
+							<div class="edit_subline">
+								<div class="edit_title">店招设置88<span class="tips"></span></div>
+								<div class="edit_content">
+									<span class="edit_content_title">选择样式</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.style" value="shop_invating_ear">样式一</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.style" value="shop_invating_two">样式二</label>
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">商城</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.show" value="shop_boxson_logopic">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.show" value="yingcang">不显示</label>
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">商城名称</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.nameshow" value="shop_boxson_logotitle">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.nameshow" value="nameyingcang">不显示</label>
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">默认导航</span>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.navshow" value="shop_boxson_bottom">显示</label>
+									<label class="edit_content_label"><input type="radio" v-model="backData['data'][puStateObj['key_num']].params.navshow" value="navyingcang">不显示</label>
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">按钮颜色</span>
+									<input class="color" type="color" v-model="backData['data'][puStateObj['key_num']].params.backColor" >
+								</div>
+								<div class="edit_content">
+									<span class="edit_content_title">背景图片</span>
+								</div>
+								<div class="edit_addimg clearfloat">
+									<!--上传图片(弹出遮罩层)=>@click="call_off(0)"=>只有一个公告图标-->
+									<div class="edit_img hover_box" @click="call_off(0)">
+										<img :src="backData['data'][puStateObj['key_num']]['data']['icon']" class="icon_up" alt="">
+									</div>
+									<div class="edit_link">
+										<label>选择链接<input type="text" placeholder="请手动输入链接(请以http://开头)" ></label><button @click.stop="close_system_box()">系统连接</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 店招-编辑 -e -->
 						<!-- 固定导航栏 -fffff -->
 						<div class="edit_modle" v-show="puStateObj['id'] == 'fixedsId'">
 							<div class="edit_subline">
@@ -1076,7 +1139,6 @@
 				}
 				return newMemory;
 			}
-
 			var newVue = new Vue({
 				el: "#edit_app_wrap",
 				data() {
@@ -1118,6 +1180,10 @@
 							{
 								name: "标题",
 								id: "titleId"
+							},
+							{
+								name:'店招',
+								id:'shopinviting'
 							},
 							{
 								name: "固定搜索栏",
@@ -1470,15 +1536,15 @@
 								/*0=>样式一，1=>样式二*/
 								resStyle: 'sty1',
 								/*0=>样式一，1=>样式二，2=>样式三*/
-								reswStyle: 'style01',
+								reswStyle: 'style02',
 								/*文字颜色*/
-								textColor: '#999999',
+								textColor: '#717171',
 								/*边框颜色*/
 								borderColor: '#C0C0C0',
 								/*边框圆角*/
 								borderRadius: '0',
 								/*背景颜色*/
-								backColor: '#f5f5f5',
+								backColor: '#171717',
 							},
 							data: {
 								/*提示文字*/
@@ -1555,6 +1621,35 @@
 								subTitle1: '',
 								// 是否显示副标题
 								subTitleState: '1'
+							}
+						},
+						/*店招，数据初始化*/
+						shopObj: {
+							// 组件id
+							id: "shopinviting",
+							// 组件名
+							temp: "shopinvit",
+							// 页面渲染-组件位置，从0开始
+							key_num: null,
+							// 组件style
+							params: {
+								// 样式选择
+								style: 'shop_invating_ear',
+								style2:'shop_invating_two',
+								// 商城logo的显示和隐藏
+								show:"shop_boxson_logopic",
+								hide:'yingcang',
+							    //商城名字的显示和隐藏
+							    nameshow:"shop_boxson_logotitle",
+								namehide:"nameyingcang",
+								//底部导航栏的显示和隐藏
+								navshow:"shop_boxson_bottom",
+								navhide:"navyingcang",
+								//底部导航栏字体和图标的颜色
+								navcolor:"backColor",			
+							},
+							data: {
+								icon: '../../img/0006.png',
 							}
 						},
 						/*滑动商品组，数据初始化*/ 
@@ -1854,6 +1949,14 @@
 							this.scroll_bottom('html_box_new', _id);
 							return false;
 						}
+						/*店招*/
+						if(_id === "shopinviting") {
+							that.shopObj['key_num'] = that.backData['data'].length;
+							that.backData['data'].push(clones(that.shopObj));
+							this.once_del();
+							this.scroll_bottom('html_box_new', _id);
+							return false;
+						}
 						/*滑动商品组*/
 						if(_id === "slidingShopId") {
 							that.sldObj['key_num'] = that.backData['data'].length;
@@ -1979,7 +2082,15 @@
 										that.axios_state = true;
 										return false;
 									}
-									
+									/*店招图标*/
+									if(thisID == 'shopinviting') {
+										that.backData['data'][thisInd]['data']['icon'] = response['data']['data'];
+										/*隐藏-遮罩层*/
+										that.active.edit_slide_mask = !that.active.edit_slide_mask;
+										console.log('公告图标', that.backData['data'][thisInd]['data']['icon']);
+										that.axios_state = true;
+										return false;
+									}
 								}else {
 									/*保存失败*/
 									alert(response['data']['msg']);
