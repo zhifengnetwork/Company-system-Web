@@ -317,7 +317,7 @@
 												未设置魔方
 											</div>
 											<div class="cube_box" v-if="v.data.cube_img!=''">
-												<img :src="item.img" v-for="(item,index) in v.data.cube_img" class="col1 row1" :class="[item.col=='2'?'col2':'',item.col=='3'?'col3':'',item.col=='4'?'col4':'',item.row=='2'?'row2':'',item.row=='3'?'row3':'',item.row=='4'?'row4':'']">
+												<img :src="item.img" v-for="(item,index) in v.data.cube_img" class="col1 row1"  onerror="onerror=null;src='../../img/pc/transparency.png'" :class="[item.col=='2'?'col2':'',item.col=='3'?'col3':'',item.col=='4'?'col4':'',item.row=='2'?'row2':'',item.row=='3'?'row3':'',item.row=='4'?'row4':'']">
 											</div>
 											<!--删除按钮 wrap-->
 											<div class="cursor_wrap">
@@ -971,7 +971,7 @@
 										<tr v-for="(Y,index) in backData['data'][puStateObj['key_num']].data.cubeY">
 											<td v-for="(X,index) in backData['data'][puStateObj['key_num']].data.cubeX" :colspan="1" :rowspan="1" :data-x="X" :data-y="Y" @click.stop="cube_mask($event)">
 												<span @click.stop="">+</span>
-												<img class="cube_img" v-for="(item,index) in backData['data'][puStateObj['key_num']]['data']['cube_img']" @click.stop="" :src="item.img" onerror="onerror=null;src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2967499114,2743769441&fm=26&gp=0.jpg'">
+												<img class="cube_img" v-for="(item,index) in backData['data'][puStateObj['key_num']]['data']['cube_img']" @click.stop="" :src="item.img" onerror="onerror=null;src='../../img/pc/transparency.png'">
 											</td>
 										</tr>
 									</table>
